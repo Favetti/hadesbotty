@@ -1,0 +1,35 @@
+{
+  "name": "guidebot",
+  "version": "2.3.5",
+  "description": "A boilerplate example bot with command handler and reloadable commands. Updated and Maintained by the Idiot's Guide Community",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/An-Idiots-Guide/guidebot.git"
+  },
+  "author": "Evelyne Lachance <eslachance@gmail.com> (http://evie.codes)",
+  "contributors": [
+    "York (http://anidiots.guide)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/An-Idiots-Guide/guidebot/issues"
+  },
+  "homepage": "https://github.com/An-Idiots-Guide/guidebot#readme",
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "discord.js": "^11.3.0",
+    "enmap": "^0.4.2",
+    "enmap-level": "^1.0.0",
+    "moment": "^2.20.1",
+    "moment-duration-format": "^2.2.0",
+    "sqlite": "*"
+  }
+}
