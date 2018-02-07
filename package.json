@@ -1,7 +1,7 @@
 {
-  "name": "guidebot",
-  "version": "2.3.5",
-  "description": "A boilerplate example bot with command handler and reloadable commands. Updated and Maintained by the Idiot's Guide Community",
+  "name": "hadesbotty",
+  "version": "1.0",
+  "description": "A copy of the Idiot's Guide Bot to serv Hades Star Tech info.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,24 +12,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/An-Idiots-Guide/guidebot.git"
+    "url": "git+https://github.com/Favetti/hadesbotty.git"
   },
-  "author": "Evelyne Lachance <eslachance@gmail.com> (http://evie.codes)",
-  "contributors": [
-    "York (http://anidiots.guide)"
-  ],
+  "author": "Favetti",
+  "contributors": [],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/An-Idiots-Guide/guidebot/issues"
+    "url": "https://github.com/Favetti/hadesbotty/issues"
   },
-  "homepage": "https://github.com/An-Idiots-Guide/guidebot#readme",
+  "homepage": "https://github.com/Favetti/hadesbotty",
   "dependencies": {
     "chalk": "^2.3.0",
     "discord.js": "^11.3.0",
     "enmap": "^0.4.2",
     "enmap-level": "^1.0.0",
+    "express": "^4.16.2",
     "moment": "^2.20.1",
-    "moment-duration-format": "^2.2.0",
-    "sqlite": "*"
+    "moment-duration-format": "^2.2.1"
   }
 }

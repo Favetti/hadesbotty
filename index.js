@@ -43,15 +43,6 @@ client.settings = new Enmap({provider: new EnmapLevel({name: "bottySettings", da
 client.points = new Enmap({provider: new EnmapLevel({name: "points", dataDir: ".data"})});
 client.hsTech = new Enmap({provider: new EnmapLevel({name: "hsTech", dataDir: ".data"})});
 
-/* OLD SQLITE
-// Create SQLITE score structure
-client.sqlScore = require("sqlite");
-client.sqlScore.open(".data/score.sqlite");
-// Create Hades Star file
-client.sqlHS = require("sqlite");
-client.sqlHS.open(".data/hades.sqlite");
-*/
-
 // We're doing real fancy node 8 async/await stuff here, and to do that
 // we need to wrap stuff in an anonymous function. It's annoying but it works.
 
@@ -90,9 +81,30 @@ const init = async () => {
   
   //*AF*
   //Create HS tables if needed
-  await client.sqlHS.run("CREATE TABLE IF NOT EXISTS userTechs (userID TEXT NOTE NULL, techID TEXT NOTE NULL, level INTEGER DEFAULT 0)");
+  //await client.sqlHS.run("CREATE TABLE IF NOT EXISTS userTechs (userID TEXT NOTE NULL, techID TEXT NOTE NULL, level INTEGER DEFAULT 0)");
+  
 
 // End top-level async/await function.
+  
+  
+// *AF
+// Express Keepalive
+const http = require('http');
+const express = require('express');
+
+const app = express();
+app.get("/", (request, response) => {
+  client.logger.log(Date.now() + " HTTPS Ping Received from " + request.headers['x-forwarded-for']);
+  response.sendStatus(200);
+});
+app.listen(process.env.PORT);
+client.logger.log(Date.now() + ` HTTPS STARTED on ${process.env.PROJECT_DOMAIN} port ${process.env.PORT}`);
+setInterval(() => {
+  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+}, 250000);
+  
 };
 
 init();
+
+

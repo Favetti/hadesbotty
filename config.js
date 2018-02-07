@@ -3,8 +3,9 @@ const config = {
   "ownerID": process.env.DISCORD_BOT_OWNER,
 
   // Bot Admins, level 9 by default. Array of user ID strings.
+  //"admins": process.env.DISCORD_BOT_ADMINS,
   "admins": [],
-
+  
   // Bot Support, level 8 by default. Array of user ID strings
   "support": [],
 
@@ -29,7 +30,7 @@ const config = {
 
   // **AF*
   // Hades Star TechList
-  "techList" : "transp, miner, bs, cargobay, computer, tradeboost, rush, tradeburst, autopilot, offload, beam, entrust, recall, hydrobay, miningboost, enrich, remote, hydroupload, miningunity, crunch, genesis, battery, laser, mass, dual, barrage, alpha, delta, pas, omega, mirror, emp, teleport, rsextender, repair, warp, unity, sanctuary, stealth, fortify, impulse, rocket, salvage, suppress, destiny, barrier, vengeance, leap",
+  "techList" : " transp, miner, bs, cargobay, computer, tradeboost, rush, tradeburst, autopilot, offload, beam, entrust, recall, hydrobay, miningboost, enrich, remote, hydroupload, miningunity, crunch, genesis, battery, laser, mass, dual, barrage, alpha, delta, pas, omega, mirror, emp, teleport, rsextender, repair, warp, unity, sanctuary, stealth, fortify, impulse, rocket, salvage, suppress, destiny, barrier, vengeance, leap,",
   
   "techArray" : {
     "transp": "Ships - Transport",
