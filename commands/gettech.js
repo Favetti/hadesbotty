@@ -1,9 +1,8 @@
-// *AF*
 // Hades star Technology Level
+// This command will list all technology developed by the user, or by someone else especified by tag
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   
-  //const user = `<@${message.author.id}>`;  
   var targetID = message.author.id;
 
   if (args[0] != null)
@@ -29,8 +28,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     var techLevel = allTech[techID];
     if (techLevel >0) msg += (`\n${client.config.techArray[techID]}: ${techLevel}`);    
   }
-  */
-  
+  */ 
 
   return message.reply(msg);
 };

@@ -79,16 +79,11 @@ const init = async () => {
   // Here we login the client.
   client.login(client.config.token);
   
-  //*AF*
-  //Create HS tables if needed
-  //await client.sqlHS.run("CREATE TABLE IF NOT EXISTS userTechs (userID TEXT NOTE NULL, techID TEXT NOTE NULL, level INTEGER DEFAULT 0)");
-  
-
 // End top-level async/await function.
   
   
 // *AF
-// Express Keepalive
+// Express Keepalive for Glitch
 const http = require('http');
 const express = require('express');
 
