@@ -158,4 +158,8 @@ module.exports = (client) => {
     client.points.set(message.author.id, score);    
   };
   
+  // *AF Points Monitoring
+  client.validTech = (client, message) => {
+    
+  };  
 };

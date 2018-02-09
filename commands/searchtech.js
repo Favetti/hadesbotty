@@ -4,9 +4,9 @@
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
     
   const techID = args[0];
-  if (client.config.techList.indexOf(` ${techID},`) < 0) return message.reply(`Invalid Tech: ${techID}`);
+  if (!client.config.hadesTech[techID]) return message.reply(`Invalid Tech: ${techID}`);
     
-  var msg = `Searching for: ${client.config.techArray[techID]}`;
+  var msg = `Searching for: ${client.config.hadesTech[techID].desc}`;
 
   client.hsTech.forEach(function (allTech, userID, mapObj) {  
     const techLevel = allTech[techID];

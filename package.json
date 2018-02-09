@@ -23,6 +23,7 @@
   "homepage": "https://github.com/Favetti/hadesbotty",
   "dependencies": {
     "chalk": "^2.3.0",
+    "dateformat": "^3.0.2",
     "discord.js": "^11.3.0",
     "enmap": "^0.4.2",
     "enmap-level": "^1.0.0",
