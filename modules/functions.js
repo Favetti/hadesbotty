@@ -144,7 +144,7 @@ module.exports = (client) => {
     if (message.channel.type !=='text') return;
     const settings = client.settings.get(message.guild.id);
     
-    const score = client.points.get(message.author.id) || { level: 0, points: 0, commands: 0 };
+    const score = client.points.get(message.guild.id+"::"+message.author.id) || { level: 0, points: 0, commands: 0 };
     if (message.content.startsWith(settings.prefix)) 
       score.commands++;
     else

@@ -28,11 +28,11 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     if (client.config.hadesTech[techID].group == techGroup) {
       var techLevel = techLevels[i++];
       msg += `\n${client.config.hadesTech[techID].desc} : set to ${techLevel} (was ${allTech[techID]})`;
-      allTech[techID] = techLevel;
-      client.hsTech.set(message.author.id, allTech);      
-    }        
-  });  
-  
+      allTech[techID] = techLevel;     
+    }
+  });
+  client.hsTech.set(message.author.id, allTech); 
+  allTech["#Guild"] = message.guild.id;
   return message.reply(msg);  
 };
 

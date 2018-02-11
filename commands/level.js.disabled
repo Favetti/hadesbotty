@@ -2,14 +2,14 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   
-  const scoreLevel = client.points.get(message.author.id).level;
+  const scoreLevel = client.points.get(message.guild.id+"::"+message.author.id).level;
   !scoreLevel ? message.reply('You have no levels yet.') : message.reply(`You are currently level ${scoreLevel}!`);
   
 };
 
 exports.conf = {
-  enabled: true,
-  guildOnly: false,
+  enabled: false,
+  guildOnly: true,
   aliases: [],
   permLevel: "User"
 };

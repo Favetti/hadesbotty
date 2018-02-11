@@ -8,9 +8,12 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     
   var msg = `Searching for: ${client.config.hadesTech[techID].desc}`;
 
-  client.hsTech.forEach(function (allTech, userID, mapObj) {  
-    const techLevel = allTech[techID];
-    if (techLevel >0) msg += (`\n<@${userID}>: ${techLevel}`);  
+  client.hsTech.forEach(function (allTech, userID, mapObj) { 
+    if (allTech["#Guild"] == message.guild.id){
+      const techLevel = allTech[techID];
+      if (techLevel >0) 
+        msg += (`\n<@${userID}>: ${techLevel}`);
+    }
 });  
   
   return message.reply(msg);

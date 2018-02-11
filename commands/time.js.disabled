@@ -1,0 +1,37 @@
+// simple Point system, from the Idiots Guide
+
+exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
+
+  const myTime = new Date();
+  var userTime = new Date();
+    
+  if (!args[0])  return message.reply(`Your local time is your own`);
+  
+  // Choose your target!
+  var targetID = message.author.id;
+  if (args[0].indexOf("<@") >= 0 && args[0].indexOf(">") > 0 ) // first arg is a user-tag
+    targetID = args[0].replace("<@","").replace(">","");
+  
+  // Set or Get ??
+  if (args[1] != "set") {
+    
+  } 
+  else {
+    var time = args.toString().replace(args[0],"");
+  }
+  
+};
+
+exports.conf = {
+  enabled: false,
+  guildOnly: false,
+  aliases: [],
+  permLevel: "User"
+};
+
+exports.help = {
+  name: "time",
+  category: "Miscelaneous",
+  description: "What time is it for <random corp member name> ?",
+  usage: "time [user] [set <timezone>]"
+};

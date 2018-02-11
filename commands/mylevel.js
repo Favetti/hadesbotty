@@ -1,18 +1,21 @@
 exports.run = async (client, message, args, level) => {
   const friendly = client.config.permLevels.find(l => l.level === level).name;
-  message.reply(`Your permission level is: ${level} - ${friendly}`);
+  const scoreLevel = client.points.get(message.guild.id+"::"+message.author.id).level;
+  var msg = `Your permission level is: ${level} - ${friendly}`;
+  !scoreLevel ? msg += '\nYou have no chatting levels yet.' : msg += `\nYour chatting level is ${scoreLevel}!`;
+  message.reply(msg);
 };
 
 exports.conf = {
   enabled: true,
   guildOnly: true,
-  aliases: [],
+  aliases: ["level"],
   permLevel: "User"
 };
 
 exports.help = {
   name: "mylevel",
   category: "Miscelaneous",
-  description: "Tells you your permission level for the current message location.",
+  description: "Tells you your permission level for the current Guild and your chatting level.",
   usage: "mylevel"
 };

@@ -5,15 +5,14 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   
   var targetID = message.author.id;
 
-  if (args[0] != null)
+  if (args[0])
     targetID = args[0].replace("<@","").replace(">","");
-  
+
   if (!client.hsTech.has(targetID))
     return message.reply(`<@${targetID}> doesn't have any data`);
   
   var allTech = client.hsTech.get(targetID);
   var msg = (targetID == message.author.id ? "here are your Tech levels: " : `here are Tech levels for <@${targetID}>`);
-       
   
   Object.keys(client.config.hadesTech).forEach(techID => {
     var techLevel = allTech[techID];
