@@ -155,11 +155,19 @@ module.exports = (client) => {
       message.reply(`You've leveled up to level **${curLevel}**! Ain't ya chatty?`);
       score.level = curLevel;
     }
-    client.points.set(message.author.id, score);    
-  };
-  
-  // *AF Points Monitoring
-  client.validTech = (client, message) => {
+    client.points.set(message.author.id, score);
     
-  };  
+    // User data recording
+    var userData = client.usersData.get(message.author.id) || [];
+    if (message.guild ) {
+      userData["guildName"] = message.guild.name;
+      userData["guild"] = message.guild.id;
+    }
+    userData["userName"] = message.author.username;
+    userData["lastSeen"] = Date.now();
+  
+    client.usersData.set(message.author.id, userData);
+    
+  };
+
 };

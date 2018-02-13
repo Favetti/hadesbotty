@@ -17,6 +17,7 @@ client.aliases = new Enmap();
 client.settings = new Enmap({provider: new EnmapLevel({name: "bottySettings", dataDir: ".data"})});
 client.points = new Enmap({provider: new EnmapLevel({name: "points", dataDir: ".data"})});
 client.hsTech = new Enmap({provider: new EnmapLevel({name: "hsTech", dataDir: ".data"})});
+client.usersData = new Enmap({provider: new EnmapLevel({name: "usersData", dataDir: ".data"})});
 
 // We're doing real fancy node 8 async/await stuff here, and to do that
 // we need to wrap stuff in an anonymous function. It's annoying but it works.
@@ -49,22 +50,24 @@ const init = async () => {
   client.login(client.config.token);
   
 // End top-level async/await function.
-  
+
 // Express Keepalive for Glitch
 const http = require('http');
 const express = require('express');
-
 const app = express();
+const moment = require('moment');
+
 app.get("/", (request, response) => {
-  client.logger.log(Date.now() + " HTTPS Ping Received from " + request.headers['x-forwarded-for'].split(",",1));
+  client.logger.log(moment().format("YYYY-MMM-DD hh:mm:ss") + " :: HTTPS Ping Received from " + request.headers['x-forwarded-for'].split(",",1));
   response.sendStatus(200);
 });
 app.listen(process.env.PORT);
-client.logger.log(Date.now() + ` HTTPS STARTED on ${process.env.PROJECT_DOMAIN} port ${process.env.PORT}`);
+client.logger.log(moment().format("YYYY-MMM-DD hh:mm:ss") + ` :: HTTPS STARTED on ${process.env.PROJECT_DOMAIN} port ${process.env.PORT}`);
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
 }, 250000);
-  
+
+
 };
 
 init();

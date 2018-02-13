@@ -3,7 +3,7 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
     
-  var msg = `Here is the Tech Level for all members:`;
+  var msg = `Here is the Tech Score for all members:`;
   client.hsTech.forEach(function (allTech, userID, mapObj) {  
       client.logger.log(`<@${userID}>`);
     var allTech = client.hsTech.get(userID);
@@ -23,13 +23,13 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["tl"],
+  aliases: ["ts"],
   permLevel: "user"
 };
 
 exports.help = {
-  name: "techlevel",
+  name: "techscore",
   category: "Hades Star",
   description: "Calculate Tech Score for all users",
-  usage: "techlevel"
+  usage: "techscore"
 };

@@ -31,7 +31,7 @@ const config = {
 
   // **AF*
   // Hades Star TechList
-  "hadesTechSize" : {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":5,"support":17},
+  "hadesTechSize" : {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":6,"support":17},
 
   "hadesTech" : {
    "transp": {desc: "Ships - Transport", group: "ships", level: 5, levels: [1,10,60,300,1000]},
@@ -65,6 +65,7 @@ const config = {
    "passive": {desc: "Shields - Passive Shield", group: "shields", level: 3, levels: [15,25,50,100,200,350,550,800,2000,5000]},
    "omega": {desc: "Shields - Omega Shield", group: "shields", level: 4, levels: [30,45,75,100,200,350,700,1000,2500,5000]},
    "mirror": {desc: "Shields - Mirror Shield", group: "shields", level: 5, levels: [50,100,200,400,600,800,1000,3500,6000,8000]},
+   "area": {desc: "Shields - Area Shield", group: "shields", level: 8, levels: [200,300,400,600,800,1000,3500,6000,8000,8000]},
    "emp": {desc: "Support - E.M.P.", group: "support", level: 2, levels: [2,5,25,50,100,250,500,1000,2000,4000]},
    "teleport": {desc: "Support - Teleport", group: "support", level: 2, levels: [8,12,25,50,100,250,500,1000,2000,4000]},
    "rsextender": {desc: "Support - Red Star Life Extender", group: "support", level: 2, levels: [8,12,25,50,100,250,500,1000,2000,4000]},
