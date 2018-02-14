@@ -2,8 +2,13 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   
-  const scorePoints = client.points.get(message.guild.id+"::"+message.author.id).points;
-  !scorePoints ? message.reply('You have no points yet.') : message.reply(`You have ${scorePoints} messages and ${client.points.get(message.author.id).commands} commands!`);
+  // Choose target!
+  var targetID = message.author.id;
+  if (args[0].indexOf("<@") >= 0 && args[0].indexOf(">") > 0 )
+    targetID = args[0].replace("<@","").replace(">","");
+  
+  const scorePoints = client.points.get(message.guild.id+"::"+targetID).points;
+  !scorePoints ? message.reply('You have no points yet.') : message.reply(`::: ${scorePoints} messages and ${client.points.get(targetID).commands} commands!`);
  
 };
 

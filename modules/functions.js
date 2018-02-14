@@ -152,7 +152,7 @@ module.exports = (client) => {
     
     const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
     if (score.level < curLevel) {
-      message.reply(`You've leveled up to level **${curLevel}**! Ain't ya chatty?`);
+      //message.reply(`You've leveled up to level **${curLevel}**! Ain't ya chatty?`);
       score.level = curLevel;
     }
     client.points.set(message.author.id, score);

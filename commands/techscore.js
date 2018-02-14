@@ -5,7 +5,6 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     
   var msg = `Here is the Tech Score for all members:`;
   client.hsTech.forEach(function (allTech, userID, mapObj) {  
-      client.logger.log(`<@${userID}>`);
     var allTech = client.hsTech.get(userID);
     if (allTech["#Guild"] == message.guild.id){
       var techLevel = 0;
@@ -22,9 +21,9 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
 
 exports.conf = {
   enabled: true,
-  guildOnly: false,
+  guildOnly: true,
   aliases: ["ts"],
-  permLevel: "user"
+  permLevel: "User"
 };
 
 exports.help = {

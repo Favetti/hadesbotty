@@ -51,22 +51,21 @@ const init = async () => {
   
 // End top-level async/await function.
 
-// Express Keepalive for Glitch
-const http = require('http');
-const express = require('express');
-const app = express();
-const moment = require('moment');
+  // Express Keepalive for Glitch
+    const http = require('http');
+    const express = require('express');
+    const moment = require("moment");
 
-app.get("/", (request, response) => {
-  client.logger.log(moment().format("YYYY-MMM-DD hh:mm:ss") + " :: HTTPS Ping Received from " + request.headers['x-forwarded-for'].split(",",1));
-  response.sendStatus(200);
-});
-app.listen(process.env.PORT);
-client.logger.log(moment().format("YYYY-MMM-DD hh:mm:ss") + ` :: HTTPS STARTED on ${process.env.PROJECT_DOMAIN} port ${process.env.PORT}`);
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 250000);
-
+    const app = express();
+    app.get("/", (request, response) => {
+      client.logger.log(moment().format("YYYY-MMM-DD HH:mm:ss") + " HTTPS Ping Received from " + request.headers['x-forwarded-for'].split(",",1));
+      response.sendStatus(200);
+    });
+    app.listen(process.env.PORT);
+    client.logger.log(moment().format("YYYY-MMM-DD HH:mm:ss") + ` HTTPS STARTED on ${process.env.PROJECT_DOMAIN} port ${process.env.PORT}`);
+    setInterval(() => {
+      http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+    }, 250000);
 
 };
 

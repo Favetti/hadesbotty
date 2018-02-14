@@ -8,8 +8,9 @@ exports.run = async (client, message, args, level) => {
   
   // Choose target!
   var targetID = message.author.id;
-  if (args[i].indexOf("<@") >= 0 && args[0].indexOf(">") > 0 )
-    targetID = args[i++].replace("<@","").replace(">","");
+  if (args[i])
+    if (args[i].indexOf("<@") >= 0 && args[i].indexOf(">") > 0 )
+      targetID = args[i++].replace("<@","").replace(">","");
   
   var userData = client.usersData.get(targetID) || [];
 
@@ -35,10 +36,10 @@ exports.run = async (client, message, args, level) => {
 };
 
 exports.conf = {
-  enabled: false,
-  guildOnly: false,
+  enabled: true,
+  guildOnly: true,
   aliases: [],
-  permLevel: "Bot Owner"
+  permLevel: "User"
 };
 
 exports.help = {
