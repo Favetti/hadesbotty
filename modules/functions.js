@@ -152,21 +152,27 @@ module.exports = (client) => {
     
     const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
     if (score.level < curLevel) {
-      //message.reply(`You've leveled up to level **${curLevel}**! Ain't ya chatty?`);
+      //message.reply(`You've leveled up to chat level **${curLevel}**!`);
       score.level = curLevel;
     }
     client.points.set(message.author.id, score);
     
     // User data recording
-    var userData = client.usersData.get(message.author.id) || [];
-    if (message.guild ) {
+    if (!client.usersData.has(message.author.id)) client.logger.debug("Not previous userData for "+message.author.id);
+    var userData = client.usersData.get(message.author.id) || {userName: message.author.username};
+    //client.logger.debug(`:pre: message from: ${message.author.id} :: ${userData["userName"]} :: ${userData["guildName"]} :: ${userData["timeOffset"]} :::: ${userData["lastSeen"]}`);
+    
+    if (message.guild) {
       userData["guildName"] = message.guild.name;
       userData["guild"] = message.guild.id;
     }
     userData["userName"] = message.author.username;
     userData["lastSeen"] = Date.now();
   
-    client.usersData.set(message.author.id, userData);
+    //client.logger.debug(`:: writing to ${message.author.id} :: ${userData["userName"]} :: ${userData["guildName"]} :: ${userData["timeOffset"]} :::: ${userData["lastSeen"]} `);
+    //client.usersData.set(message.author.id, userData);
+    userData = client.usersData.get(message.author.id)
+    //client.logger.debug(`:pos: message from: ${message.author.id} :: ${userData["userName"]} :: ${userData["guildName"]} :: ${userData["timeOffset"]} :::: ${userData["lastSeen"]}`);
     
   };
 

@@ -3,24 +3,69 @@
 exports.run = async (client, message, args, level) => { 
 
   const moment = require("moment");
+  const table = require('easy-table');
+    
+  if (args[0] === "all") {
+    //var msg = "";
+    var hasData=false;
+    var allTimes = new table;
+    
+    message.guild.members.forEach(function (user, userID, mapObj){
+      client.logger.debug("trying: "+userID);
+      if (client.usersData.has(userID)) {
+        var userData = client.usersData.get(userID);
+        if (userData["timeOffset"]) {
+          //msg += (moment(Date.now() + (userData["timeOffset"] * 3600000)).format("YYYY-MMM-DD HH:mm:ss")+` :: ${userData["userName"]}\n`);
+          hasData=true;
+          if (userData.userName)
+           allTimes.cell('User', userData.userName);
+          else{
+            //var unknowUser = client.fetchUser(userid).userName;
+            allTimes.cell('User', client.fetchUser(userID).userName);
+            //client.logger.debug(`found username for ${userID} ` + client.fetchUser(userID).userName);
+          }
+          allTimes.cell('Time', moment(Date.now() + (userData.timeOffset * 3600000)).format("MMM-DD, HH:mm"));
+          allTimes.newRow();
+        }
+        //else client.logger.debug("Not timezone for "+userID);
+      }
+      //else client.logger.debug("No userData for "+userID);
+        
+    });
+    
+    if (!hasData)
+      return message.reply("No data found");
+    else {
+      allTimes.sort("Time");
+      return message.reply(`Time recorded for everyone on ${message.guild.name}:\n` + allTimes.toString());
+    }
+  }
 
-  var i=0; // used to parse optional arguments 
-  
-  // Choose target!
   var targetID = message.author.id;
-  if (args[i])
-    if (args[i].indexOf("<@") >= 0 && args[i].indexOf(">") > 0 )
-      targetID = args[i++].replace("<@","").replace(">","");
-  
+  var isSet = false;
+  var offset = 0;
+
+  args.forEach(function(arg) {
+    if (arg.indexOf("<@") >= 0 )
+      targetID = arg.replace("<@","").replace(">","");
+    else if (arg === "set")
+      isSet = true;
+    else if (arg.indexOf("gmt") >= 0 )
+      offset = Number(arg.replace("gmt",""))
+});
+
   var userData = client.usersData.get(targetID) || [];
 
-  //SET
-  if (args[i] == "set" ) {
-    userData["timeOffset"] = Number(args[++i].replace("gmt",""));
-    client.usersData.set(targetID, userData);
-  }
-  
-  //GET
+  //client.logger.debug(`target: ${targetID} :: user: ${message.author.id}  ::::  ${isSet} :: ${offset} ::: ${userData["timeOffset"]}`)
+
+  if (isSet) {
+    if (offset){
+      userData["timeOffset"] = offset;
+      client.usersData.set(targetID, userData);
+    }
+    else
+      return message.reply("Sorry, couldn't undertand the timezone");
+  }  
   else {
     if (!client.usersData.has(targetID))
       return message.reply(`<@${targetID}> doesn't have any data.`);
@@ -29,7 +74,7 @@ exports.run = async (client, message, args, level) => {
       return message.reply(`<@${targetID}> doesn't have a timezone set.`);
 
     var targetTime = Date.now() + (userData["timeOffset"] * 3600000);
-    message.reply(`<@${targetID}> local time is: `+moment(targetTime).format("YYYY-MMM-DD HH:mm:ss"));
+    message.reply(`<@${targetID}> local time is: `+moment(targetTime).format("MMM-DD, HH:mm"));
     
   }
   
