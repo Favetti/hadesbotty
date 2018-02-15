@@ -11,20 +11,19 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   var techTable = new table;
   
   message.guild.members.forEach(function (user, userID, mapObj){
-    client.logger.debug("trying: "+userID);
     if (client.hsTech.has(userID)) {
       const allTech = client.hsTech.get(userID);
       const techLevel = allTech[techID] || 0;
       if (techLevel >0) {
-        //var userData = client.usersData.get(userID);
+        var targetName = client.usersData.get(userID).userName || `<@${userID}>`;
         hasData=true;
         techTable.cell('Level', techLevel);
-        techTable.cell('User', client.usersData.get(userID).userName);
+        techTable.cell('User', );
         techTable.newRow();
       }
-      else client.logger.debug("Not tech for "+userID);
+      //else client.logger.debug("Not tech for "+userID);
     }
-    else client.logger.debug("No data for "+userID);
+    //else client.logger.debug("No data for "+userID);
 
   });
 

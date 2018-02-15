@@ -36,7 +36,7 @@ exports.run = async (client, message, args, level) => {
       return message.reply("No data found");
     else {
       allTimes.sort('Time');
-      return message.reply(`Time recorded for everyone on ${message.guild.name}:\n` + allTimes.print());
+      return message.reply(`Time recorded for everyone on ${message.guild.name}:\n` + allTimes.toString());
     }
   }
 
@@ -54,6 +54,7 @@ exports.run = async (client, message, args, level) => {
 });
 
   var userData = client.usersData.get(targetID) || [];
+  var targetName = userData.userName || `<@${targetID}>`;
 
   //client.logger.debug(`target: ${targetID} :: user: ${message.author.id}  ::::  ${isSet} :: ${offset} ::: ${userData["timeOffset"]}`)
 
@@ -67,13 +68,13 @@ exports.run = async (client, message, args, level) => {
   }  
   else {
     if (!client.usersData.has(targetID))
-      return message.reply(`<@${targetID}> doesn't have any data.`);
+      return message.reply(`${targetName} doesn't have any data.`);
     
     if (!userData["timeOffset"])
-      return message.reply(`<@${targetID}> doesn't have a timezone set.`);
+      return message.reply(`${targetName} doesn't have a timezone set.`);
 
     var targetTime = Date.now() + (userData["timeOffset"] * 3600000);
-    message.reply(`<@${targetID}> local time is: `+moment(targetTime).format("MMM-DD, HH:mm"));
+    message.reply(`${targetName} local time is: `+moment(targetTime).format("MMM-DD, HH:mm"));
     
   }
   
