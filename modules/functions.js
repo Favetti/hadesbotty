@@ -170,8 +170,8 @@ module.exports = (client) => {
     userData["lastSeen"] = Date.now();
   
     //client.logger.debug(`:: writing to ${message.author.id} :: ${userData["userName"]} :: ${userData["guildName"]} :: ${userData["timeOffset"]} :::: ${userData["lastSeen"]} `);
-    //client.usersData.set(message.author.id, userData);
-    userData = client.usersData.get(message.author.id)
+    client.usersData.set(message.author.id, userData);
+    //userData = client.usersData.get(message.author.id)
     //client.logger.debug(`:pos: message from: ${message.author.id} :: ${userData["userName"]} :: ${userData["guildName"]} :: ${userData["timeOffset"]} :::: ${userData["lastSeen"]}`);
     
   };

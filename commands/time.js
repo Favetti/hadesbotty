@@ -6,25 +6,24 @@ exports.run = async (client, message, args, level) => {
   const table = require('easy-table');
     
   if (args[0] === "all") {
-    //var msg = "";
     var hasData=false;
     var allTimes = new table;
     
     message.guild.members.forEach(function (user, userID, mapObj){
-      client.logger.debug("trying: "+userID);
+      //client.logger.debug("trying: "+userID);
       if (client.usersData.has(userID)) {
         var userData = client.usersData.get(userID);
         if (userData["timeOffset"]) {
-          //msg += (moment(Date.now() + (userData["timeOffset"] * 3600000)).format("YYYY-MMM-DD HH:mm:ss")+` :: ${userData["userName"]}\n`);
           hasData=true;
-          if (userData.userName)
-           allTimes.cell('User', userData.userName);
-          else{
-            //var unknowUser = client.fetchUser(userid).userName;
-            allTimes.cell('User', client.fetchUser(userID).userName);
-            //client.logger.debug(`found username for ${userID} ` + client.fetchUser(userID).userName);
-          }
           allTimes.cell('Time', moment(Date.now() + (userData.timeOffset * 3600000)).format("MMM-DD, HH:mm"));
+          //if (userData.userName)
+           allTimes.cell('User', userData.userName);
+          //else{
+            //var unknownUser = client.fetchUser(userID).username;
+            //var unknownUser = message.guild.fetchMember(userID).nickname;
+            //client.logger.debug(`found username for ${userID} ` + unknownUser);
+            //allTimes.cell('User', unknownUser);
+         // }
           allTimes.newRow();
         }
         //else client.logger.debug("Not timezone for "+userID);
@@ -36,8 +35,8 @@ exports.run = async (client, message, args, level) => {
     if (!hasData)
       return message.reply("No data found");
     else {
-      allTimes.sort("Time");
-      return message.reply(`Time recorded for everyone on ${message.guild.name}:\n` + allTimes.toString());
+      allTimes.sort('Time');
+      return message.reply(`Time recorded for everyone on ${message.guild.name}:\n` + allTimes.print());
     }
   }
 

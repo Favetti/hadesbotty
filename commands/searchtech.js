@@ -5,14 +5,24 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     
   const techID = args[0];
   if (!client.config.hadesTech[techID]) return message.reply(`Invalid Tech: ${techID}`);
+  
+  
+  const table = require('easy-table');
+  var hasData=false;
+  var techTable = new table;
+
     
   var msg = `Searching for: ${client.config.hadesTech[techID].desc}`;
 
   client.hsTech.forEach(function (allTech, userID, mapObj) { 
     if (allTech["#Guild"] == message.guild.id){
       const techLevel = allTech[techID];
-      if (techLevel >0) 
+      if (techLevel >0) {
         msg += (`\n<@${userID}>: ${techLevel}`);
+          techTable.cell('Time', );
+          techTable.cell('User', userData.userName);
+          techTable.newRow();
+      }
     }
 });  
   
