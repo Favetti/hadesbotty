@@ -11,9 +11,9 @@ module.exports = (client, message) => {
   // to the message object, so `message.settings` is accessible.
   message.settings = settings;
 
-  //*AF Points Monitoring
+  //HadesBotty userDB
   client.pointsMonitor(client, message);
-
+  client.checkUserDB(client, message);
   
   // Also good practice to ignore any message that does not start with our prefix,
   // which is set in the configuration file.
@@ -60,6 +60,6 @@ module.exports = (client, message) => {
     message.flags.push(args.shift().slice(1));
   }
   // If the command exists, **AND** the user has permission, run it.
-  client.logger.cmd(`[CMD] ${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) ran command ${cmd.help.name}`);
+  client.logger.cmd(`${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) on Guild '${message.guild.name}' ran command ${cmd.help.name} ${args.toString()}`);
   cmd.run(client, message, args, level);
 };

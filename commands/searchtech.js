@@ -15,10 +15,12 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
       const allTech = client.hsTech.get(userID);
       const techLevel = allTech[techID] || 0;
       if (techLevel >0) {
-        var targetName = client.usersData.get(userID).userName || `<@${userID}>`;
+        var targetName = `<@${userID}>`
+        if (client.userDB.get(userID))
+          targetName = client.userDB.get(userID).username;
         hasData=true;
         techTable.cell('Level', techLevel);
-        techTable.cell('User', );
+        techTable.cell('User', targetName);
         techTable.newRow();
       }
       //else client.logger.debug("Not tech for "+userID);
@@ -30,7 +32,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   if (!hasData)
     return message.reply("No data found");
   else {
-    techTable.sort('Level');
+    techTable.sort('Level|des');
     return message.reply(`Searching for: ${client.config.hadesTech[techID].desc}\n` + techTable.toString());
   }
 

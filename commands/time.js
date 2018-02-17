@@ -9,21 +9,14 @@ exports.run = async (client, message, args, level) => {
     var hasData=false;
     var allTimes = new table;
     
-    message.guild.members.forEach(function (user, userID, mapObj){
+    message.guild.members.forEach(function (target, targetID, mapObj){
       //client.logger.debug("trying: "+userID);
-      if (client.usersData.has(userID)) {
-        var userData = client.usersData.get(userID);
-        if (userData["timeOffset"]) {
+      if (client.userDB.has(targetID)) {
+        var targetDB = client.userDB.get(targetID);
+        if (!isNaN(targetDB.timeOffset)) {
           hasData=true;
-          allTimes.cell('Time', moment(Date.now() + (userData.timeOffset * 3600000)).format("MMM-DD, HH:mm"));
-          //if (userData.userName)
-           allTimes.cell('User', userData.userName);
-          //else{
-            //var unknownUser = client.fetchUser(userID).username;
-            //var unknownUser = message.guild.fetchMember(userID).nickname;
-            //client.logger.debug(`found username for ${userID} ` + unknownUser);
-            //allTimes.cell('User', unknownUser);
-         // }
+          allTimes.cell('Time', moment(Date.now() + (targetDB.timeOffset * 3600000)).format("MMM-DD, HH:mm"));
+          allTimes.cell('User', targetDB.username);
           allTimes.newRow();
         }
         //else client.logger.debug("Not timezone for "+userID);
@@ -42,39 +35,39 @@ exports.run = async (client, message, args, level) => {
 
   var targetID = message.author.id;
   var isSet = false;
-  var offset = 0;
+  var offset = false;
+  var targetDB = message.userDB;
 
   args.forEach(function(arg) {
-    if (arg.indexOf("<@") >= 0 )
+    if (arg.indexOf("<@") >= 0 ) {
       targetID = arg.replace("<@","").replace(">","");
+      if (client.userDB.get(targetID))
+        targetDB = client.userDB.get(targetID);
+      else
+        targetDB = {username: arg};
+
+    }
     else if (arg === "set")
       isSet = true;
     else if (arg.indexOf("gmt") >= 0 )
       offset = Number(arg.replace("gmt",""))
 });
 
-  var userData = client.usersData.get(targetID) || [];
-  var targetName = userData.userName || `<@${targetID}>`;
-
-  //client.logger.debug(`target: ${targetID} :: user: ${message.author.id}  ::::  ${isSet} :: ${offset} ::: ${userData["timeOffset"]}`)
-
-  if (isSet) {
-    if (offset){
-      userData["timeOffset"] = offset;
-      client.usersData.set(targetID, userData);
+   if (isSet) {
+    if (!isNaN(offset)) {
+      targetDB.timeOffset = offset;
+      client.userDB.set(targetID, targetDB);
     }
     else
-      return message.reply("Sorry, couldn't undertand the timezone");
+      return message.reply("Sorry, couldn't understand the timezone");
   }  
   else {
-    if (!client.usersData.has(targetID))
-      return message.reply(`${targetName} doesn't have any data.`);
-    
-    if (!userData["timeOffset"])
-      return message.reply(`${targetName} doesn't have a timezone set.`);
+   
+    if (!targetDB.timeOffset)
+      return message.reply(`${targetDB.username} doesn't have a timezone set.`);
 
-    var targetTime = Date.now() + (userData["timeOffset"] * 3600000);
-    message.reply(`${targetName} local time is: `+moment(targetTime).format("MMM-DD, HH:mm"));
+    var targetTime = Date.now() + (targetDB.timeOffset * 3600000);
+    message.reply(`${targetDB.username} local time is: `+moment(targetTime).format("MMM-DD, HH:mm"));
     
   }
   
