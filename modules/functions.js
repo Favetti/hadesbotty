@@ -173,13 +173,13 @@ module.exports = (client) => {
       message.userDB[message.guild.id].level = curLevel;
     }
       
-    client.logger.debug("set: "+JSON.stringify(message.userDB));
+    //ient.logger.debug("set: "+JSON.stringify(message.userDB));
     client.userDB.set(message.author.id, message.userDB);
     
     
   };
-  
-  // *AF Points Monitoring
+  /*
+  // AF Points Monitoring
   client.pointsMonitor = (client, message) => {
     if (message.channel.type !=='text') return;
         
@@ -216,5 +216,6 @@ module.exports = (client) => {
     //client.logger.debug(`:pos: message from: ${message.author.id} :: ${userData["userName"]} :: ${userData["guildName"]} :: ${userData["timeOffset"]} :::: ${userData["lastSeen"]}`);
     
   };
+  */
 
 };
