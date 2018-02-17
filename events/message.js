@@ -12,7 +12,6 @@ module.exports = (client, message) => {
   message.settings = settings;
 
   //HadesBotty userDB
-  //client.pointsMonitor(client, message);
   client.checkUserDB(client, message);
   
   // Also good practice to ignore any message that does not start with our prefix,
