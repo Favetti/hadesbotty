@@ -17,8 +17,6 @@ client.aliases = new Enmap();
 client.settings = new Enmap({provider: new EnmapLevel({name: "bottySettings", dataDir: ".data"})});
 client.hsTech = new Enmap({provider: new EnmapLevel({name: "hsTech", dataDir: ".data"})});
 client.userDB = new Enmap({provider: new EnmapLevel({name: "userDB", dataDir: ".data"})});
-//client.points = new Enmap({provider: new EnmapLevel({name: "points", dataDir: ".data"})});
-//client.usersData = new Enmap({provider: new EnmapLevel({name: "usersData", dataDir: ".data"})});
 
 // We're doing real fancy node 8 async/await stuff here, and to do that
 // we need to wrap stuff in an anonymous function. It's annoying but it works.
@@ -50,15 +48,17 @@ const init = async () => {
   // Here we login the client.
   client.login(client.config.token);
   
-// End top-level async/await function.
+  // End top-level async/await function.
+  
+  // *** HTTP SERVER ***
+  var http = require('http'),
+      path = require('path'),
+      express = require('express'),
+      moment = require("moment"),
+      app = express();
+  
+  app.listen(process.env.PORT);
 
-  // Express Keepalive for Glitch
-  const http = require('http');
-  var path = require('path');
-  const express = require('express');
-  const moment = require("moment");
-
-  const app = express();
   app.use(express.static(path.join(__dirname, 'public')));
   
   app.get("/", (request, response) => {
@@ -66,15 +66,14 @@ const init = async () => {
     //response.sendStatus(200);
     response.sendFile(__dirname + '/web/index.html')
   });
-  app.listen(process.env.PORT);
-  client.logger.log(` HTTPS STARTED on ${process.env.PROJECT_DOMAIN} port ${process.env.PORT}`);
+
+  // Express Keepalive for Glitch
   if(process.env.BOTTY_ENVIRONMENT === "PRD") {
     setInterval(() => {
       http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
     }, 250000);
   }
+  
 };
 
 init();
-
-

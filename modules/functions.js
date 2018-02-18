@@ -158,8 +158,7 @@ module.exports = (client) => {
     if (!message.userDB[message.guild.id]) 
       message.userDB[message.guild.id] = {name: message.guild.name, level: 0, points: 0, commands: 0 };
 
-    
-    //client.logger.debug("got: "+JSON.stringify(message.userDB));
+    client.logger.debug(":: "+JSON.stringify(message.userDB));
     
     if (message.content.indexOf(settings.prefix) === 0) 
       message.userDB[message.guild.id].commands++;

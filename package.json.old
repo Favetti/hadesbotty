@@ -1,0 +1,41 @@
+{
+  "name": "hadesbotty",
+  "version": "1.1",
+  "description": "A copy of the Idiot's Guide Bot to serv Hades Star Tech info.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Favetti/hadesbotty.git"
+  },
+  "author": "Favetti",
+  "contributors": [],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Favetti/hadesbotty/issues"
+  },
+  "homepage": "https://github.com/Favetti/hadesbotty",
+  "dependencies": {
+    "chalk": "^2.3.1",
+    "dateformat": "^3.0.3",
+    "discord.js": "^11.3.0",
+    "easy-table": "^1.1.1",
+    "enmap": "^0.4.2",
+    "enmap-level": "^1.0.0",
+    "express": "^4.16.2",
+    "moment": "^2.20.1",
+    "moment-duration-format": "^2.2.1",
+    "moment-timezone": "^0.5.14",
+    "path": "^0.12.7"
+  }
+}
+4",
+    "path": "^0.12.7"
+  }
+}
