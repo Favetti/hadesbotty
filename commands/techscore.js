@@ -12,48 +12,8 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   if (args[0] === "role") {
     const roleID = args[1].replace("<@&","").replace(">","");
     if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
-    const roleObj = message.guild.roles.get(roleID);
     searchObj = message.guild.roles.get(roleID);
   }
-  /*
-    roleObj.members.forEach(function (target, targetID, mapObj){
-      if (client.hsTech.has(targetID)) {
-        var allTech = client.hsTech.get(targetID);
-        var techLevel = 0;
-        Object.keys(allTech).map(function(techID, index) {
-          if (client.config.hadesTech[techID]) 
-            techLevel += client.config.hadesTech[techID].levels[Number(allTech[techID]-1)] || 0;
-          });
-          hasData=true;
-          scoreTable.cell('Level', techLevel);
-          scoreTable.cell('User', client.userDB.get(targetID).username);
-          scoreTable.newRow();
-      }
-    });  
-    if (!hasData) return message.reply("No data found");
-    else return message.reply(`Score recorded for everyone on role ${args[1]}:\n` + scoreTable.sort('Level').toString()); 
-  }
-  else {
-        message.guild.members.forEach(function (target, targetID, mapObj){
-        if (client.hsTech.has(targetID)) {
-        var allTech = client.hsTech.get(targetID);
-        var targetDB = client.userDB.get(targetID) || {username: `<@${targetID}>`}
-        var techLevel = 0;
-        Object.keys(allTech).map(function(techID, index) {
-          if (client.config.hadesTech[techID]) 
-            techLevel += client.config.hadesTech[techID].levels[Number(allTech[techID]-1)] || 0;
-          });
-          hasData=true;
-          scoreTable.cell('Level', techLevel);
-          scoreTable.cell('User', targetDB.username);
-          scoreTable.newRow();
-      }
-    });
-    if (!hasData) return message.reply("No data found");
-    else return message.reply(`Score recorded for everyone on ${message.guild.name}:\n` + scoreTable.sort('Level|des').toString()); 
-  }
-  */
-  
   searchObj.members.forEach(function (target, targetID, mapObj){
     if (client.hsTech.has(targetID)) {
       var allTech = client.hsTech.get(targetID);
@@ -70,7 +30,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     }
   });  
   if (!hasData) return message.reply("No data found");
-  else return message.reply(`Score recorded for everyone on ${searchObj.name}:\n` + scoreTable.sort('Level').toString()); 
+  else return message.reply(`Score recorded for everyone of ${args[0]} ${searchObj.name}:\n` + scoreTable.sort('Level|des').toString()); 
     
 };
 
