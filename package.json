@@ -1,6 +1,6 @@
 {
   "name": "hadesbotty",
-  "version": "1.0",
+  "version": "1.1",
   "description": "A copy of the Idiot's Guide Bot to serv Hades Star Tech info.",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,8 @@
     "express": "^4.16.2",
     "moment": "^2.20.1",
     "moment-duration-format": "^2.2.1",
-    "moment-timezone": "^0.5.14"
+    "moment-timezone": "^0.5.14",
+    "path": "^0.12.7",
+    "tableify": "^1.1.0"
   }
 }

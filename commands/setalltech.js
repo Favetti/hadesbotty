@@ -31,8 +31,8 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
       allTech[techID] = techLevel;     
     }
   });
+  //allTech["#Guild"] = message.guild.id;
   client.hsTech.set(message.author.id, allTech); 
-  allTech["#Guild"] = message.guild.id;
   return message.reply(msg);  
 };
 

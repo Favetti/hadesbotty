@@ -1,7 +1,7 @@
 // Hades star Technology Level
 // This command will list all technology developed by the user, or by someone else especified by tag
 
-exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
+exports.run = async (client, message, args, level) => {
   
   var targetID = message.author.id;
 

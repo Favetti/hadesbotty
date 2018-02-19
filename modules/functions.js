@@ -139,41 +139,41 @@ module.exports = (client) => {
     client.logger.error(`Unhandled rejection: ${err}`);
   });
     
-  // *AF Points Monitoring
-  client.pointsMonitor = (client, message) => {
+  
+  // *** HadesBotty userDB ***
+  client.checkUserDB = (client, message) => {
     if (message.channel.type !=='text') return;
     const settings = client.settings.get(message.guild.id);
     
-    const score = client.points.get(message.guild.id+"::"+message.author.id) || { level: 0, points: 0, commands: 0 };
-    if (message.content.startsWith(settings.prefix)) 
-      score.commands++;
+    // For ease of use in commands and functions, attach the userDB to the message object
+    // to-do: same thing for targetDB
+    if (client.userDB.get(message.author.id)) {
+      message.userDB = client.userDB.get(message.author.id);
+      message.userDB.username = message.author.username;
+      message.userDB.lastSeen = Date.now();
+    }
     else
-      score.points++;
+      message.userDB = {username: message.author.username, lastSeen: Date.now()};
+
+    if (!message.userDB[message.guild.id]) 
+      message.userDB[message.guild.id] = {name: message.guild.name, level: 0, points: 0, commands: 0 };
+
+    //client.logger.debug(":: "+JSON.stringify(message.userDB));
     
-    const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
-    if (score.level < curLevel) {
+    if (message.content.indexOf(settings.prefix) === 0) 
+      message.userDB[message.guild.id].commands++;
+    else
+      message.userDB[message.guild.id].points++;
+    
+    const curLevel = Math.floor(0.1 * Math.sqrt(message.userDB[message.guild.id].points));
+    if (message.userDB[message.guild.id].level < curLevel) {
       //message.reply(`You've leveled up to chat level **${curLevel}**!`);
-      score.level = curLevel;
+      message.userDB[message.guild.id].level = curLevel;
     }
-    client.points.set(message.author.id, score);
-    
-    // User data recording
-    if (!client.usersData.has(message.author.id)) client.logger.debug("Not previous userData for "+message.author.id);
-    var userData = client.usersData.get(message.author.id) || {userName: message.author.username};
-    //client.logger.debug(`:pre: message from: ${message.author.id} :: ${userData["userName"]} :: ${userData["guildName"]} :: ${userData["timeOffset"]} :::: ${userData["lastSeen"]}`);
-    
-    if (message.guild) {
-      userData["guildName"] = message.guild.name;
-      userData["guild"] = message.guild.id;
-    }
-    userData["userName"] = message.author.username;
-    userData["lastSeen"] = Date.now();
-  
-    //client.logger.debug(`:: writing to ${message.author.id} :: ${userData["userName"]} :: ${userData["guildName"]} :: ${userData["timeOffset"]} :::: ${userData["lastSeen"]} `);
-    client.usersData.set(message.author.id, userData);
-    //userData = client.usersData.get(message.author.id)
-    //client.logger.debug(`:pos: message from: ${message.author.id} :: ${userData["userName"]} :: ${userData["guildName"]} :: ${userData["timeOffset"]} :::: ${userData["lastSeen"]}`);
+      
+    //client.logger.debug("set: "+JSON.stringify(message.userDB));
+    client.userDB.set(message.author.id, message.userDB);
     
   };
-
+ 
 };

@@ -1,83 +1,83 @@
-//
+// This command will set/reply with the current time for specified user
 
 exports.run = async (client, message, args, level) => { 
 
   const moment = require("moment");
   const table = require('easy-table');
     
+  // ************************************* return ALL members of the guild
   if (args[0] === "all") {
+    var hasData = false,
+        allTimes = new table;
+
+    message.guild.members.forEach(function (target, targetID, mapObj){
+      if (client.userDB.has(targetID)) {
+        var targetDB = client.userDB.get(targetID);
+        if (!isNaN(targetDB.timeOffset)) {
+          hasData=true;
+          allTimes.cell('Time', moment(Date.now() + (targetDB.timeOffset * 3600000)).format("MMM-DD, HH:mm"));
+          allTimes.cell('User', targetDB.username);
+          allTimes.newRow();
+        }
+      }
+    });
+    if (!hasData) return message.reply("No data found");
+    else return message.reply(`Time recorded for everyone on ${message.guild.name}:\n` + allTimes.sort('Time').toString()); 
+  }
+
+  // ************************************* return all members of a specified ROLE
+  else if (args[0] === "role") {
     var hasData=false;
     var allTimes = new table;
     
-    message.guild.members.forEach(function (user, userID, mapObj){
-      //client.logger.debug("trying: "+userID);
-      if (client.usersData.has(userID)) {
-        var userData = client.usersData.get(userID);
-        if (userData["timeOffset"]) {
+    const roleID = args[1].replace("<@&","").replace(">","");
+    if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
+    const roleObj = message.guild.roles.get(roleID);
+    
+    roleObj.members.forEach(function (target, targetID, mapObj){
+      if (client.userDB.has(targetID)) {
+        var targetDB = client.userDB.get(targetID);
+        if (!isNaN(targetDB.timeOffset)) {
           hasData=true;
-          allTimes.cell('Time', moment(Date.now() + (userData.timeOffset * 3600000)).format("MMM-DD, HH:mm"));
-          //if (userData.userName)
-           allTimes.cell('User', userData.userName);
-          //else{
-            //var unknownUser = client.fetchUser(userID).username;
-            //var unknownUser = message.guild.fetchMember(userID).nickname;
-            //client.logger.debug(`found username for ${userID} ` + unknownUser);
-            //allTimes.cell('User', unknownUser);
-         // }
+          allTimes.cell('Time', moment(Date.now() + (targetDB.timeOffset * 3600000)).format("MMM-DD, HH:mm"));
+          allTimes.cell('User', targetDB.username);
           allTimes.newRow();
         }
-        //else client.logger.debug("Not timezone for "+userID);
       }
-      //else client.logger.debug("No userData for "+userID);
-        
-    });
-    
-    if (!hasData)
-      return message.reply("No data found");
-    else {
-      allTimes.sort('Time');
-      return message.reply(`Time recorded for everyone on ${message.guild.name}:\n` + allTimes.toString());
-    }
+    });  
+    if (!hasData) return message.reply("No data found");
+    else return message.reply(`Time recorded for everyone on role ${args[1]}:\n` + allTimes.sort('Time').toString()); 
   }
 
-  var targetID = message.author.id;
-  var isSet = false;
-  var offset = 0;
+  // ************************************* individual members GET and SET
+  var targetID = message.author.id,
+      isSet = false,
+      offset = false,
+      targetDB = message.userDB;
 
   args.forEach(function(arg) {
-    if (arg.indexOf("<@") >= 0 )
+    if (arg.indexOf("<@") >= 0 ) {
       targetID = arg.replace("<@","").replace(">","");
+      targetDB = client.userDB.get(targetID) || {username: arg}
+    }
     else if (arg === "set")
       isSet = true;
     else if (arg.indexOf("gmt") >= 0 )
       offset = Number(arg.replace("gmt",""))
-});
+  });
 
-  var userData = client.usersData.get(targetID) || [];
-  var targetName = userData.userName || `<@${targetID}>`;
-
-  //client.logger.debug(`target: ${targetID} :: user: ${message.author.id}  ::::  ${isSet} :: ${offset} ::: ${userData["timeOffset"]}`)
-
-  if (isSet) {
-    if (offset){
-      userData["timeOffset"] = offset;
-      client.usersData.set(targetID, userData);
-    }
-    else
-      return message.reply("Sorry, couldn't undertand the timezone");
-  }  
+   if (isSet) {
+    if (!isNaN(offset)) {
+      targetDB.timeOffset = offset;
+      client.userDB.set(targetID, targetDB);
+    } 
+    else return message.reply("Sorry, couldn't understand the timezone");
+  } 
   else {
-    if (!client.usersData.has(targetID))
-      return message.reply(`${targetName} doesn't have any data.`);
-    
-    if (!userData["timeOffset"])
-      return message.reply(`${targetName} doesn't have a timezone set.`);
-
-    var targetTime = Date.now() + (userData["timeOffset"] * 3600000);
-    message.reply(`${targetName} local time is: `+moment(targetTime).format("MMM-DD, HH:mm"));
-    
+    if (!targetDB.timeOffset) return message.reply(`${targetDB.username} doesn't have a timezone set.`);
+    var targetTime = Date.now() + (targetDB.timeOffset * 3600000);
+    message.reply(`${targetDB.username} local time is: `+moment(targetTime).format("MMM-DD, HH:mm"));
   }
-  
 };
 
 exports.conf = {
@@ -91,5 +91,5 @@ exports.help = {
   name: "time",
   category: "Miscelaneous",
   description: "What time is it for any corp member?",
-  usage: "time [user] [set timezone]\nPlease use timezone in GMT reference format only."
+  usage: "time [user|role @role] [set timezone]\nPlease use timezone in GMT reference format only."
 };
