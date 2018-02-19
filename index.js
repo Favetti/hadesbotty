@@ -57,16 +57,16 @@ const init = async () => {
       moment = require("moment"),
       app = express();
   
-  app.listen(process.env.PORT);
-
   app.use(express.static(path.join(__dirname, 'public')));
   
   app.get("/", (request, response) => {
     //client.logger.log(" HTTPS Ping Received from " + request.headers['x-forwarded-for'].split(",",1));
-    //response.sendStatus(200);
-    response.sendFile(__dirname + '/web/index.html')
+    response.sendStatus(200);
+    //response.sendFile(__dirname + '/web/index.html')
   });
 
+  app.listen(process.env.PORT);
+  
   // Express Keepalive for Glitch
   if(process.env.BOTTY_ENVIRONMENT === "PRD") {
     setInterval(() => {

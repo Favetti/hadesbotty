@@ -1,3 +1,5 @@
+// This command will set/reply with the current time for specified user
+
 exports.run = async (client, message, args, level) => { 
 
   const moment = require("moment");
@@ -23,7 +25,7 @@ exports.run = async (client, message, args, level) => {
     else return message.reply(`Time recorded for everyone on ${message.guild.name}:\n` + allTimes.sort('Time').toString()); 
   }
 
-  // ************************************* return members of a specified ROLE
+  // ************************************* return all members of a specified ROLE
   else if (args[0] === "role") {
     var hasData=false;
     var allTimes = new table;

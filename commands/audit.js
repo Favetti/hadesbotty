@@ -1,4 +1,4 @@
-//
+// Dump the main data Maps on the LOGGER ONLY
 
 exports.run = async (client, message, args, level) => { 
 
@@ -17,7 +17,7 @@ exports.run = async (client, message, args, level) => {
         dataTable.cell('Data', JSON.stringify(keyObj));
         dataTable.newRow();
       }); 
-    case "usersdata":
+/*    case "usersdata":
       client.usersData.forEach(function (value, key, mapObj) {  
         var keyObj = client.usersData.get(key);
         hasData=true;
@@ -34,7 +34,7 @@ exports.run = async (client, message, args, level) => {
         dataTable.cell('Data', JSON.stringify(keyObj));
         dataTable.newRow();
       }); 
-      break;
+      break;*/
     case "hstech":
       client.hsTech.forEach(function (value, key, mapObj) {  
         var keyObj = client.hsTech.get(key);

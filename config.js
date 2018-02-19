@@ -4,7 +4,6 @@ const config = {
 
   // Bot Admins, level 9 by default. Array of user ID strings.
   //"admins": process.env.DISCORD_BOT_ADMINS,
-  //"admins": ["345745565583278082", "345983173156405249", "361143134895341568"],
   "admins": [],
   
   // Bot Support, level 8 by default. Array of user ID strings

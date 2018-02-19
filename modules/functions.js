@@ -145,8 +145,8 @@ module.exports = (client) => {
     if (message.channel.type !=='text') return;
     const settings = client.settings.get(message.guild.id);
     
-    // For ease of use in commands and functions, we'll attach the userDB
-    // to the message object, so `message.userDB` is accessible.
+    // For ease of use in commands and functions, attach the userDB to the message object
+    // to-do: same thing for targetDB
     if (client.userDB.get(message.author.id)) {
       message.userDB = client.userDB.get(message.author.id);
       message.userDB.username = message.author.username;
@@ -158,7 +158,7 @@ module.exports = (client) => {
     if (!message.userDB[message.guild.id]) 
       message.userDB[message.guild.id] = {name: message.guild.name, level: 0, points: 0, commands: 0 };
 
-    client.logger.debug(":: "+JSON.stringify(message.userDB));
+    //client.logger.debug(":: "+JSON.stringify(message.userDB));
     
     if (message.content.indexOf(settings.prefix) === 0) 
       message.userDB[message.guild.id].commands++;
