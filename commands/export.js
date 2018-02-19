@@ -109,5 +109,5 @@ exports.help = {
   name: "export",
   category: "Hades Star",
   description: "Export Guild's Tech data to a webpage.",
-  usage: "export"
+  usage: "export  [role @role]"
 };
