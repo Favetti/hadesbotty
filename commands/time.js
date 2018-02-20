@@ -2,15 +2,23 @@
 
 exports.run = async (client, message, args, level) => { 
 
-  const moment = require("moment");
-  const table = require('easy-table');
-    
-  // ************************************* return ALL members of the guild
-  if (args[0] === "all") {
-    var hasData = false,
-        allTimes = new table;
+  const moment = require("moment"),
+        table = require('easy-table');
+ 
+  var hasData = false,
+      allTimes = new table,
+      searchObj = message.guild,
+      targetID = message.author.id;
 
-    message.guild.members.forEach(function (target, targetID, mapObj){
+  // ************************************* return members of ROLE
+  if (args[0] === "role") {
+    const roleID = args[1].replace("<@&","").replace(">","");
+    if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
+    searchObj = message.guild.roles.get(roleID);
+  }
+
+  if (args[0] === "role" || args[0] === "all" ) {
+    searchObj.members.forEach(function (target, targetID, mapObj){
       if (client.userDB.has(targetID)) {
         var targetDB = client.userDB.get(targetID);
         if (!isNaN(targetDB.timeOffset)) {
@@ -22,32 +30,9 @@ exports.run = async (client, message, args, level) => {
       }
     });
     if (!hasData) return message.reply("No data found");
-    else return message.reply(`Time recorded for everyone on ${message.guild.name}:\n` + allTimes.sort('Time').toString()); 
+    else return message.reply(`Time recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` +"```"+ allTimes.sort('Time').toString()+"```"); 
   }
-
-  // ************************************* return all members of a specified ROLE
-  else if (args[0] === "role") {
-    var hasData=false;
-    var allTimes = new table;
-    
-    const roleID = args[1].replace("<@&","").replace(">","");
-    if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
-    const roleObj = message.guild.roles.get(roleID);
-    
-    roleObj.members.forEach(function (target, targetID, mapObj){
-      if (client.userDB.has(targetID)) {
-        var targetDB = client.userDB.get(targetID);
-        if (!isNaN(targetDB.timeOffset)) {
-          hasData=true;
-          allTimes.cell('Time', moment(Date.now() + (targetDB.timeOffset * 3600000)).format("MMM-DD, HH:mm"));
-          allTimes.cell('User', targetDB.username);
-          allTimes.newRow();
-        }
-      }
-    });  
-    if (!hasData) return message.reply("No data found");
-    else return message.reply(`Time recorded for everyone on role ${args[1]}:\n` + allTimes.sort('Time').toString()); 
-  }
+  
 
   // ************************************* individual members GET and SET
   var targetID = message.author.id,

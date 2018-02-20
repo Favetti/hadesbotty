@@ -72,9 +72,10 @@ module.exports = (client) => {
   };
 
   client.loadCommand = (commandName) => {
+    var msg = "";
     try {
       const props = require(`../commands/${commandName}`);
-      client.logger.log(`Loading Command: ${props.help.name}. 👌`);
+      msg += `${props.help.name}👌;  `;
       if (props.init) {
         props.init(client);
       }
@@ -82,10 +83,11 @@ module.exports = (client) => {
       props.conf.aliases.forEach(alias => {
         client.aliases.set(alias, props.help.name);
       });
+      client.logger.log(`Loading Commands: ${msg}`);
       return false;
     } catch (e) {
       return `Unable to load command ${commandName}: ${e}`;
-    }
+    }    
   };
 
   client.unloadCommand = async (commandName) => {
@@ -158,7 +160,7 @@ module.exports = (client) => {
     if (!message.userDB[message.guild.id]) 
       message.userDB[message.guild.id] = {name: message.guild.name, level: 0, points: 0, commands: 0 };
 
-    //client.logger.debug(":: "+JSON.stringify(message.userDB));
+    client.logger.debug("> "+JSON.stringify(message.userDB));
     
     if (message.content.indexOf(settings.prefix) === 0) 
       message.userDB[message.guild.id].commands++;
@@ -170,10 +172,7 @@ module.exports = (client) => {
       //message.reply(`You've leveled up to chat level **${curLevel}**!`);
       message.userDB[message.guild.id].level = curLevel;
     }
-      
-    //client.logger.debug("set: "+JSON.stringify(message.userDB));
     client.userDB.set(message.author.id, message.userDB);
-    
   };
  
 };
