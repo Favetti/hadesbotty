@@ -83,11 +83,11 @@ module.exports = (client) => {
       props.conf.aliases.forEach(alias => {
         client.aliases.set(alias, props.help.name);
       });
-      client.logger.log(`Loading Commands: ${msg}`);
       return false;
     } catch (e) {
       return `Unable to load command ${commandName}: ${e}`;
     }    
+    client.logger.log(`Loading Commands: ${msg}`);
   };
 
   client.unloadCommand = async (commandName) => {

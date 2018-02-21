@@ -47,6 +47,10 @@ const init = async () => {
   
   // Here we login the client.
   client.login(client.config.token);
+
+  //Audit CHANNEL SETTINGS ofr debug purposes
+  client.commands.get("audit").run(client, "", ["settings","settings"], "Bot Owner");
+  
   
   // End top-level async/await function.
   

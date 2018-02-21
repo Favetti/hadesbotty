@@ -6,10 +6,16 @@
 // However it's, like, super ultra useful for troubleshooting and doing stuff
 // you don't want to put in a command.
 
+
 const { inspect } = require("util");
 const { post } = require("snekfetch");
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
+
+  
+  return;
+
+  
   const code = args.join(" ");
   const token = client.token.split("").join("[^]{0,2}");
   const rev = client.token.split("").reverse().join("[^]{0,2}");
