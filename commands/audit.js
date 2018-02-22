@@ -2,14 +2,19 @@
 
 exports.run = async (client, message, args, level) => { 
 
-  const moment = require("moment");
-  const table = require('easy-table');
+  const moment = require("moment"),
+        table = require('easy-table');
     
-  var hasData=false;
-  var dataTable = new table;
-  
+  var hasData=false,
+      dataTable = new table;
+
   switch(args[0]) {
-    case "userdb":
+    case "clean":
+      if (args[1]) {
+        client.logger.log("blah blah blah");
+      }
+       break;
+   case "userdb":
       client.userDB.forEach(function (value, key, mapObj) {  
         var keyObj = client.userDB.get(key);
         hasData=true;
@@ -17,24 +22,16 @@ exports.run = async (client, message, args, level) => {
         dataTable.cell('Data', JSON.stringify(keyObj));
         dataTable.newRow();
       }); 
-/*    case "usersdata":
-      client.usersData.forEach(function (value, key, mapObj) {  
-        var keyObj = client.usersData.get(key);
+      break;
+    case "settings":
+      client.settings.forEach(function (value, key, mapObj) {  
+        var keyObj = client.settings.get(key);
         hasData=true;
         dataTable.cell('Key', key);
         dataTable.cell('Data', JSON.stringify(keyObj));
         dataTable.newRow();
       }); 
       break;
-    case "points":
-      client.points.forEach(function (value, key, mapObj) {  
-        var keyObj = client.points.get(key);
-        hasData=true;
-        dataTable.cell('Key', key);
-        dataTable.cell('Data', JSON.stringify(keyObj));
-        dataTable.newRow();
-      }); 
-      break;*/
     case "hstech":
       client.hsTech.forEach(function (value, key, mapObj) {  
         var keyObj = client.hsTech.get(key);
@@ -45,14 +42,15 @@ exports.run = async (client, message, args, level) => {
       }); 
       break;
     default:
-      return message.reply("Please specify the DB to audit");
+      client.logger.debug("Please specify the DB to audit: "+args.join());
+      return;
   }
   
   if (!hasData)
-    return message.reply("No data found");
+    client.logger.debug("No data found on: "+args.join());
   else
     //return message.reply(`Audit for ${args[0]}:\n` + dataTable.toString());
-    client.logger.log(`Audit for ${args[0]}:\n` + dataTable.toString());
+    client.logger.debug(`Audit for ${args[0]}:\n` + dataTable.toString());
   
 };
 

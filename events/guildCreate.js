@@ -2,5 +2,8 @@
 
 module.exports = (client, guild) => {
   // We need to add this guild to our settings!
-  client.settings.set(guild.id, client.config.defaultSettings);
+  if (!client.settings.get(guild.id)) {
+    client.logger.debug(".....NEW GUILD, using default settings: "+guild.id+" :: "+guild.name);
+    client.settings.set(guild.id, client.config.defaultSettings);
+  }
 };

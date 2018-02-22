@@ -32,7 +32,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     }
   });  
   if (!hasData) return message.reply("No data found");
-  else return message.reply(`Tech level recorded for everyone of ${args[0]} ${searchObj.name}:\n` + techTable.sort('Level|des').toString()); 
+  else return message.reply(`Tech level recorded for everyone of ${args[0]} ${searchObj.name}:\n` + "```" + techTable.sort('Level|des').toString()+"```"); 
 
 };
 
