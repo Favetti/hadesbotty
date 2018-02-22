@@ -17,6 +17,31 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
   // Retrieve current guild settings
   const settings = client.settings.get(message.guild.id);
   
+  switch(key) {
+    case "adminrole":
+      key = "adminRole";
+      client.logger.debug("set adminrole");
+      break;
+    case "modrole":
+      key = "modRole";
+      break;
+    case "modlogchannel":
+      key = "modLogChannel";
+      break;
+    case "systemnotice":
+      key = "systemNotice";
+      break;
+    case "welcomechannel":
+      key = "welcomeChannel";
+      break;
+    case "welcomemessage":
+      settings.key = "welcomeMessage";
+      break;
+    case "welcomeenabled":
+      key = "welcomeEnabled";
+      break;
+  }
+  
   // First, if a user does `-set add <key> <new value>`, let's add it
   if (action === "add") {
     if (!key) return message.reply("Please specify a key to add");
@@ -67,7 +92,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
   
   if (action === "get") {
     if (!key) return message.reply("Please specify a key to view");
-    if (!settings[key]) return message.reply("This key does not exist in the settings");
+    if (!settings[key]) return message.reply("This key does not exist in the settings: "+key);
     message.reply(`The value of ${key} is currently ${settings[key]}`);
   } else {
     message.channel.send(inspect(settings), {code: "json"});

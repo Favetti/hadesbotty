@@ -9,4 +9,9 @@ module.exports = async client => {
 
   // We check for any guilds added while the bot was offline, if any were, they get a default configuration.
   //client.guilds.filter(g => !client.settings.has(g.id)).forEach(g => client.settings.set(g.id, client.config.defaultSettings));
+  
+  client.guilds.filter(g => !client.settings.has(g.id)).forEach(g => {
+    //client.settings.set(g.id, client.config.defaultSettings);
+    client.logger.debug(".....Setting guild default settings: "+g.id+" :: "+g.name);
+  });
 };
