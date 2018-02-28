@@ -3,6 +3,7 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
 
+  args = args.map(function(x){ return x.toLowerCase() });
   const table = require('easy-table');
   var hasData=false,
       scoreTable = new table,
@@ -30,7 +31,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     }
   });  
   if (!hasData) return message.reply("No data found");
-  else return message.reply(`Score recorded for everyone of ${args[0]} ${searchObj.name}:\n` + "```" + scoreTable.sort('Level|des').toString()+"```"); 
+  else return message.reply(`Score recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` + "```" + scoreTable.sort('Level|des').toString()+"```"); 
     
 };
 

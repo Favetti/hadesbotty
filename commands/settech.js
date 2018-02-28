@@ -3,7 +3,8 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
 
-  if (!args[0]  || !args[1]) return message.reply("Invalid command, need 2 arguments");
+ args = args.map(function(x){ return x.toLowerCase() });
+ if (!args[0]  || !args[1]) return message.reply("Invalid command, need 2 arguments");
   
   const techID = args[0];
   const techLevel = Number(args[1]);

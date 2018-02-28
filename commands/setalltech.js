@@ -3,6 +3,7 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   
+  args = args.map(function(x){ return x.toLowerCase() });
   if (!args[0] || !args[1] ) return message.reply("Invalid command, need 2 arguments");
 
   const techSize = {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":5,"support":17};

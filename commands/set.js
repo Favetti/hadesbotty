@@ -17,7 +17,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
   // Retrieve current guild settings
   const settings = client.settings.get(message.guild.id);
   
-  switch(key) {
+/*  switch(key) {
     case "adminrole":
       key = "adminRole";
       client.logger.debug("set adminrole");
@@ -40,7 +40,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
     case "welcomeenabled":
       key = "welcomeEnabled";
       break;
-  }
+  }*/
   
   // First, if a user does `-set add <key> <new value>`, let's add it
   if (action === "add") {

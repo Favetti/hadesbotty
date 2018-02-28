@@ -3,6 +3,7 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   
+  args = args.map(function(x){ return x.toLowerCase() });
   if (!args[0])
     return message.reply("Invalid command, missing user tag for target.");
   

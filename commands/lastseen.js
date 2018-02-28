@@ -2,6 +2,7 @@
 
 exports.run = async (client, message, args, level) => { 
 
+  args = args.map(function(x){ return x.toLowerCase() });
   const moment = require("moment"),
         table = require('easy-table');
   var hasData=false,
