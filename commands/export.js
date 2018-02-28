@@ -3,14 +3,11 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
  
-  const table = require('easy-table'),
-        tableify = require('tableify'),
-        fs = require('fs'),
+  const fs = require('fs'),
         dir = '/app/public/',
         url = `https://${process.env.PROJECT_DOMAIN}.glitch.me/`;
   
   var hasData=false,
-      dataTable = new table,
       searchObj = message.guild,
       dataObj = {},
       html = "";
@@ -32,19 +29,21 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   // Make Header
   html = "<HTML><BODY><TABLE><TR><TH>User</TH>";
   Object.keys(client.config.hadesTech).forEach(techID => {html += "<TH>"+techID+"</TH>";});
-  html += "</TR>";  
+  html += "<TH>techScore</TH></TR>";  
 
   client.hsTech.forEach(function (target, targetID, mapObj){
     if (targetMembers.includes(targetID)) {
       hasData=true;
-      var targetDB = client.userDB.get(targetID) || {username: targetID}
+      let targetDB = client.userDB.get(targetID) || {username: targetID}
       
       html += "<TR><TD>"+targetDB.username+"</TD>";
+      let techScore = 0;
       Object.keys(client.config.hadesTech).forEach(techID => { 
-        var techLevel = client.hsTech.get(targetID)[techID] || 0;
+        let techLevel = client.hsTech.get(targetID)[techID] || 0;
+        techScore += client.config.hadesTech[techID].levels[Number(techLevel)-1] || 0;
         html += "<TD>"+techLevel+"</TD>";
       });
-      html += "</TR>";   
+      html += "<TD>"+techScore+"</TD></TR>";   
     }
   });
 
@@ -79,5 +78,5 @@ exports.help = {
   name: "export",
   category: "Hades Star",
   description: "Export Guild's Tech data to a webpage.\nFor an example of import Sheet, visit: https://goo.gl/zfPDoz",
-  usage: "export  [role @role]\nYou can set another URL to be replied with !set add webSheet <URL>"
+  usage: "export  [role @role]\nYou can set another URL to be replied with !set add webSheet <URL> (case sensitive)"
 };

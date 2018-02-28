@@ -17,10 +17,10 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
   // Retrieve current guild settings
   const settings = client.settings.get(message.guild.id);
   
-/*  switch(key) {
+  // Stupid-user-friendly case adjustments
+  switch(key) {
     case "adminrole":
       key = "adminRole";
-      client.logger.debug("set adminrole");
       break;
     case "modrole":
       key = "modRole";
@@ -35,12 +35,15 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
       key = "welcomeChannel";
       break;
     case "welcomemessage":
-      settings.key = "welcomeMessage";
+      key = "welcomeMessage";
       break;
     case "welcomeenabled":
       key = "welcomeEnabled";
       break;
-  }*/
+    case "websheet":
+      key = "webSheet";
+      break;
+  }
   
   // First, if a user does `-set add <key> <new value>`, let's add it
   if (action === "add") {
@@ -74,7 +77,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
     if (!settings[key]) return message.reply("This key does not exist in the settings");
     
     // Throw the 'are you sure?' text at them.
-    const response = await client.awaitReply(message, `Are you sure you want to permanently delete ${key}? This **CANNOT** be undone.`);
+    const response = await client.awaitReply(message, `Are you sure you want to permanently delete ${key}? This **CANNOT** be undone.`).toLowerCase();
 
     // If they respond with y or yes, continue.
     if (["y", "yes"].includes(response)) {
@@ -85,7 +88,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
       message.reply(`${key} was successfully deleted.`);
     } else
     // If they respond with n or no, we inform them that the action has been cancelled.
-    if (["n","no","cancel"].includes(response)) {
+    if (["n","no", "cancel"].includes(response)) {
       message.reply("Action cancelled.");
     }
   } else
