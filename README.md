@@ -18,7 +18,7 @@ time : sets and tells Local Time for any/all guild members
 
 ===============================================================================
 
-# This is built on the Idiots Guide Bot
+# This is build upon the Idiots Guide Bot
 https://github.com/An-Idiots-Guide/guidebot.git
 
 Thank you for your guide, it's great!

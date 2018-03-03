@@ -6,7 +6,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   args = args.map(function(x){ return x.toLowerCase() });
   if (!args[0] || !args[1] ) return message.reply("Invalid command, need 2 arguments");
 
-  const techSize = {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":5,"support":17};
+  //const techSize = {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":5,"support":17};
   const techGroup = args[0];
   if (!client.config.hadesTechSize[techGroup]) return message.reply("Invalid Tech!");
   
