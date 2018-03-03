@@ -128,6 +128,7 @@ module.exports = {
          return "vengeance";
          return "leap";//can't reach
       default:
+        break;
     }
     return name.ToLowerCase()
   }
