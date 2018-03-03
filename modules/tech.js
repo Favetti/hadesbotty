@@ -1,5 +1,5 @@
-module.exports = (hadesTech) => {
-  tech.normalizeTechName = function (name) {
+module.exports = {
+  normalizeTechName: (name) => {
     switch(name.ToLowerCase()) {
       case "ts":
       case "trans":
