@@ -4,10 +4,10 @@ const config = {
 
   // Bot Admins, level 9 by default. Array of user ID strings.
   //"admins": process.env.DISCORD_BOT_ADMINS,
-  "admins": [],
+  "admins": process.env.DISCORD_BOT_ADMIN.split(","),
   
   // Bot Support, level 8 by default. Array of user ID strings
-  "support": [],
+  "support": process.env.DISCORD_BOT_SUPPORT.split(","),
 
   // Your Bot's Token. Available on https://discordapp.com/developers/applications/me
   "token": process.env.DISCORD_BOT_TOKEN,

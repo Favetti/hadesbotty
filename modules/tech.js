@@ -1,6 +1,10 @@
+/*
+      // ** I moved it to functions.js because i was not sure why it wast working when importing from here.
+      
+
 module.exports = {
   normalizeTechName: (name) => {
-    switch(name.ToLowerCase()) {
+    switch(name.toLowerCase()) {
       case "ts":
       case "trans":
       case "transport":
@@ -124,12 +128,13 @@ module.exports = {
          return "destiny";
          return "barrier";//can't reach
       case "veng":
-      case "venge"
+      case "venge":
          return "vengeance";
          return "leap";//can't reach
       default:
         break;
     }
-    return name.ToLowerCase()
+    return name.toLowerCase()
   }
 }
+*/

@@ -25,8 +25,7 @@ exports.run = async (client, message, args, level) => {
     else if (arg === "get")      action = "get";
     else if (arg === "score")    action = "score";
     else if (arg === "search")   action = "search";    
-      
-    
+   
     // *** Find TARGET
     else if (arg === "all") { //target is the guild
       singleTarget = false;
@@ -140,13 +139,14 @@ exports.run = async (client, message, args, level) => {
     //client.hsTech.set(targetID, allTech);
     client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
     return message.reply(msg);    
+  }
 };
 
 exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: ["t"],
-  permLevel: "Bot Owner"
+  permLevel: "Bot Admin"
 };
 
 exports.help = {
