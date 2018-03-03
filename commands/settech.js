@@ -5,7 +5,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
 
   if (!args[0]  || !args[1]) return message.reply("Invalid command, need 2 arguments");
   
-  const techID = args[0];
+  const techID = HadesTechModule.normalizeTechName(args[0]);
   const techLevel = Number(args[1]);
   
   if (!client.config.hadesTech[techID]) return message.reply(`Invalid Tech: ${techID}`);
