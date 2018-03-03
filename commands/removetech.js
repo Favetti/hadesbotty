@@ -3,7 +3,6 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
   
-  args = args.map(function(x){ return x.toLowerCase() });
   if (!args[0])
     return message.reply("Invalid command, missing user tag for target.");
   
@@ -12,8 +11,8 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     return message.reply(`<@${targetID}> doesn't have any data`);
   
   // Throw the 'are you sure?' text at them.
-  const response = await client.awaitReply(message, `Are you sure you want to permanently remove tech for <@${targetID}>? This **CANNOT** be undone.`).toLowerCase();
-  if (["y", "yes"].includes(response)) {
+  const response = await client.awaitReply(message, `Are you sure you want to permanently remove tech for <@${targetID}>? This **CANNOT** be undone.`);
+  if (["y", "yes", "Y", "Yes"].includes(response)) {
     client.logger.log(`Removing  data for <@${targetID}> `);
     client.hsTech.delete(targetID);
     return message.reply(`Removed data for <@${targetID}>`);

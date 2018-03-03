@@ -22,8 +22,7 @@ module.exports = (client, message) => {
   // e.g. if we have the message "+say Is this the real life?" , we'll get the following:
   // command = say
   // args = ["Is", "this", "the", "real", "life?"]
-  //const args = message.content.slice(settings.prefix.length).trim().toLowerCase().split(/ +/g);
-  const args = message.content.slice(settings.prefix.length).trim().split(/ +/g);
+  const args = message.content.slice(settings.prefix.length).trim().toLowerCase().split(/ +/g);
   const command = args.shift().toLowerCase();
 
   // Get the user or member's permission level from the elevation
@@ -60,6 +59,6 @@ module.exports = (client, message) => {
     message.flags.push(args.shift().slice(1));
   }
   // If the command exists, **AND** the user has permission, run it.
-  client.logger.cmd(`${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) on '${!message.guild ? "PM" : "Guild "+message.guild.name}' ran command ${cmd.help.name} ${args.toString()}`);
+  client.logger.cmd(`${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) on Guild '${message.guild.name}' ran command ${cmd.help.name} ${args.toString()}`);
   cmd.run(client, message, args, level);
 };

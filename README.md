@@ -1,24 +1,29 @@
 # Hades's Star Tech Bot
 
-This is a Discord Bot born to treat data on reserch Technology for the mobile game Hades's Star.
+This is a work in progress, and made more for learning purposes than any real big utility...
 
-Main Commands:
+This Discord bot stores data on reserch Technology for the mobile game Hades's Star.
 
-settech : Sets the tech level for a specified tech
+Commands are:
 
-setalltech : Sets the level for a whole group of techs
+settech     
+  - Sets the tech level for a specified tech
 
-gettech : Tells all tech for the user or a specified user-target
+setalltech  
+  - Sets the level for a whole group of techs
 
-searchtech : Tells the user and level for everyone that has a specified tech
+gettech     
+  - Tells all tech for the user or a specified user-target
 
-techscore : Calculates a Tech Score for each user, based on current-tech-level cost
+searchtech  
+  - Tells the user and level for everyone that has a specified tech
 
-time : sets and tells Local Time for any/all guild members
+techlevel  
+  - Calculates a Tech Level for each user, based on current-tech-level cost
 
 ===============================================================================
 
-# This is build upon the Idiots Guide Bot
+# This is built on the Idiots Guide Bot
 https://github.com/An-Idiots-Guide/guidebot.git
 
 Thank you for your guide, it's great!

@@ -5,12 +5,13 @@ const { promisify } = require("util");
 const readdir = promisify(require("fs").readdir);
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
-const HadesTechTool = require("./modules/tech.js");
 
 const client = new Discord.Client();
 client.config = require("./config.js");
 client.logger = require("./util/Logger");
 require("./modules/functions.js")(client);
+
+//client.HadesTechTool = require("./modules/tech.js");
 
 client.commands = new Enmap();
 client.aliases = new Enmap();

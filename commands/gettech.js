@@ -3,9 +3,8 @@
 
 exports.run = async (client, message, args, level) => {
   
-  args.map(function(x){ return x.toLowerCase() });
   var targetID = message.author.id;
-  
+
   if (args[0])
     targetID = args[0].replace("<@","").replace(">","");
 

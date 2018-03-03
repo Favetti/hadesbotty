@@ -4,10 +4,10 @@ const config = {
 
   // Bot Admins, level 9 by default. Array of user ID strings.
   //"admins": process.env.DISCORD_BOT_ADMINS,
-  "admins": [],
+  "admins": process.env.DISCORD_BOT_ADMIN.split(","),
   
   // Bot Support, level 8 by default. Array of user ID strings
-  "support": [],
+  "support": process.env.DISCORD_BOT_SUPPORT.split(","),
 
   // Your Bot's Token. Available on https://discordapp.com/developers/applications/me
   "token": process.env.DISCORD_BOT_TOKEN,
@@ -32,9 +32,7 @@ const config = {
   // Hades Star TechList
   "hadesTechSize" : {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":6,"support":17},
 
-  //"level" is deprecated and unused...
   "hadesTech" : {
-   "rs": {desc: "RedStar Scanner", group: "base", level: 5, levels: [1,2,20,60,120,250,1000,2000]},
    "transp": {desc: "Ships - Transport", group: "ships", level: 5, levels: [1,10,60,300,1000]},
    "miner": {desc: "Ships - Miner", group: "ships", level: 5, levels: [1,5,50,250,800]},
    "bs": {desc: "Ships - Battleship", group: "ships", level: 5, levels: [1,10,80,400,1500]},
