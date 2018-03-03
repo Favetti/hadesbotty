@@ -3,8 +3,7 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
 
-  args = args.map(function(x){ return x.toLowerCase() });
-  const techID = args[0];
+  const techID = HadesTechModule.normalizeTechName(args[0]);
   if (!client.config.hadesTech[techID]) return message.reply(`Invalid Tech: ${techID}`);
 
   const table = require('easy-table');
