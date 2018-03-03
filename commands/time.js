@@ -30,10 +30,8 @@ exports.run = async (client, message, args, level) => {
       isSet = true;
       singleTarget = true;
     }
-    else if (arg.indexOf("gmt") >= 0 ) {
+    else if (arg.indexOf("gmt") >= 0 )
       offset = Number(arg.replace("gmt",""));
-      client.logger.log("::"+Number(arg.replace("gmt",""))+":::"+typeof offset);
-    }
   });
 
   // SET

@@ -1,5 +1,7 @@
 // ....  trying to unify all tech commands in one easier to understand
 
+// prior to normalizeTech and spaced_setall_args... need some rework.
+
 exports.run = async (client, message, args, level) => { 
 
   args = args.map(function(x){ return x.toLowerCase() });

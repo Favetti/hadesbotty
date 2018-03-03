@@ -5,8 +5,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   
   if (!args[0] || !args[1] ) return message.reply("Invalid command, need 2 arguments");
 
-  //const techSize = {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":5,"support":17};
-  const techGroup = args[0];
+  const techGroup = args[0].toLowerCase();
   if (!client.config.hadesTechSize[techGroup]) return message.reply("Invalid Tech!");
   
   var techLevels = args[1];
@@ -55,7 +54,3 @@ exports.help = {
   description: "Update ALL your Technology Levels",
   usage: "setalltech [group] [n,n...,n]\n Where each group need all it's techs:\n >>Ships	3\n >>Trade	10\n >>Mining	8\n >>Weapons	5\n >>Shields	6\n >>Support	17\n\nExample:\n : setalltech ships 4,4,4"
 };
-
-/*
-Ships	3\nTrade	10\nMining	8\nWeapons	5\nShields	5\nSupport	17\n
-*/

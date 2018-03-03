@@ -12,6 +12,10 @@ module.exports = async client => {
   
   client.guilds.filter(g => !client.settings.has(g.id)).forEach(g => {
     //client.settings.set(g.id, client.config.defaultSettings);
+
+    //disabled to to an unknown bug when it would eventually overwrite existing guild settings...
+    // need more info
+
     client.logger.debug(".....Should SET guilds default: "+g.id+" :: "+g.name+" "+JSON.stringify(g));
   });
 };

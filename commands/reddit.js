@@ -1,3 +1,5 @@
+// test to fetch reddit wiki... turns out hard to read on discord.
+// need more work
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
 
