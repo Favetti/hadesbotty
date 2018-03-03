@@ -5,7 +5,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   
   if (!args[0] || !args[1] ) return message.reply("Invalid command, need 2 arguments");
 
-  const techSize = {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":5,"support":17};
+  //const techSize = {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":5,"support":17};
   const techGroup = args[0];
   if (!client.config.hadesTechSize[techGroup]) return message.reply("Invalid Tech!");
   
@@ -38,7 +38,6 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
       allTech[techID] = techLevel;     
     }
   });
-  //allTech["#Guild"] = message.guild.id;
   client.hsTech.set(message.author.id, allTech); 
   return message.reply(msg);  
 };

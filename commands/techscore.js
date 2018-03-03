@@ -1,19 +1,23 @@
 // Hades star Technology Level
 // This command will calculate the tech level for all users
 
-exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
+exports.run = async (client, message, args, level) => { 
 
+  args = args.map(function(x){ return x.toLowerCase() });
   const table = require('easy-table');
   var hasData=false,
       scoreTable = new table,
       searchObj = message.guild;
     
   // ************************************* return members of a specified ROLE
-  if (args[0] === "role") {
-    const roleID = args[1].replace("<@&","").replace(">","");
-    if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
-    searchObj = message.guild.roles.get(roleID);
-  }
+  args.forEach(function(arg) {
+    if (arg.indexOf("<@&") >= 0) { //target is a ROLE
+      const roleID = arg.replace("<@&","").replace(">","");
+      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
+      searchObj = message.guild.roles.get(roleID);
+    }
+  });
+
   searchObj.members.forEach(function (target, targetID, mapObj){
     if (client.hsTech.has(targetID)) {
       var allTech = client.hsTech.get(targetID);
@@ -30,7 +34,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
     }
   });  
   if (!hasData) return message.reply("No data found");
-  else return message.reply(`Score recorded for everyone of ${args[0]} ${searchObj.name}:\n` + "```" + scoreTable.sort('Level|des').toString()+"```"); 
+  else return message.reply(`Score recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` + "```" + scoreTable.sort('Level|des').toString()+"```"); 
     
 };
 
