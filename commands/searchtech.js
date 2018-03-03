@@ -4,7 +4,7 @@
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
 
   
-  const techID = client.HadesTechModule.normalizeTechName(args[0]);
+  const techID = client.normalizeTechName(args[0]);
   if (!client.config.hadesTech[techID]) return message.reply(`Invalid Tech: ${techID}`);
 
   const table = require('easy-table');
