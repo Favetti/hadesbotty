@@ -10,7 +10,14 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   if (!client.config.hadesTechSize[techGroup]) return message.reply("Invalid Tech!");
   
   var techLevels = args[1];
-    
+  
+  // Incase the list of levels has spaces in it we should look at the extra args
+  for (var i = 2; i< args.length; i++) {
+    if (techLevels.slice(-1) !== ',') { //if last character is not a comma
+      techLevels += ',';
+    }
+    techLevels += args[i];
+  }
   if (args[1].indexOf(",") >0) {
     techLevels = techLevels.split(",");
     if (client.config.hadesTechSize[techGroup] != techLevels.length)
