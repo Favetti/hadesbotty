@@ -3,7 +3,6 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
 
-  
   const techID = HadesTechModule.normalizeTechName(args[0]);
   if (!client.config.hadesTech[techID]) return message.reply(`Invalid Tech: ${techID}`);
 
