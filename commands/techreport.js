@@ -43,6 +43,7 @@ exports.run = async (client, message, args, level) => {
           return true; //Skip to next member of args
         }
         message.guild.roles.get(roleID).members.forEach(function(targetDB, targetID){
+          targetDB = client.userDB.get(targetID);
           members.set(targetID, targetDB);
         });
       }
