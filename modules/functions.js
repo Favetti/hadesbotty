@@ -269,6 +269,7 @@ module.exports = (client) => {
       case "tele":
          return "teleport";
       case "rse":
+      case "extender":
       case "redstarextender":
          return "rsextender";
       case "remoterepair":
@@ -293,6 +294,7 @@ module.exports = (client) => {
       case "alpharocket":
       case "arocket":
       case "rock":
+      case "rockets":
          return "rocket";
       case "salv":
          return "salvage";
