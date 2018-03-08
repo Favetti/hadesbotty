@@ -1,4 +1,5 @@
 // This command will reply with the last seen time for specified user
+/* global Map */ // clear error: Map is not defined. 
 
 exports.run = async (client, message, args, level) => { 
 
@@ -15,7 +16,7 @@ exports.run = async (client, message, args, level) => {
   args.forEach(function(arg, argNum) {
     //errors += `arg ${argNum}: ${arg}\n`; // Debug
     if (arg.indexOf("<@&") >= 0) { //target is a ROLE
-      singleTarget = false;
+      //singleTarget = false; // unused?
       const roleID = arg.replace("<@&","").replace(">","");
       if (!message.guild.roles.has(roleID)) {
         errors += "Role not found! Maybe i can't mention it...\n";

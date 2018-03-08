@@ -1,9 +1,6 @@
-/*
-      // ** I moved it to functions.js because i was not sure why it wast working when importing from here.
-      
+module.exports = (client) => {
 
-module.exports = {
-  normalizeTechName: (name) => {
+  client.normalizeTechName = (name) => {
     switch(name.toLowerCase()) {
       case "ts":
       case "trans":
@@ -95,6 +92,7 @@ module.exports = {
       case "tele":
          return "teleport";
       case "rse":
+      case "extender":
       case "redstarextender":
          return "rsextender";
       case "remoterepair":
@@ -119,6 +117,7 @@ module.exports = {
       case "alpharocket":
       case "arocket":
       case "rock":
+      case "rockets":
          return "rocket";
       case "salv":
          return "salvage";
@@ -136,5 +135,4 @@ module.exports = {
     }
     return name.toLowerCase()
   }
-}
-*/
+};

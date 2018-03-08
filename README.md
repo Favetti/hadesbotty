@@ -14,6 +14,8 @@ searchtech : Tells the user and level for everyone that has a specified tech
 
 techscore : Calculates a Tech Score for each user, based on current-tech-level cost
 
+techreport: Report on various users/techs 
+
 time : sets and tells Local Time for any/all guild members
 
 ===============================================================================

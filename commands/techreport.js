@@ -1,5 +1,6 @@
 // Hades star Technology Level
 // This command will calculate the tech level for all users
+/* global Map */ // clear error: Map is not defined. 
 
 exports.run = async (client, message, args, level) => { 
 

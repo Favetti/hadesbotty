@@ -58,7 +58,7 @@ exports.run = async (client, message, args, level) => {
     
   });
 
-  if (action.indexOf("set") === 0 && !singleTarget) return message.reply("Cant SET parameters for a group.");
+  if (action.indexOf("set") === 0 && !singleTarget) return message.reply("Cannot SET parameters for a GROUP.");
   if (action.indexOf("get") === 0 && !singleTarget) return message.reply("GET can only return a single user.");
   
   
