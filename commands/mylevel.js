@@ -1,9 +1,7 @@
 exports.run = async (client, message, args, level) => {
   const friendly = client.config.permLevels.find(l => l.level === level).name;
   const scoreLevel = message.userDB[message.guild.id].level;
-  //var msg = `Your permission level is: ${level} - ${friendly} (chat lvl: ${scoreLevel})`;
-  var msg = "Your permission level is: "+level+" - "+friendly+" (chat lvl: "+scoreLevel+")";
-  message.reply(msg);
+  message.reply("Your permission level is: "+level+" - "+friendly+" (chat lvl: "+scoreLevel+")");
 };
 
 exports.conf = {
