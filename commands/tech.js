@@ -148,12 +148,12 @@ exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: ["t"],
-  permLevel: "Bot Admin"
+  permLevel: "Bot Support"
 };
 
 exports.help = {
   name: "tech",
   category: "Hades Star",
-  description: "new tech methods",
+  description: "new tech method",
   usage: "..."
 };

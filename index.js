@@ -12,8 +12,6 @@ client.logger = require("./util/Logger");
 require("./modules/functions.js")(client);
 require("./modules/tech.js")(client);
 
-//client.HadesTechTool = require("./modules/tech.js");
-
 client.commands = new Enmap();
 client.aliases = new Enmap();
 
