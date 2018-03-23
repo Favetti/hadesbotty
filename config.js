@@ -32,7 +32,7 @@ const config = {
   "hadesTechSize" : {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":6,"support":17},
 
   "hadesTech" : {
-    "rs": {desc: "RedStar Scanner", group: "base", level: 5, levels: [1,2,20,60,120,250,1000,2000]},
+    "rs": {desc: "RedStar Scanner", group: "base", redditURL: "red_stars", levels: [1,2,20,60,120,250,1000,2000]},
     "transp": {desc: "Ships - Transport", group: "ships", redditURL: "ships/transport", levels: [1,10,60,300,1000]},
     "miner": {desc: "Ships - Miner", group: "ships", redditURL: "ships/miner", levels: [1,5,50,250,800]},
     "bs": {desc: "Ships - Battleship", group: "ships", redditURL: "ships/battleship", levels: [1,10,80,400,1500]},
