@@ -130,6 +130,9 @@ module.exports = (client) => {
       case "venge":
          return "vengeance";
          return "leap";//can't reach
+      case "alphadrone":
+      case "drones":
+         return "drone";
       default:
         break;
     }
