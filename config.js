@@ -32,9 +32,8 @@ const config = {
   "hadesTechSize" : {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":6,"support":18},
 
   "hadesTech" : {
-    "rs": {desc: "RedStar Scanner", group: "base", redditURL: "red_stars", levels: [1,2,20,60,120,250,1000,2000]},
-    "transp": {desc: "Ships - Transport", group: "ships", redditURL: "ships/transport", levels: [1,10,60,300,1000]},
     "miner": {desc: "Ships - Miner", group: "ships", redditURL: "ships/miner", levels: [1,5,50,250,800]},
+    "bs": {desc: "Ships - Battleship", group: "ships", redditURL: "ships/battleship", levels: [1,10,80,400,1500]},
     "bs": {desc: "Ships - Battleship", group: "ships", redditURL: "ships/battleship", levels: [1,10,80,400,1500]},
     "cargobay": {desc: "Trade - Cargo Bay Extension", group: "trade", redditURL: "modules/cargo_bay_extension", levels: [1,5,25,50,100,250,500,1000,2000,4000]},
     "computer": {desc: "Trade - Shipment Computer", group: "trade", redditURL: "modules/shipment_computer", levels: [8,12,25,50,100,250,500,1000,2000,4000]},
@@ -82,8 +81,7 @@ const config = {
     "barrier": {desc: "Support - Barrier", group: "support", redditURL: "modules/barrier", levels: [150,300,400,500,600,800,1000,3500,6000,8000]},
     "vengeance": {desc: "Support - Vengeance", group: "support", redditURL: "modules/vengeance", levels: [200,300,400,500,600,800,1000,3500,6000,8000]},
     "leap": {desc: "Support - Leap" , group: "support", redditURL: "modules/leap", levels: [400,500,600,700,800,1000,2000,4000,6000,8000]},
-    // *** DRONE LEVELS STILL UNCLEAR - using LEAP's  just to have some idea ***
-    "drone": {desc: "Support - Alpha Drone" , group: "support", redditURL: "modules/alpha_drone", levels: [400,500,600,700,800,1000,2000,4000,6000,8000]}
+    "drone": {desc: "Support - Alpha Drone" , group: "support", redditURL: "modules/alpha_drone", levels: [1000]}
   },
   
   // PERMISSION LEVEL DEFINITIONS.

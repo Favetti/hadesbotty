@@ -3,9 +3,9 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
 
-  args = args.map(function(x){ return x.toLowerCase() });
+  if (!args) return message.reply("What should i query on the Reddit Wiki?");
   const techID = client.normalizeTechName(args[0]);
-  
+    
   if (!client.config.hadesTech[techID]) return message.reply(`Invalid Tech: ${techID}`);
   const snoowrap = require('snoowrap'),
         subreddit = "HadesStar",
@@ -22,15 +22,23 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   let result = page.split(/\r?\n/),
       desc = "",
       table = "",
-      title = "";
+      title = "",
+      tableObj = {name: techID, maxLevels: 0};
 
   result.forEach(function(line) {
     if (line != "" && line != "[Main Page](/r/HadesStar/wiki)") {
       if ( line.indexOf("#") === 0)
         title = line.replace(/[^a-zA-Z0-9 ]/g, "");
       else if ( line.indexOf("|") >= 0 ) {
-        if ( line.replace(/[^a-zA-Z0-9 ]/g, "") !== "")
+        if ( line.replace(/[^a-zA-Z0-9 ]/g, "") !== "") {
           table+=line+"\n" 
+          if (line.indexOf("Level">=0))
+            tableObj.maxLevels = line.split("|").lenght-1;
+          else {
+            let x = line.split("|");
+            tableObj[line[0].trim()]
+          }            
+        }
       }
       else
         desc+=line+"\n" ;
@@ -55,8 +63,8 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
 exports.conf = {
   enabled: true,
   guildOnly: false,
-  aliases: ["wiki"],
-  permLevel: "User"
+  aliases: [],
+  permLevel: "Bot Owner"
 };
 
 exports.help = {
