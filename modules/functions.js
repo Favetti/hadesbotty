@@ -150,10 +150,8 @@ module.exports = (client) => {
     message.userDB = client.userDB.get(message.author.id) || {username: message.author.username};
 
     // ** Points system
-    if (!message.userDB[message.guild.id]) {
+    if (!message.userDB[message.guild.id]) 
       message.userDB[message.guild.id] = {name: message.guild.name, level: 0, points: 0, commands: 0 };
-      let newUsrMsg = "Hi, it seems it`s the first time i see you... I'm your friendly Botty, and i suggest you first input tech using the setTechAll command";
-    }
     if (message.content.indexOf(settings.prefix) === 0) 
       message.userDB[message.guild.id].commands++;
     else

@@ -32,6 +32,8 @@ exports.run = async (client, message, args, level) => {
     }
     else if (arg.indexOf("gmt") >= 0 )
       offset = Number(arg.replace("gmt",""));
+    else if (Number(arg)<= 12 && Number(arg) >= -12)
+      offset = Number(arg);
   });
 
   // SET
