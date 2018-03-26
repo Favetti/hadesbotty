@@ -52,5 +52,5 @@ exports.help = {
   name: "setalltech",
   category: "Hades Star",
   description: "Update ALL your Technology Levels",
-  usage: "setalltech [group] [n,n...,n]\n Where each group need all it's techs:\n >>Ships	3\n >>Trade	10\n >>Mining	8\n >>Weapons	5\n >>Shields	6\n >>Support	17\n\nExample:\n : setalltech ships 4,4,4"
+  usage: "setalltech [group] [n,n...,n]\n Where each group need all it's techs:\n >>Ships	3\n >>Trade	10\n >>Mining	8\n >>Weapons	5\n >>Shields	6\n >>Support	18\n\nExample:\n : setalltech ships 4,4,4"
 };

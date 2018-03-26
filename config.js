@@ -82,8 +82,7 @@ const config = {
     "barrier": {desc: "Support - Barrier", group: "support", redditURL: "modules/barrier", levels: [150,300,400,500,600,800,1000,3500,6000,8000]},
     "vengeance": {desc: "Support - Vengeance", group: "support", redditURL: "modules/vengeance", levels: [200,300,400,500,600,800,1000,3500,6000,8000]},
     "leap": {desc: "Support - Leap" , group: "support", redditURL: "modules/leap", levels: [400,500,600,700,800,1000,2000,4000,6000,8000]},
-    // *** DRONE LEVELS STILL UNCLEAR - using LEAP's  just to have some idea ***
-    "drone": {desc: "Support - Alpha Drone" , group: "support", redditURL: "modules/alpha_drone", levels: [400,500,600,700,800,1000,2000,4000,6000,8000]}
+    "drone": {desc: "Support - Alpha Drone" , group: "support", redditURL: "modules/alpha_drone", levels: [1000]}
   },
   
   // PERMISSION LEVEL DEFINITIONS.

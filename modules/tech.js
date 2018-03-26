@@ -1,4 +1,6 @@
 module.exports = (client) => {
+  
+  //New tech
 
   client.normalizeTechName = (name) => {
     switch(name.toLowerCase()) {
