@@ -138,7 +138,7 @@ exports.run = async (client, message, args, level) => {
         }
       });
     }  
-    //client.hsTech.set(targetID, allTech);
+    client.hsTech.set(targetID, allTech);
     client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
     return message.reply(msg);    
   }
@@ -155,5 +155,5 @@ exports.help = {
   name: "tech",
   category: "Hades Star",
   description: "new tech method",
-  usage: "..."
+  usage: "... help still need to be written ..."
 };
