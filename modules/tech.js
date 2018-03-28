@@ -4,6 +4,10 @@ module.exports = (client) => {
 
   client.normalizeTechName = (name) => {
     switch(name.toLowerCase()) {
+      case "redstarscanner":
+      case "scanner":
+      case "rss":
+         return "rs";
       case "ts":
       case "trans":
       case "transport":
