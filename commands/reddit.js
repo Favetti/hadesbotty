@@ -1,5 +1,4 @@
-// test to fetch reddit wiki... turns out hard to read on discord.
-// need more work
+// fetch reddit wiki pages
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
 
@@ -73,19 +72,6 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
  
   //return message.reply(" here is the page from Wiki: https://reddit.com/r/"+subreddit+"/wiki/"+wikiPage+"\n```" + page + "```");
   return message.reply(" here is the Wiki: https://reddit.com/r/"+subreddit+"/wiki/"+wikiPage+"\n"+ desc +"\n```" + dataTable.toString() + "```");
-  //return message.reply("```" + dataTable.toString() + "```");
-  
-  const Discord = require("discord.js"),
-        embed = new Discord.RichEmbed()
-  .setTitle("Here is the page from Wiki: https://reddit.com/r/"+subreddit+"/wiki/"+wikiPage)
-  .setURL("https://reddit.com/r/"+subreddit+"/wiki/"+wikiPage)
-  .setColor(0x00AE86)
-  //.setDescription(desc)
-  //.setFooter(table)
-  .addField(title, desc+"```"+table+"```")
-  //.addField(title, desc+"```"+dataTable.toString()+"```")
-  
-  message.channel.send({embed});
     
 };
 

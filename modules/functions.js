@@ -150,8 +150,11 @@ module.exports = (client) => {
     message.userDB = client.userDB.get(message.author.id) || {username: message.author.username};
 
     // ** Points system
-    if (!message.userDB[message.guild.id]) 
+    if (!message.userDB[message.guild.id]) {
       message.userDB[message.guild.id] = {name: message.guild.name, level: 0, points: 0, commands: 0 };
+      //Welcome a new user
+      message.author.send("Hello, it seems to be the first time i see you. I´m a BOT designed to deal with Hade's Star technologies.\nYou may type "+settings.prefix+"help at anytime to view the available commands, and "+settings.prefix+"help <command> to describe any one of them.\n I suggest your first inputs to be using the "+settings.prefix+"SetAllTech command (so you can batch input all your research levels).");
+    }
     if (message.content.indexOf(settings.prefix) === 0) 
       message.userDB[message.guild.id].commands++;
     else
