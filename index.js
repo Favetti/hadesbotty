@@ -1,9 +1,8 @@
-//if (process.env.BOTTY_ENVIRONMENT === "DEV") throw new Error("DISABLED FOR TESTING - Comment first line on index.js to FIX");
-
 if (process.version.slice(1).split(".")[0] < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
 
 const Discord = require("discord.js");
-const { promisify } = require("util");
+const util = require('util');
+const promisify = util.promisify;
 const readdir = promisify(require("fs").readdir);
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
@@ -20,6 +19,7 @@ client.aliases = new Enmap();
 client.settings = new Enmap({provider: new EnmapLevel({name: "bottySettings", dataDir: ".data"})});
 client.hsTech = new Enmap({provider: new EnmapLevel({name: "hsTech", dataDir: ".data"})});
 client.userDB = new Enmap({provider: new EnmapLevel({name: "userDB", dataDir: ".data"})});
+client.rosterDB = new Enmap({provider: new EnmapLevel({name: "rosterDB", dataDir: ".data"})});
 
 // We're doing real fancy node 8 async/await stuff here, and to do that
 // we need to wrap stuff in an anonymous function. It's annoying but it works.
