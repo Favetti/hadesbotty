@@ -20,7 +20,7 @@ exports.run = async (client, message, args, level) => {
       
   techLists[techLists.length] = new Map();
   args.forEach(function(arg, index) {
-    errors += `Processing argument ${arg}\n`;// Debug
+    //errors += `Processing argument ${arg}\n`;// Debug
     if (0 == index && ('set' === arg || 'remove' === arg  || 'add' === arg || 'reset' === arg )) {
       callType = arg;
     } else if ('|' === arg) {
@@ -50,7 +50,7 @@ exports.run = async (client, message, args, level) => {
         errors += `Cannot use 'all' when setting roster builds but you can target a specific role\n`;
         return true;
       }
-      errors += `Using all active users`;// Debug
+      //errors += `Using all active users`;// Debug
       message.guild.members.forEach(function(targetDB, targetID){
           targetDB = client.userDB.get(targetID);
           members.set(targetID, targetDB);
@@ -74,10 +74,10 @@ exports.run = async (client, message, args, level) => {
     var rosterEntry;
     rosterEntry = client.rosterDB.has(targetID) ? client.rosterDB.get(targetID) : false;
     if (!rosterEntry) {
-      errors += "No roster entry for "+targetID+"\n";// Debug
+      //errors += "No roster entry for "+targetID+"\n";// Debug
       rosterEntry = new Map([['active', false], ['battleBuild', false], ['supportBuild', false]]);
     } else {
-      errors += "rosterEntry is:\n" + util.inspect(rosterEntry) + "\n";// Debug
+      //errors += "rosterEntry is:\n" + util.inspect(rosterEntry) + "\n";// Debug
     }
     switch (callType) {
       case 'reset':
@@ -180,11 +180,11 @@ exports.run = async (client, message, args, level) => {
         });// end of techLists.forEach( (techMap, techMapIndex) => {
         if (false !== battleBuild) {
           rosterEntry.set('battleBuild',battleBuild);
-          errors += "Setting a battle build\n"; //Debug
+          //errors += "Setting a battle build\n"; //Debug
         }
         if (false !== supportBuild) {
           rosterEntry.set('supportBuild',supportBuild);
-          errors += "Setting a support build\n"; //Debug
+          //errors += "Setting a support build\n"; //Debug
         } 
         break;
     }// end of switch (callType) {
@@ -195,19 +195,20 @@ exports.run = async (client, message, args, level) => {
     }
     let allTech = client.hsTech.get(targetID) || client.hsTech.get('!'+targetID);
     if (!allTech) { return errors += `No tech levels found for user ${targetID}\n`; }
-    errors += util.inspect(rosterEntry)+"\n";// Debug
+    //errors += util.inspect(rosterEntry)+"\n";// Debug
     if (rosterEntry.get('supportBuild')) {
-      errors += `Found a support build in roster for ${targetID}\n`;// Debug
-      errors += util.inspect(rosterEntry.get('supportBuild')) + "\n";// Debug
-      var buildText = rosterEntry.get('supportBuild').shipType;
+      //errors += `Found a support build in roster for ${targetID}\n`;// Debug
+      //errors += util.inspect(rosterEntry.get('supportBuild')) + "\n";// Debug
+      var techID = rosterEntry.get('supportBuild').shipType;
+      var buildText = techID+" ("+(Number( allTech[techID] ) || 0)+")";
       rosterEntry.get('supportBuild').supportModules.forEach( (value, techID) => {
-        buildText += "\t"+techID+"("+(Number( allTech[techID] ) || 0)+")";
+        buildText += "\t"+techID+" ("+(Number( allTech[techID] ) || 0)+")";
       });
       rosterEntry.get('supportBuild').tradeModules.forEach( (value, techID) => {
-        buildText += "\t"+techID+"("+(Number( allTech[techID] ) || 0)+")";
+        buildText += "\t"+techID+" ("+(Number( allTech[techID] ) || 0)+")";
       });
       rosterEntry.get('supportBuild').miningModules.forEach( (value, techID) => {
-        buildText += "\t"+techID+"("+(Number( allTech[techID] ) || 0)+")";
+        buildText += "\t"+techID+" ("+(Number( allTech[techID] ) || 0)+")";
       });
     } else {
       buildText = "_No Build_";
@@ -218,20 +219,24 @@ exports.run = async (client, message, args, level) => {
     };
     
     if (rosterEntry.get('battleBuild')) {
-      errors += `Found a battle build in roster for ${targetID}\n`;// Debug
-      errors += util.inspect(rosterEntry.get('battleBuild')) + "\n";// Debug
-      var techID = rosterEntry.get('battleBuild').weaponType;
-      var buildText = (techID 
-                      ? techID+"("+(Number( allTech[techID] ) || 0)+")"
+      //errors += `Found a battle build in roster for ${targetID}\n`;// Debug
+      //errors += util.inspect(rosterEntry.get('battleBuild')) + "\n";// Debug
+      
+      var techID = rosterEntry.get('battleBuild').shipType;
+      var buildText = techID+" ("+(Number( allTech[techID] ) || 0)+")";
+      
+      techID = rosterEntry.get('battleBuild').weaponType;
+      buildText += "\t"+( techID 
+                      ? techID+" ("+(Number( allTech[techID] ) || 0)+")"
                       : "_No Weapon_");
       
       techID = rosterEntry.get('battleBuild').shieldType;
       buildText += "\t"+( techID
-                      ? techID+"("+(Number( allTech[techID] ) || 0)+")"
+                      ? techID+" ("+(Number( allTech[techID] ) || 0)+")"
                       : "_No Shield_");
       
       rosterEntry.get('battleBuild').supportModules.forEach( (value, techID) => {
-        buildText += "\t"+techID+"("+(Number( allTech[techID] ) || 0)+")"
+        buildText += "\t"+techID+" ("+(Number( allTech[techID] ) || 0)+")"
       });
     } else {
       buildText = "_No Build_";
