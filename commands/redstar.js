@@ -68,6 +68,9 @@ exports.run = async (client, message, args, level) => {
       case 'o':
         action = 'leave';
         break;
+      case 'talk':
+        action = 'talk';
+        break;
       default:
         action = 'join';
         break;
@@ -85,6 +88,9 @@ exports.run = async (client, message, args, level) => {
       return true;
     }
     switch (action){
+      case 'talk':
+        args.shift();
+        return action_talk(client, userID, args);
       case 'join':
         return action_join(client, userID, newRedstarQue);
       case 'ready':
@@ -106,13 +112,17 @@ exports.run = async (client, message, args, level) => {
   } 
 };
 
+const MATCH_MAX = 5;
+const MATCH_MIN = 2;
+const MATCH_KICK = 120 * 1000;
+const MATCH_KICK_EXTRA = MATCH_KICK;
+
 function action_status(client, userID, rsQueName, message) {
   if (message) {
     message += "\n"
   } else {
     message = "";
   }
-  
   var targetUserID = userID;
   var singleMessage = false;
   if (userID && !rsQueName) {
@@ -128,7 +138,7 @@ function action_status(client, userID, rsQueName, message) {
     client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" que you were in does not exist!")});
     //client.logger.error("Cannot find "+'redstarQue'+rsQueName); // Debug
     //client.logger.error(require('util').inspect(client.redstarQue)); // Debug
-    //client.redstarQue.delete('userQue'+userID);
+    client.redstarQue.delete('userQue'+userID);
     return true;
   }
   var rsQueInfo = client.redstarQue.get('redstarQue'+rsQueName);
@@ -143,7 +153,7 @@ function action_status(client, userID, rsQueName, message) {
     if (userID === userIDcompare) {
       quePositionFound = true;
     }
-    if (userIDs.length >= 5) return;
+    if (userIDs.length >= MATCH_MAX) return;
     if (client.redstarQue.has('userQue'+userIDcompare) && client.redstarQue.get('userQue'+userIDcompare).ready) {
       readyNum++;
     }
@@ -153,14 +163,22 @@ function action_status(client, userID, rsQueName, message) {
   if (singleMessage) {
     userIDs = new Array(userID);
   }
-  message += `RS${rsQueName} Status: ${userNum}/5 in que ${readyNum}/${userNum} are ready.`;
-  if (quePosition > 5)
+  message += `RS${rsQueName} Status: ${userNum}/${MATCH_MAX} in que ${readyNum}/${userNum} are ready`;
+  var extraKickTime = 0;
+  if (quePosition > MATCH_MAX) {
+    extraKickTime = MATCH_KICK_EXTRA;
+    message = "You are #**"+quePosition+"** in the que and must wait for this match to start or kick users\n"+message;
+  }
   if (false !== rsQueInfo.kickTime) {
-    var tillKick = (rsQueInfo.kickTime - Date.now()) / 1000;
-    message += ` **${tillKick}**s until you can kick unready players.`
+    var tillKick = Math.round((extraKickTime + rsQueInfo.kickTime - Date.now()) / 1000, 0);
+    if (0 < tillKick) {
+      message += ` **${tillKick}**s until you can kick unready players`
+    } else {
+      message += ` You may **kick** players now using _!redstar kick_`
+    }
   }
   action_send(client, userIDs, message, targetUserID);
-  if (readyNum >= userNum && readyNum > 0) {
+  if (readyNum >= userNum && readyNum >= MATCH_MIN) {
     action_start(client, rsQueName, rsQueInfo);
     return true;
   }
@@ -170,7 +188,7 @@ function action_send(client, userIDs, message, targetUserID) {
   if (!Array.isArray(userIDs)) {
       client.logger.error("action_send recieved a non-array value "+userIDs);
   }
-  client.logger.error("sending: "+message);
+  //client.logger.error("sending: "+message); // Debug
   userIDs.forEach( (userID) => {
     if (targetUserID && targetUserID === userID) {
       client.fetchUser(userID).then(user => {user.send(message.replace('Someone','You'))});
@@ -183,7 +201,7 @@ function action_send(client, userIDs, message, targetUserID) {
 function action_start(client, rsQueName, rsQueInfo) {
   var userIDs = new Array();
   rsQueInfo.users.forEach( (userID) => {
-    if (userIDs.length >= 5) return;
+    if (userIDs.length >= MATCH_MAX) return;
     action_leave(client, userID, true);
     //rsQueInfo.users = rsQueInfo.users.splice(rsQueInfo.users.indexOf(userID),1);
     userIDs.push(userID);
@@ -193,7 +211,7 @@ function action_start(client, rsQueName, rsQueInfo) {
   setTimeout(action_send, 1,     client, userIDs, "Countdown, 30s left until scan");
   setTimeout(action_send, 20000, client, userIDs, "Countdown, 10s left until scan");
   setTimeout(action_send, 30000, client, userIDs, "Countdown, SCAN NOW!");
-  setTimeout(action_status, 45000, client, false, rsQueName, "The previous match has started, You are now part of the new match");
+  setTimeout(action_status, 45000, client, false, rsQueName, "The previous match was started 1MATCH_MAXs ago, You are now part of the new match");
   return true;
 }
              
@@ -217,7 +235,7 @@ function action_leave(client, userID, suppressStatus) {
   rsQueInfo.users.splice(rsQueInfo.users.indexOf(userID),1);
   client.redstarQue.set('redstarQue'+rsQueName, rsQueInfo);
   client.redstarQue.delete('userQue'+userID);
-  //client.fetchUser(userID).then(user => {user.send("You left the RS"+rsQueName+" que, Goodbye!")});
+  client.fetchUser(userID).then(user => {user.send("You left the RS"+rsQueName+" que, Goodbye!")});
   if (!suppressStatus) {
     action_status(client, userID, rsQueName, "Someone left the RS"+rsQueName+" que");
   }
@@ -245,8 +263,8 @@ function action_join(client, userID, rsQueName) {
   client.logger.error("About to set " + 'userQue'+userID);
   client.redstarQue.set('userQue'+userID, {rsQueName:rsQueName, ready: false});
   rsQueInfo.users.push(userID);
-  if (rsQueInfo.users.length >= 5 && !rsQueInfo.kickTime) {
-    rsQueInfo.kickTime = Date.now() + 120 * 1000;
+  if (rsQueInfo.users.length >= MATCH_MIN && !rsQueInfo.kickTime) {
+    rsQueInfo.kickTime = Date.now() + MATCH_KICK;
   } else {
     rsQueInfo.kickTime = false;
   }
@@ -299,11 +317,11 @@ function action_kick(client, userID) {
     action_join(client, userID, rsQueName);
     return true;
   }
-  if (!rsQueInfo.kickTIme) {
+  if (!rsQueInfo.kickTime) {
     client.fetchUser(userID).then(user => {user.send("You cannot kick people if the RS"+rsQueName+" que is not full.")});
     return true;
   }
-  var timeTillKick = Date.now() - rsQueInfo.kickTime;
+  var timeTillKick = rsQueInfo.kickTime - Date.now();
   if (0 < timeTillKick) {
     client.fetchUser(userID).then(user => {user.send("You cannot kick people for another "+(timeTillKick/1000)+" seconds in the RS"+rsQueName+" que")});
     return true;
@@ -313,9 +331,9 @@ function action_kick(client, userID) {
   var kickableUsers = new Array();
   var readyUsers = new Array();
   rsQueInfo.users.forEach( (userIDcompare) => {
-    if (userNum >= 5) return;
+    if (userNum >= MATCH_MAX) return;
     userNum++;
-    if (client.redstarQue.get('userQue'+userID).ready) {
+    if (client.redstarQue.get('userQue'+userIDcompare).ready) {
       readyUsers.push(userIDcompare);
     } else {
       kickableUsers.push(userIDcompare);
@@ -324,10 +342,12 @@ function action_kick(client, userID) {
       inCurrentMatch = true;
     }
   });
-  if (!inCurrentMatch && -120000 < timeTillKick) {
-    client.fetchUser(userID).then(user => {user.send("You are not in the current RS"+rsQueName+" match so cannot kick people yet. Please wait another "+((timeTillKick + 120000)/1000)+" seconds.")});
+  if (!inCurrentMatch && (0 - MATCH_KICK_EXTRA) < timeTillKick) {
+    client.fetchUser(userID).then(user => {user.send("You are not in the current RS"+rsQueName+" match so cannot kick people yet. Please wait another "+Math.round((timeTillKick + MATCH_KICK_EXTRA)/1000,0)+" seconds.")});
     return true;
   }
+  rsQueInfo.kickTime = false;
+  client.redstarQue.set('redstarQue'+rsQueName, rsQueInfo);
   action_send(client, kickableUsers, "You have been kicked from the RS"+rsQueName+" que because you didn't mark yourself as ready soon enough. You can re-join the que but please pay attention.");
   kickableUsers.forEach( (userID) => {
     action_leave(client, userID, true);
@@ -335,7 +355,28 @@ function action_kick(client, userID) {
   readyUsers.forEach( (userID) => {
     action_ready(client, userID, false);
   });
-  action_status(client, userID, rsQueName, "AFK players have been kicked from the RS"+rsQueName+" que and everyone has been set to not ready status");
+  action_status(client, userID, rsQueName, ""+kickableUsers.length+" AFK players have been kicked from the RS"+rsQueName+" que and everyone has been set to not ready status");
+}
+
+function action_talk(client, userID, args) {
+  if (!client.redstarQue.has('userQue'+userID)) {
+    client.fetchUser(userID).then(user => {user.send("You have no que to talk to anyone in. Lonely!")});
+    return true;
+  }
+  var rsQueName = client.redstarQue.get('userQue'+userID).rsQueName;
+  if (!client.redstarQue.has('redstarQue'+rsQueName)) {
+    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" que you were in does not exist!")});
+    client.redstarQue.delete('userQue'+userID);
+    return true;
+  }
+  var rsQueInfo = client.redstarQue.get('redstarQue'+rsQueName);
+  var quePosition = rsQueInfo.users.indexOf(userID);
+  if (-1 === quePosition) {
+    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" que you were supposed to be in doesn't have you, joining now but not kicking anyone!")});
+    action_join(client, userID, rsQueName);
+    return true;
+  }
+  return action_send(client, rsQueInfo.users, "User(#**"+quePosition+"**): "+args.join(' '), userID);
 }
 
 exports.conf = {
@@ -348,7 +389,7 @@ exports.conf = {
 exports.help = {
   name: "redstar",
   category: "Hades Star",
-  description: "Joins a cross-server que for a redstar level that communicate through DM. The que starts counting down as soon as all users are ready. If there are 5 users in the que, the option to kick AFK/unready player becomes available after 2 minutes.\n"+
+  description: "Joins a cross-server que for a redstar level that communicate through DM. The que starts counting down as soon as all users are ready. If there are "+MATCH_MAX+" users in the que, the option to kick AFK/unready player becomes available after 2 minutes.\n"+
     "  Example: redstar 6 (Joins the RS6 que)\n"+
     "  Example: redstar status (View the current que status)\n"+
     "  Example: redstar leave (Leave the que)\n"+
