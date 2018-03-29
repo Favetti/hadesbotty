@@ -14,7 +14,30 @@ exports.run = async (client, message, args, level) => {
         client.logger.log("blah blah blah");
       }
        break;
-   case "userdb":
+    case "rs":
+    case "redstar":
+    case "redstarque":
+      client.redstarQue.forEach(function (value, key, mapObj) {  
+        var keyObj = client.redstarQue.get(key);
+        hasData=true;
+        dataTable.cell('Key', key);
+        dataTable.cell('Data', JSON.stringify(keyObj));
+        dataTable.newRow();
+      }); 
+      break;
+    case "ws":
+    case "roster":
+    case "rosterdb":
+      client.rosterDB.forEach(function (value, key, mapObj) {  
+        var keyObj = client.rosterDB.get(key);
+        hasData=true;
+        dataTable.cell('Key', key);
+        dataTable.cell('Data', JSON.stringify(keyObj));
+        dataTable.newRow();
+      }); 
+      break;
+    case "user":
+    case "userdb":
       client.userDB.forEach(function (value, key, mapObj) {  
         var keyObj = client.userDB.get(key);
         hasData=true;
@@ -32,6 +55,7 @@ exports.run = async (client, message, args, level) => {
         dataTable.newRow();
       }); 
       break;
+    case "tech":
     case "hstech":
       client.hsTech.forEach(function (value, key, mapObj) {  
         var keyObj = client.hsTech.get(key);
