@@ -72,9 +72,9 @@ exports.run = async (client, message, args, level) => {
   members.forEach( (targetDB, targetID) => {
     //client.logger.error(util.inspect(client.rosterDB));
     var rosterEntry;
-    rosterEntry = client.rosterDB.has(targetID) ? client.rosterDB.get(targetID) : false;
+    rosterEntry = client.rosterDB.has(targetID) ? new Map(client.rosterDB.get(targetID)) : false;
     if (!rosterEntry) {
-      //errors += "No roster entry for "+targetID+"\n";// Debug
+      errors += "No roster entry for "+targetID+"\n";// Debug
       rosterEntry = new Map([['active', false], ['battleBuild', false], ['supportBuild', false]]);
     } else {
       //errors += "rosterEntry is:\n" + util.inspect(rosterEntry) + "\n";// Debug
@@ -97,9 +97,9 @@ exports.run = async (client, message, args, level) => {
             shipType:        false,
             weaponType:      false,
             shieldType:      false,
-            supportModules:  new Map(),
-            tradeModules:    new Map(),
-            miningModules:   new Map(),
+            supportModules:  new Array(),
+            tradeModules:    new Array(),
+            miningModules:   new Array(),
           }
           techMap.forEach( (value, techID) => {
             if (client.config.hadesTech[techID]) {
@@ -126,13 +126,19 @@ exports.run = async (client, message, args, level) => {
                   build.shieldType = techID;
                   break;
                 case 'support':
-                  build.supportModules.set(techID, true);
+                  if (!build.supportModules.includes(techID)) {
+                    build.supportModules.push(techID);
+                  }
                   break;
                 case 'mining':
-                  build.miningModules.set(techID, true);
+                  if (!build.miningModules.includes(techID)) {
+                    build.miningModules.push(techID);
+                  }
                   break;
                 case 'trade':
-                  build.tradeModules.set(techID, true);
+                  if (!build.tradeModules.includes(techID)) {
+                    build.tradeModules.push(techID);
+                  }
                   break;
               }
             } else {
@@ -143,15 +149,15 @@ exports.run = async (client, message, args, level) => {
             errors += `No ship type found for build ${techMapIndex}\n`;
             return true;// Don't process
           }
-          if ('miner' !== build.shipType && 0 < build.miningModules.size) {
+          if ('miner' !== build.shipType && 0 < build.miningModules.length) {
             errors += `No mining modules allowed on ${build.shipType}, skipping build ${techMapIndex}\n`;
             return true;// Don't process
           }
-          if ('transp' != build.shipType && 0 < build.tradeModules.size) {
+          if ('transp' != build.shipType && 0 < build.tradeModules.length) {
             errors += `No trading modules allowed on ${build.shipType}, skipping build ${techMapIndex}\n`;
             return true;// Don't process
           }
-          if ('bs' != build.shipType && 1 < build.supportModules.size) {
+          if ('bs' != build.shipType && 1 < build.supportModules.length) {
             errors += `No more than 1 support modules allowed on ${build.shipType}, skipping build ${techMapIndex}\n`;
             return true;// Don't process
           }
@@ -189,7 +195,8 @@ exports.run = async (client, message, args, level) => {
         break;
     }// end of switch (callType) {
     
-    client.rosterDB.set(targetID, rosterEntry);
+    //Save our updated data before we do anything else.
+    client.rosterDB.set(targetID, [...rosterEntry]);
     if (!rosterEntry.get('active')) {
       return true; //
     }
@@ -201,13 +208,13 @@ exports.run = async (client, message, args, level) => {
       //errors += util.inspect(rosterEntry.get('supportBuild')) + "\n";// Debug
       var techID = rosterEntry.get('supportBuild').shipType;
       var buildText = techID+" ("+(Number( allTech[techID] ) || 0)+")";
-      rosterEntry.get('supportBuild').supportModules.forEach( (value, techID) => {
+      rosterEntry.get('supportBuild').supportModules.forEach( (techID) => {
         buildText += "\t"+techID+" ("+(Number( allTech[techID] ) || 0)+")";
       });
-      rosterEntry.get('supportBuild').tradeModules.forEach( (value, techID) => {
+      rosterEntry.get('supportBuild').tradeModules.forEach( (techID) => {
         buildText += "\t"+techID+" ("+(Number( allTech[techID] ) || 0)+")";
       });
-      rosterEntry.get('supportBuild').miningModules.forEach( (value, techID) => {
+      rosterEntry.get('supportBuild').miningModules.forEach( (techID) => {
         buildText += "\t"+techID+" ("+(Number( allTech[techID] ) || 0)+")";
       });
     } else {
@@ -235,7 +242,7 @@ exports.run = async (client, message, args, level) => {
                       ? techID+" ("+(Number( allTech[techID] ) || 0)+")"
                       : "_No Shield_");
       
-      rosterEntry.get('battleBuild').supportModules.forEach( (value, techID) => {
+      rosterEntry.get('battleBuild').supportModules.forEach( (techID) => {
         buildText += "\t"+techID+" ("+(Number( allTech[techID] ) || 0)+")"
       });
     } else {
@@ -270,9 +277,9 @@ exports.help = {
   category: "Hades Star",
   description: "Shows the current roster of who is in the WS and what ships they are bringing Each player can have one battle build and one support build. \n"+
     "  Example: roster all (shows the current builds for all players marked active\n"+
-    "  Example: roster remove @user (sets the user to inactive)\n"+
-    "  Example: roster add @role (sets all @roll users to active)\n"+
+    "  Example: roster remove @user (sets the @user to inactive)\n"+
+    "  Example: roster add @role (sets all @role users to active)\n"+
     "  Example: roster set @role bs batt omega sanc emp (sets the battle build for all @role users)\n"+
     "  Example: roster set @user bs batt omega sanc emp | ts cargo entrust barrier (sets the battle and support build for @user)\n",
-  usage: "roster [remove or add] (all or @role or @user) [ship type] [techID]... [| [ship type] [techID...]]"
+  usage: "roster [set, remove or add] (all or @role or @user)... [ship type] [techID]... [| [ship type] [techID...]]"
 };
