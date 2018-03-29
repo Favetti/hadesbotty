@@ -23,7 +23,7 @@ exports.run = async (client, message, args, level) => {
       case 'reset':
         if (message.author.permLevel >= 9) {
           client.redstarQue.clear()
-          message.reply("Redstar Queues Cleared!");
+          message.reply("Redstar Ques Cleared!");
         } else {
           message.reply("HAHAHAHAHaaaa... Um... who do you think you are?");
         }
@@ -383,7 +383,7 @@ exports.conf = {
   enabled: true,
   guildOnly: false,
   aliases: ["rs"],
-  permLevel: "Moderator"
+  permLevel: "User"
 };
 
 exports.help = {
