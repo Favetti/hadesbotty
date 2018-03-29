@@ -81,6 +81,7 @@ exports.run = async (client, message, args, level) => {
     }
     switch (callType) {
       case 'reset':
+        return message.reply("Sorry, reset is DISABLED for now...");
         rosterEntry = new Map([['active', false], ['battleBuild', false], ['supportBuild', false]]);
       case 'remove':
         rosterEntry.set('active', false);
