@@ -15,8 +15,8 @@ exports.run = async (client, message, args, level) => {
       members = new Map(),
       techLists = new Array(),
       callType = 'get',
-      battleEmbed = {  'embed': {'title':  "Battle Roster",  'fields': new Array()}},
-      supportEmbed = {  'embed': {'title': "Support Roster", 'fields': new Array()}};
+      battleEmbed = {  'embed': {'title':  "__Battle Roster__",  'fields': new Array()}},
+      supportEmbed = {  'embed': {'title': "__Support Roster__", 'fields': new Array()}};
       
   techLists[techLists.length] = new Map();
   args.forEach(function(arg, index) {
