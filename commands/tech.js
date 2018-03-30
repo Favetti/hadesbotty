@@ -148,12 +148,25 @@ exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: ["t"],
-  permLevel: "Bot Support"
+  permLevel: "User"
 };
 
 exports.help = {
   name: "tech",
   category: "Hades Star",
-  description: "new tech method",
-  usage: "... help still need to be written ..."
+  description: "Input and retrieve tech info.",
+  usage: `tech [set|get|score|search] [all|@role|@user] [...args...]
+------------------------------------------
+GET and SET only work for a single target
+SCORE works with single user, role or all
+SEARCH is for any tech
+------------------------------------------
+Examples:
+• !t set @fato emp 5
+• !t set @fato ships 4,4,4
+• !t get @fato
+• !t score @ws_squad_1
+• !t search destiny
+------------------------------------------
+TechGroups: ships(3), trade(10), mining(8), weapons(5), shields(6), support(18)`
 };
