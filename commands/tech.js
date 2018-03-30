@@ -32,15 +32,15 @@ exports.run = async (client, message, args, level) => {
     else if (arg === "all") { //target is the guild
       singleTarget = false;
     }
-    else if (arg.indexOf("<@") >= 0 ) { //target is a USER
-      targetID = arg.replace("<@","").replace(">","");
-      targetDB = client.userDB.get(targetID) || {username: arg}
-    }
     else if (arg.indexOf("<@&") >= 0) { //target is a ROLE
       singleTarget = false;
       const roleID = arg.replace("<@&","").replace(">","");
       if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
       searchObj = message.guild.roles.get(roleID);
+    }
+    else if (arg.indexOf("<@") >= 0 ) { //target is a USER
+      targetID = arg.replace("<@","").replace(">","");
+      targetDB = client.userDB.get(targetID) || {username: arg}
     }
     else if (client.config.hadesTechSize[arg]) // target is Tech Group
       techGroup = arg;

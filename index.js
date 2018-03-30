@@ -19,10 +19,11 @@ client.commands = new Enmap();
 client.aliases = new Enmap();
 
 client.settings = new Enmap({provider: new EnmapLevel({name: "bottySettings", dataDir: ".data"})});
-client.hsTech = new Enmap({provider: new EnmapLevel({name: "hsTech", dataDir: ".data"})});
+client.hsTech = new Enmap({provider: new EnmapLevel({name: "hsTech", dataDir: ".data"})}); //this should be techDB
 client.userDB = new Enmap({provider: new EnmapLevel({name: "userDB", dataDir: ".data"})});
 client.rosterDB = new Enmap({provider: new EnmapLevel({name: "rosterDB", dataDir: ".data"})});
 client.redstarQue = new Enmap({provider: new EnmapLevel({name: "redstarQue", dataDir: ".data"})});
+client.wikiTech = new Enmap({provider: new EnmapLevel({name: "wikiTech", dataDir: ".data"})});
 
 // We're doing real fancy node 8 async/await stuff here, and to do that
 // we need to wrap stuff in an anonymous function. It's annoying but it works.

@@ -61,7 +61,7 @@ module.exports = (client, message) => {
   }
   
   // If the command exists, **AND** the user has permission, run it.
-  client.logger.cmd(`${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) on '${!message.guild ? "PM" : "Guild "+message.guild.name}' ran command ${cmd.help.name} ${args.toString()}`);
+  client.logger.cmd(`${client.config.permLevels.find(l => l.level === level).name} ${message.author.username} (${message.author.id}) on ${!message.guild ? "PM" : "Guild '"+message.guild.name}' ran command ${cmd.help.name} ${args.toString()}`);
   try { cmd.run(client, message, args, level); }
   catch (e) {
     message.reply("An error occured and was caught by the message event: " + e);

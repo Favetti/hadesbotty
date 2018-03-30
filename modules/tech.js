@@ -1,7 +1,5 @@
 module.exports = (client) => {
   
-  //New tech
-
   client.normalizeTechName = (name) => {
     switch(name.toLowerCase()) {
       case "redstarscanner":
@@ -17,78 +15,97 @@ module.exports = (client) => {
       case "battleship":
       case "battle":
          return "bs";
+      case "cargo_bay_extension":
       case "cargo":
       case "cb":
          return "cargobay";
+      case "shipment_computer":
       case "shipmentcomputer":
       case "comp":
       case "sc":
          return "computer";
+      case "trade_boost":
       case "tboost":
          return "tradeboost";
          return "rush"; //can't reach
+      case "trade_burst":
       case "tburst":
          return "tradeburst";
-      case "sa":
-      case "autoship":
-      case "auto":
-      case "pilot":
+      case "shipment_autopilot":
       case "shipmentautopilot":
+      case "autoship":
+      case "pilot":
+      case "auto":
+      case "sa":
          return "autopilot";
       case "off":
          return "offload";
+      case "shipment_beam":
       case "shipmentbeam":
       case "sbeam":
       case "sb":
          return "beam";
          return "entrust";//can't reach
          return "recall";//can't reach
-      case "hb":
+      case "hydrogen_bay_extension":
       case "hydrogenbay":
+      case "hb":
          return "hydrobay";
-      case "mb":
+      case "mining_boost":
       case "mboost":
+      case "mb":
          return "miningboost";
          return "enrich";
-      case "rm":
+      case "remote_mining":
       case "remotemining":
+      case "rm":
          return "remote";
+      case "hydrogen_upload":
       case "upload":
       case "hu":
          return "hydroupload";
-      case "mu":
+      case "mining_unity":
       case "munity":
+      case "mu":
          return "miningunity";
          return "crunch";//can't reach
          return "genesis";//can't reach
       case "batt":
          return "battery";
          return "laser";
-      case "massbatt":
+      case "mass_battery":
       case "massbattery":
+      case "massbatt":
          return "mass";
+      case "dual_Laser":
       case "duallaser":
       case "dualaser":
          return "dual";
          return "barrage";//can't reach
+      case "alpha_shield":
       case "alphashield":
          return "alpha";
+      case "delta_shield":
       case "deltashield":
       case "dshield":
       case "ds":
          return "delta";
+      case "passive_shield":
       case "passiveshield":
       case "pshield":
       case "ps":
          return "passive";
+      case "omega_shield":
       case "omegashield":
       case "oshield":
       case "os":
          return "omega";
+      case "mirror_shield":
       case "mirrorshield":
       case "mshield":
       case "ms":
          return "mirror";
+      case "area_shield":
       case "areashield":
       case "ashield":
       case "as":
@@ -97,10 +114,12 @@ module.exports = (client) => {
       case "tel":
       case "tele":
          return "teleport";
-      case "rse":
-      case "extender":
+      case "red_star_life_extender":
       case "redstarextender":
+      case "extender":
+      case "rse":
          return "rsextender";
+      case "remote_repair":
       case "remoterepair":
       case "remoterep":
       case "remrepair":
@@ -108,6 +127,7 @@ module.exports = (client) => {
       case "rr":
       case "rep":
          return "repair";
+      case "time_warp":
       case "timewarp":
       case "tw":
       case "twarp":
@@ -120,6 +140,7 @@ module.exports = (client) => {
       case "fort":
          return "fortify";
          return "impulse";//can't reach
+      case "alpha_rocket":
       case "alpharocket":
       case "arocket":
       case "rock":
@@ -136,6 +157,7 @@ module.exports = (client) => {
       case "venge":
          return "vengeance";
          return "leap";//can't reach
+      case "alpha_drone":
       case "alphadrone":
       case "drones":
          return "drone";
