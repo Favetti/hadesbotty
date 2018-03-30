@@ -13,33 +13,35 @@ exports.run = (client, message, args, level) => { // eslint-disable-line no-unus
 • Discord.js :: v${version}
 • Node       :: ${process.version}`;
 
-if (args[0]) {
-  if (args[0] === "full"){
-    msg += "\n-----------------------------------";
-    
-    let corps = {};
-    
-    client.settings.foreach(function (target, targetID, mapObj){
-      corps[targetID] = {name: "", users: 0}
-    });
-    client.userDB.forEach(function (target, targetID, mapObj){
-      target.foreach(function (target2, targetID2, mapObj2){
-        if (corps.includes(targetID2)){
-          corps[targetID2].users++;
-          corps[targetID2].name = target2.name;
-        }
+  if (args[0]) {
+    if (args[0] === "full"){
+      msg += "\n-----------------------------------";
+
+      let corps = {};
+  /*    client.settings.foreach(function (target, targetID, mapObj){
+        corps[targetID] = {name: "", users: 0}
       });
-    });
-    
-    corps.foreach(function(target, targetID){
-      msg += "\n• • • "+target.name+" ("+target.users+" users)";
-    });
-    
-  }
-}
-  
-  
-message.channel.send(msg, {code: "asciidoc"})
+  */    
+      client.userDB.forEach(function (target, targetID){
+        //client.logger.debug(targetID+"::"+JSON.stringify(target));
+
+        Object.keys(target).forEach(function (key){
+          if ( key !== "username" && key !== "lastSeen" && key !== "timeOffset" ) {
+            if (!corps[key]) corps[key] = {users: 0};
+            corps[key].users++;
+            corps[key].name = target[key].name;
+          }
+
+        });
+
+      });
+      Object.keys(corps).forEach(function (key){
+        msg += "\n•• "+corps[key].name+" ("+corps[key].users+" users)";
+      });
+      //client.logger.debug(JSON.stringify(corps));
+    }
+  }  
+  message.channel.send(msg, {code: "asciidoc"})
 };
 
 exports.conf = {
