@@ -58,8 +58,13 @@ exports.run = async (client, message, args, level) => {
     
   });
 
-  if (action.indexOf("set") === 0 && !singleTarget) return message.reply("Cannot SET parameters for a GROUP.");
-  if (action.indexOf("set") === 0 && (level < 1 && targetID !== message.author.id)) return message.reply("Only Moderators or higher can SET other people's tech... safety stuff, you know...");
+  client.logger.debug(":"+level+"::"+targetID+"!="+message.author.id);
+  if (action.indexOf("set") === 0) {
+    if (!singleTarget) 
+      return message.reply("Cannot SET parameters for a GROUP.");
+    if (level <= 1 && targetID != message.author.id)
+      return message.reply("Only Moderators or higher can SET other people's tech... safety stuff, you know...");
+  }  
   if (action.indexOf("get") === 0 && !singleTarget) return message.reply("GET can only return a single user.");
     
   if (action === "get"){
