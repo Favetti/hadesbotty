@@ -6,6 +6,9 @@ const moment = require("moment");
 
 exports.log = (content, type = "log") => {
   const timestamp = `[${moment().format("YYYY-MM-DD HH:mm:ss")}]:`;
+    
+  //client.sendMessage("429018012083945475", "Hello");
+  
   switch (type) {
     case "log": {
       return console.log(`${timestamp} ${chalk.bgBlue(type.toUpperCase())} ${content} `);
