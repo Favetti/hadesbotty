@@ -98,7 +98,7 @@ exports.run = async (client, message, args, level) => {
       }
     });  
     if (!hasData) return message.reply("No data found");
-    else return message.reply(`Score recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` + "```" + dataTable.sort('Level|des').toString()+"```"); 
+    else return message.reply(`Score recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` + "```" + dataTable.sort(['Level|des']).toString()+"```"); 
   }  
   else if (action === "search"){
     searchObj.members.forEach(function (value, index){
@@ -115,7 +115,7 @@ exports.run = async (client, message, args, level) => {
       }
     });  
     if (!hasData) return message.reply("No data found");
-    else return message.reply(`Tech level recorded for everyone of ${args[0]} ${searchObj.name}:\n` + "```" + dataTable.sort('Level|des').toString()+"```");
+    else return message.reply(`Tech level recorded for everyone of ${args[0]} ${searchObj.name}:\n` + "```" + dataTable.sort(['Level|des']).toString()+"```");
   }  
   else if (action === "set"){
 

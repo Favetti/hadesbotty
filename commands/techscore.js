@@ -3,39 +3,15 @@
 
 exports.run = async (client, message, args, level) => { 
 
-  args = args.map(function(x){ return x.toLowerCase() });
-  const table = require('easy-table');
-  var hasData=false,
-      scoreTable = new table,
-      searchObj = message.guild;
-    
-  // ************************************* return members of a specified ROLE
-  args.forEach(function(arg) {
-    if (arg.indexOf("<@&") >= 0) { //target is a ROLE
-      const roleID = arg.replace("<@&","").replace(">","");
-      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
-      searchObj = message.guild.roles.get(roleID);
-    }
-  });
-
-  searchObj.members.forEach(function (target, targetID, mapObj){
-    if (client.hsTech.has(targetID)) {
-      var allTech = client.hsTech.get(targetID);
-      var targetDB = client.userDB.get(targetID) || {username: `<@${targetID}>`}
-      var techLevel = 0;
-      Object.keys(allTech).map(function(techID, index) {
-        if (client.config.hadesTech[techID]) 
-          techLevel += client.config.hadesTech[techID].levels[Number(allTech[techID]-1)] || 0;
-        });
-      hasData=true;
-      scoreTable.cell('Level', techLevel);
-      scoreTable.cell('User', targetDB.username);
-      scoreTable.newRow();
-    }
-  });  
-  if (!hasData) return message.reply("No data found");
-  else return message.reply(`Score recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` + "```" + scoreTable.sort('Level|des').toString()+"```"); 
-    
+  const cmd = client.commands.get("tech");
+  args.push("score");
+  try { cmd.run(client, message, args, level); }
+  catch (e) {
+    message.reply("An error occured and was caught by the message event: " + e);
+    throw e;
+  }
+  return;
+   
 };
 
 exports.conf = {
@@ -48,6 +24,6 @@ exports.conf = {
 exports.help = {
   name: "techscore",
   category: "Hades Star",
-  description: "Calculate Tech Score for all users",
-  usage: "techscore [role @role]"
+  description: "DEPRECATED! Calculate Tech Score for all users",
+  usage: "This command was replaced by the TECH command, this remais as an ALIAS.\ntechscore [role @role]"
 };

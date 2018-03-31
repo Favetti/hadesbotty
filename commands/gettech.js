@@ -2,25 +2,16 @@
 // This command will list all technology developed by the user, or by someone else especified by tag
 
 exports.run = async (client, message, args, level) => {
-  
-  args.map(function(x){ return x.toLowerCase() });
-  var targetID = message.author.id;
-  
-  if (args[0])
-    targetID = args[0].replace("<@","").replace(">","");
 
-  if (!client.hsTech.has(targetID))
-    return message.reply(`<@${targetID}> doesn't have any data`);
+  const cmd = client.commands.get("tech");
+  args.push("get");
+  try { cmd.run(client, message, args, level); }
+  catch (e) {
+    message.reply("An error occured and was caught by the message event: " + e);
+    throw e;
+  }
+  return;
   
-  var allTech = client.hsTech.get(targetID);
-  var msg = (targetID == message.author.id ? "here are your Tech levels: " : `here are Tech levels for <@${targetID}>`);
-  
-  Object.keys(client.config.hadesTech).forEach(techID => {
-    var techLevel = allTech[techID];
-    if (techLevel >0) msg += (`\n${client.config.hadesTech[techID].desc}: ${techLevel}`);    
-  });  
-
-  return message.reply(msg);
 };
 
 exports.conf = {
@@ -33,6 +24,6 @@ exports.conf = {
 exports.help = {
   name: "gettech",
   category: "Hades Star",
-  description: "Shows Technology Level for you or tagged user",
-  usage: "gettech [user tag]"
+  description: "DEPRECATED! Shows Technology Level for you or tagged user",
+  usage: "This command was replaced by the TECH command, this remais as an ALIAS.\ngettech [user tag]"
 };
