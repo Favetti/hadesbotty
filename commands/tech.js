@@ -54,7 +54,8 @@ exports.run = async (client, message, args, level) => {
     else if (arg.indexOf(",") >0)
       techLevels = arg.split(",");
     else 
-      client.logger.log("<!> Unidentified ARG: "+arg);
+      message.reply("I did not understand the '"+arg+"' part... gonna try to reply ignoring that!");
+      //client.logger.log("<!> Unidentified ARG: "+arg);
   });
   
   
