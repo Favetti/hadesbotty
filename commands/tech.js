@@ -4,8 +4,6 @@
 
 exports.run = async (client, message, args, level) => { 
 
-  args = args.map(function(x){ return x.toLowerCase() });
-
   const moment = require("moment"),
         table = require('easy-table');
  
@@ -22,6 +20,9 @@ exports.run = async (client, message, args, level) => {
       action;
   
   args.forEach(function(arg) {
+    
+    arg = client.normalizeTechName(arg);
+    
     // ** Find ACTION
     if (arg === "set")           action = "set";
     else if (arg === "get")      action = "get";
@@ -54,11 +55,10 @@ exports.run = async (client, message, args, level) => {
       techLevels = arg.split(",");
     else 
       client.logger.log("<!> Unidentified ARG: "+arg);
-
-    
   });
+  
+  if (!action) return message.reply("I could not understand what you want... \n ... GET ? SET ? SCORE ? SEARCH ?\n ... Go to the Beach ?");
 
-  client.logger.debug(":"+level+"::"+targetID+"!="+message.author.id);
   if (action.indexOf("set") === 0) {
     if (!singleTarget) 
       return message.reply("Cannot SET parameters for a GROUP.");
@@ -123,21 +123,25 @@ exports.run = async (client, message, args, level) => {
     let msg = "Setting tech for <@"+targetID+">";
 
     if (!techGroup) { // single Tech
-      if (!techID || !techLevel) return message.reply("Missing arguments");
-      if (!client.config.hadesTech[techID].levels[techLevel]) return message.reply("Invalid Level ("+techLevel+") for "+client.config.hadesTech[techID].desc);
-
-      allTech[techID] = techLevel;
+      if (!techID || !techLevel) return message.reply("Did you forget something ?? Missing the tech levels...");
+      if (!client.config.hadesTech[techID].levels[techLevel-1]) return message.reply("Invalid Level ("+techLevel+") for "+client.config.hadesTech[techID].desc);
       msg += `\n${client.config.hadesTech[techID].desc} : set to ${techLevel} (was ${allTech[techID]})`
+      allTech[techID] = techLevel;
     }  
     else { // group
-      if (client.config.hadesTechSize[techGroup] != techLevels.length)  return message.reply(`Invalid number of techs: ${techLevels.length} instead of ${client.config.hadesTechSize[techGroup]}`);
+      if (!techLevels) return message.reply("Did you forget something ?? Missing the tech levels...");
+      if (client.config.hadesTechSize[techGroup] != techLevels.length) return message.reply(`Invalid number of techs: ${techLevels.length} instead of ${client.config.hadesTechSize[techGroup]}`);
 
       let i = 0;
       Object.keys(client.config.hadesTech).forEach(techID => {
         if (client.config.hadesTech[techID].group == techGroup) {
           techLevel = techLevels[i++];
-          msg += `\n${client.config.hadesTech[techID].desc} : set to ${techLevel} (was ${allTech[techID]})`;
-          allTech[techID] = techLevel;     
+          if (!client.config.hadesTech[techID].levels[techLevel-1]) 
+            msg += "\nInvalid Level ("+techLevel+") for "+client.config.hadesTech[techID].desc;
+          else {          
+            msg += `\n${client.config.hadesTech[techID].desc} : set to ${techLevel} (was ${allTech[techID]})`;
+            allTech[techID] = techLevel;     
+          }
         }
       });
     }  
@@ -159,17 +163,19 @@ exports.help = {
   category: "Hades Star",
   description: "Input and retrieve tech info.",
   usage: `tech [set|get|score|search] [all|@role|@user] [...args...]
-------------------------------------------
-GET and SET only work for a single target
-SCORE works with single user, role or all
-SEARCH is for any tech
-------------------------------------------
-Examples:
-• !t set @fato emp 5
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+GET/SET - only work for @user (or self, if omitted)
+SCORE   - works with @user, @role or all
+SEARCH  - is for any tech
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Examples::
+• !t set emp 5
 • !t set @fato ships 4,4,4
 • !t get @fato
 • !t score @ws_squad_1
 • !t search destiny
-------------------------------------------
-TechGroups: ships(3), trade(10), mining(8), weapons(5), shields(6), support(18)`
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+TechGroups:: 
+ . . . ships   (x3), trade  (x10), mining   (x8), 
+ . . . weapons (x5), shields (x6), support (x18)`
 };
