@@ -389,13 +389,17 @@ exports.conf = {
 exports.help = {
   name: "redstar",
   category: "Hades Star",
-  description: "Joins a cross-server que for a redstar level that communicate through DM. The que starts counting down as soon as all users are ready. If there are "+MATCH_MAX+" users in the que, the option to kick AFK/unready player becomes available after 2 minutes.\n"+
-    "  Example: redstar 6 (Joins the RS6 que)\n"+
-    "  Example: redstar status (View the current que status)\n"+
-    "  Example: redstar leave (Leave the que)\n"+
-    "  Example: redstar ready (sets status to ready)\n"+
-    "  Example: redstar unready (sets status to not-ready)\n"+
-    "  Example: redstar kick (removes players who aren't ready and marks all other ready players as unready)\n"+
-    "  Short Versions: 'rs 6', 'rs s', 'rs l', 'rs r', 'rs u', 'rs k'\n",
-  usage: "redstar [RSnumber, leave, status, ready, unready, or kick]"
+  description: "Joins a cross-server queue for a redstar.",
+  usage: `redstar [RSnumber, leave, status, ready, unready, or kick]
+The que starts counting down as soon as all users are ready. If there are ${MATCH_MAX} users in the que, the option to kick AFK/unready player becomes available after 2 minutes.
+Examples:
+  • !redstar 6        (Joins the RS6 que)
+  • !redstar status   (View the current que status)
+  • !redstar leave    (Leave the que)
+  • !redstar ready    (sets status to ready)
+  • !redstar unready  (sets status to not-ready)
+  • !redstar kick     (removes unready players and marks all others as unready)
+Short Versions: 'rs 6', 'rs s', 'rs l', 'rs r', 'rs u', 'rs k'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+** All communication happens thru Direct Messages **`
 };

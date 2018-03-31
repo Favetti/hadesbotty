@@ -77,6 +77,6 @@ exports.conf = {
 exports.help = {
   name: "export",
   category: "Hades Star",
-  description: "Export Guild's Tech data to a webpage.\nFor an example of import Sheet, visit: https://goo.gl/zfPDoz",
-  usage: "export  [role @role]\nYou can set another URL to be replied with !set add webSheet <URL> (case sensitive)"
+  description: "Export Guild's Tech data to a webpage.",
+  usage: "export  [role @role]\nYou can set another URL to be replied with !set add webSheet <URL> (case sensitive)\nFor an example of import Sheet, visit: https://goo.gl/zfPDoz"
 };
