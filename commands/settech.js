@@ -24,6 +24,6 @@ exports.conf = {
 exports.help = {
   name: "settech",
   category: "x Deprecated - HS x",
-  description: "DEPRECATED! Update your Technology Level",
+  description: "DEPRECATED! Use: !tech set",
   usage: "This command was replaced by the TECH command, this remais as an ALIAS.\nsettech [techID] [level] \n\nValid Tech: transp, miner, bs, cargobay, computer, tradeboost, rush, tradeburst, autopilot, offload, beam, entrust, recall, hydrobay, miningboost, enrich, remote, hydroupload, miningunity, crunch, genesis, battery, laser, mass, dual, barrage, alpha, delta, passive, omega, mirror, area, emp, teleport, rsextender, repair, warp, unity, sanctuary, stealth, fortify, impulse, rocket, salvage, suppress, destiny, barrier, vengeance, leap, drone"
 };

@@ -205,6 +205,10 @@ exports.conf = {
 exports.help = {
   name: "techreport",
   category: "Hades Star",
-  description: "Show a report on one or more users/roles and their one or more technologies (run multiple reports on the same users by them by another '|'\n  Example: techreport all | ships\n  Example: techreport @nickname @roleName | miner genesis crunch | bs batt passive emp salv",
-  usage: "techreport (all or @role or @user)... | (techID or techGroup)... [| (techId or techGroup)...]..."
+  description: "Shows a report on users/roles and techs.",
+  usage: `techreport (all or @role or @user)... | (techID or techGroup)... [| (techId or techGroup)...]...
+Run multiple reports on the same users by adding another '|'
+Examples:
+  • !techreport all | ships
+  • !techreport @nickname @roleName | miner genesis crunch | bs batt passive emp salv`
 };

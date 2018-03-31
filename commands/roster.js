@@ -276,11 +276,12 @@ exports.conf = {
 exports.help = {
   name: "roster",
   category: "Hades Star",
-  description: "Shows the current roster of who is in the WS and what ships they are bringing Each player can have one battle build and one support build. \n"+
-    "  Example: roster all (shows the current builds for all players marked active\n"+
-    "  Example: roster remove @user (sets the @user to inactive)\n"+
-    "  Example: roster add @role (sets all @role users to active)\n"+
-    "  Example: roster set @role bs batt omega sanc emp (sets the battle build for all @role users)\n"+
-    "  Example: roster set @user bs batt omega sanc emp | ts cargo entrust barrier (sets the battle and support build for @user)\n",
-  usage: "roster [set, remove or add] (all or @role or @user)... [ship type] [techID]... [| [ship type] [techID...]]"
+  description: "The Corp's WS roster (players/ships)",
+  usage: `roster [set, remove or add] (all or @role or @user)... [ship type] [techID]... [| [ship type] [techID...]]
+Examples:
+  • !roster all (shows the current builds for all players marked active
+  • !roster remove @user (sets the @user to inactive)
+  • !roster add @role (sets all @role users to active)
+  • !roster set @role bs batt omega sanc emp (sets the battle build for all @role users)
+  • !roster set @user bs batt omega sanc emp | ts cargo entrust barrier (sets the battle and support build for @user)`
 };

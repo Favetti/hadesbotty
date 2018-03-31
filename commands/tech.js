@@ -137,20 +137,24 @@ exports.run = async (client, message, args, level) => {
     let msg = "Setting tech for <@"+targetID+">";
 
     if (!techGroup) { // single Tech
-      if (!techID || !techLevel) return message.reply("Did you forget something ?? Missing the tech levels...");
-      if (!client.config.hadesTech[techID].levels[techLevel-1]) return message.reply("Invalid Level ("+techLevel+") for "+client.config.hadesTech[techID].desc);
+      if (!techID || !techLevel)
+        return message.reply("Did you forget something ?? Missing the tech levels...");
+      if (!client.config.hadesTech[techID].levels[techLevel-1] && techLevel != 0)
+        return message.reply("Invalid Level ("+techLevel+") for "+client.config.hadesTech[techID].desc);
       msg += `\n${client.config.hadesTech[techID].desc} : set to ${techLevel} (was ${allTech[techID]})`
       allTech[techID] = techLevel;
     }  
     else { // group
-      if (!techLevels) return message.reply("Did you forget something ?? Missing the tech levels...");
-      if (client.config.hadesTechSize[techGroup] != techLevels.length) return message.reply(`Invalid number of techs: ${techLevels.length} instead of ${client.config.hadesTechSize[techGroup]}`);
+      if (!techLevels) 
+        return message.reply("Did you forget something ?? Missing the tech levels...");
+      if (client.config.hadesTechSize[techGroup] != techLevels.length)
+        return message.reply(`Invalid number of techs: ${techLevels.length} instead of ${client.config.hadesTechSize[techGroup]}`);
 
       let i = 0;
       Object.keys(client.config.hadesTech).forEach(techID => {
         if (client.config.hadesTech[techID].group == techGroup) {
           techLevel = techLevels[i++];
-          if (!client.config.hadesTech[techID].levels[techLevel-1]) 
+          if (!client.config.hadesTech[techID].levels[techLevel-1] && techLevel != 0) 
             msg += "\nInvalid Level ("+techLevel+") for "+client.config.hadesTech[techID].desc;
           else {          
             msg += `\n${client.config.hadesTech[techID].desc} : set to ${techLevel} (was ${allTech[techID]})`;
@@ -160,7 +164,7 @@ exports.run = async (client, message, args, level) => {
       });
     }  
     client.hsTech.set(targetID, allTech);
-    client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
+    //client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
     return message.reply(msg);    
   }
 };

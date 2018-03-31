@@ -14,6 +14,6 @@ exports.conf = {
 exports.help = {
   name: "mylevel",
   category: "Miscelaneous",
-  description: "Tells you your permission level for the current Guild and your chatting level.",
+  description: "Tells your current permission level.",
   usage: "mylevel"
 };

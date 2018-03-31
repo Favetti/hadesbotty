@@ -93,6 +93,6 @@ exports.conf = {
 exports.help = {
   name: "lastseen",
   category: "Miscelaneous",
-  description: "What is the last time a corp member was seen?",
+  description: "Last time i saw someone ?",
   usage: "lastseen [@user|role @role|all]."
 };
