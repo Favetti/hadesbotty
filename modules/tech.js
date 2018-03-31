@@ -1,11 +1,25 @@
 module.exports = (client) => {
   
   client.normalizeTechName = (name) => {
-    switch(name.toLowerCase()) {
+
+    name = name.toLowerCase();
+    switch(name) {
+        
+      // TECH GROUPS:
+      case "ship":
+         return "ships";
+      case "weapon":
+         return "weapons";
+      case "shield":
+         return "shields";
+
+      // BASE TECH:
       case "redstarscanner":
       case "scanner":
       case "rss":
          return "rs";
+        
+      // INDIVIDUAL TECH - ships:
       case "ts":
       case "trans":
       case "transport":
@@ -15,6 +29,8 @@ module.exports = (client) => {
       case "battleship":
       case "battle":
          return "bs";
+        
+      // INDIVIDUAL TECH - trade:
       case "cargo_bay_extension":
       case "cargo":
       case "cb":
@@ -47,6 +63,8 @@ module.exports = (client) => {
          return "beam";
          return "entrust";//can't reach
          return "recall";//can't reach
+        
+      // INDIVIDUAL TECH - mining:
       case "hydrogen_bay_extension":
       case "hydrogenbay":
       case "hb":
@@ -70,6 +88,8 @@ module.exports = (client) => {
          return "miningunity";
          return "crunch";//can't reach
          return "genesis";//can't reach
+        
+      // INDIVIDUAL TECH - weapons:
       case "batt":
          return "battery";
          return "laser";
@@ -82,6 +102,8 @@ module.exports = (client) => {
       case "dualaser":
          return "dual";
          return "barrage";//can't reach
+        
+      // INDIVIDUAL TECH - shields:
       case "alpha_shield":
       case "alphashield":
          return "alpha";
@@ -110,6 +132,8 @@ module.exports = (client) => {
       case "ashield":
       case "as":
          return "area";
+        
+      // INDIVIDUAL TECH - support:
          return "emp";//can't reach
       case "tel":
       case "tele":
@@ -164,6 +188,6 @@ module.exports = (client) => {
       default:
         break;
     }
-    return name.toLowerCase()
+    return name;
   }
 };

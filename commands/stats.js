@@ -3,7 +3,12 @@ const moment = require("moment");
 require("moment-duration-format");
 
 exports.run = (client, message, args, level) => { // eslint-disable-line no-unused-vars
-  const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+
+  const duration = moment.duration(client.uptime).format(" D [days], H [hrs], m [mins], s [secs]"),
+        easyTable = require('easy-table');
+  var table = new easyTable;
+
+  
   var msg = `= STATISTICS =
 • Mem Usage  :: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
 • Uptime     :: ${duration}
@@ -15,16 +20,10 @@ exports.run = (client, message, args, level) => { // eslint-disable-line no-unus
 
   if (args[0]) {
     if (args[0] === "full"){
-      msg += "\n-----------------------------------";
+      msg += "\n\n====================================\n";
 
       let corps = {};
-  /*    client.settings.foreach(function (target, targetID, mapObj){
-        corps[targetID] = {name: "", users: 0}
-      });
-  */    
       client.userDB.forEach(function (target, targetID){
-        //client.logger.debug(targetID+"::"+JSON.stringify(target));
-
         Object.keys(target).forEach(function (key){
           if ( key !== "username" && key !== "lastSeen" && key !== "timeOffset" ) {
             if (!corps[key]) corps[key] = {users: 0};
@@ -36,12 +35,14 @@ exports.run = (client, message, args, level) => { // eslint-disable-line no-unus
 
       });
       Object.keys(corps).forEach(function (key){
-        msg += "\n•• "+corps[key].name+" ("+corps[key].users+" users)";
+        //msg += "\n•• "+corps[key].name+" ("+corps[key].users+" users)";
+        table.cell('Corps', "• "+corps[key].name);
+        table.cell('Users', corps[key].users);
+        table.newRow();
       });
-      //client.logger.debug(JSON.stringify(corps));
     }
   }  
-  message.channel.send(msg, {code: "asciidoc"})
+  message.channel.send(msg+table.sort('Users|des').toString(), {code: "asciidoc"})
 };
 
 exports.conf = {
@@ -54,6 +55,6 @@ exports.conf = {
 exports.help = {
   name: "stats",
   category: "Miscelaneous",
-  description: "Gives some useful bot statistics",
+  description: "Gives some (not-so)useful bot statistics",
   usage: "stats"
 };
