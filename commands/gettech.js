@@ -23,7 +23,7 @@ exports.conf = {
 
 exports.help = {
   name: "gettech",
-  category: "Deprecated - HS",
+  category: "x Deprecated - HS x",
   description: "DEPRECATED! Shows Technology Level for you or tagged user",
   usage: "This command was replaced by the TECH command, this remais as an ALIAS.\ngettech [user tag]"
 };

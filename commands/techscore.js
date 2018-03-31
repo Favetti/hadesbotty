@@ -23,7 +23,7 @@ exports.conf = {
 
 exports.help = {
   name: "techscore",
-  category: "Deprecated - HS",
+  category: "x Deprecated - HS x",
   description: "DEPRECATED! Calculate Tech Score for all users",
   usage: "This command was replaced by the TECH command, this remais as an ALIAS.\ntechscore [role @role]"
 };

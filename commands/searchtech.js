@@ -23,7 +23,7 @@ exports.conf = {
 
 exports.help = {
   name: "searchtech",
-  category: "Deprecated - HS",
+  category: "x Deprecated - HS x",
   description: "DEPRECATED! Search for a Technology from all users",
   usage: "This command was replaced by the TECH command, this remais as an ALIAS.\nsearchtech [techID] [role @role]\n\nValid Tech: transp, miner, bs, cargobay, computer, tradeboost, rush, tradeburst, autopilot, offload, beam, entrust, recall, hydrobay, miningboost, enrich, remote, hydroupload, miningunity, crunch, genesis, battery, laser, mass, dual, barrage, alpha, delta, passive, omega, mirror, emp, teleport, rsextender, repair, warp, unity, sanctuary, stealth, fortify, impulse, rocket, salvage, suppress, destiny, barrier, vengeance, leap"
 };
