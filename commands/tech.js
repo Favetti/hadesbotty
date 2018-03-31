@@ -164,7 +164,7 @@ exports.run = async (client, message, args, level) => {
       });
     }  
     client.hsTech.set(targetID, allTech);
-    client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
+    //client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
     return message.reply(msg);    
   }
 };
