@@ -19,8 +19,8 @@ exports.run = async (client, message, args, level) => {
       techID,
       action;
   
+  // ** PARSE and SORT OUT arguments
   args.forEach(function(arg) {
-    
     arg = client.normalizeTechName(arg);
     
     // ** Find ACTION
@@ -57,16 +57,29 @@ exports.run = async (client, message, args, level) => {
       client.logger.log("<!> Unidentified ARG: "+arg);
   });
   
-  if (!action) return message.reply("I could not understand what you want... \n ... GET ? SET ? SCORE ? SEARCH ?\n ... Go to the Beach ?");
+  
+  //** VALIDATE ARGUMENTs COMPOSITION
+  if (!action)
+    return message.reply("I could not understand what you want... \n ... GET ? SET ? SCORE ? SEARCH ?\n ... Go to the Beach ?");
 
-  if (action.indexOf("set") === 0) {
+  if (action === "set") {
     if (!singleTarget) 
       return message.reply("Cannot SET parameters for a GROUP.");
     if (level <= 1 && targetID != message.author.id)
       return message.reply("Only Moderators or higher can SET other people's tech... safety stuff, you know...");
-  }  
-  if (action.indexOf("get") === 0 && !singleTarget) return message.reply("GET can only return a single user.");
-    
+  }
+  
+  if (action === "get" && !singleTarget) 
+    return message.reply("GET can only return a single user.");
+
+  if (action === "search") {
+    if (techGroup)
+      return message.reply("SEARCH only works with a single tech. Use TechReport for broader options.");
+    else if (!techID)
+      return message.reply("SEARCH needs a valid tech.");
+  }
+  
+  // ** DO-IT
   if (action === "get"){
     if (!client.hsTech.has(targetID))
       return message.reply(`<@${targetID}> doesn't have any data`);
