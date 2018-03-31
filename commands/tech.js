@@ -179,7 +179,7 @@ exports.conf = {
 exports.help = {
   name: "tech",
   category: "Hades Star",
-  description: "Input and retrieve tech info.",
+  description: "Input and retrieve tech info",
   usage: `tech [set|get|score|search] [all|@role|@user] [...args...]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 GET/SET - only work for @user (or self, if omitted)

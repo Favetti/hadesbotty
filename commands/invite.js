@@ -22,6 +22,6 @@ exports.conf = {
 exports.help = {
   name: "invite",
   category: "Miscelaneous",
-  description: "Get a link to the invite URL.",
+  description: "Get a link to the invite URL",
   usage: "invite"
 };

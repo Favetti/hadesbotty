@@ -278,8 +278,9 @@ exports.help = {
   category: "Hades Star",
   description: "The Corp's WS roster (players/ships)",
   usage: `roster [set, remove or add] (all or @role or @user)... [ship type] [techID]... [| [ship type] [techID...]]
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Examples:
-  • !roster all (shows the current builds for all players marked active
+  • !roster all (shows the current builds for all players marked active)
   • !roster remove @user (sets the @user to inactive)
   • !roster add @role (sets all @role users to active)
   • !roster set @role bs batt omega sanc emp (sets the battle build for all @role users)

@@ -389,7 +389,7 @@ exports.conf = {
 exports.help = {
   name: "redstar",
   category: "Hades Star",
-  description: "Joins a cross-server queue for a redstar.",
+  description: "Joins a cross-server queue for a redstar",
   usage: `redstar [RSnumber, leave, status, ready, unready, or kick]
 The que starts counting down as soon as all users are ready. If there are ${MATCH_MAX} users in the que, the option to kick AFK/unready player becomes available after 2 minutes.
 Examples:

@@ -205,7 +205,7 @@ exports.conf = {
 exports.help = {
   name: "techreport",
   category: "Hades Star",
-  description: "Shows a report on users/roles and techs.",
+  description: "Shows a report on users/roles and techs",
   usage: `techreport (all or @role or @user)... | (techID or techGroup)... [| (techId or techGroup)...]...
 Run multiple reports on the same users by adding another '|'
 Examples:
