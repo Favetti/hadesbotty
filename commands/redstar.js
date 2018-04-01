@@ -253,7 +253,7 @@ function action_join(client, userID, rsQueName) {
   }
   if (-1 !== rsQueInfo.users.indexOf(userID)) {
     client.fetchUser(userID).then(user => {user.send("You are already in the RS"+rsQueName+" que!")});
-    client.logger.error(require('util').inspect(rsQueInfo));
+    //client.logger.error(require('util').inspect(rsQueInfo));
     return true;
   }
   var oldQueName = false;
