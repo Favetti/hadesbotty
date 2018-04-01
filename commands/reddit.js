@@ -77,6 +77,6 @@ exports.conf = {
 exports.help = {
   name: "reddit",
   category: "Hades Star",
-  description: "Fetch a Wiki page from Reddit about Techs.",
+  description: "Fetch a Wiki page from Reddit about Techs",
   usage: "reddit [tech] [levels]\n If levels are specied, only show those specific columns."
 };

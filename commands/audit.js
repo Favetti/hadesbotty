@@ -87,7 +87,7 @@ exports.conf = {
 
 exports.help = {
   name: "audit",
-  category: "Miscelaneous",
+  category: "System",
   description: "Audit the Database",
   usage: "audit <database>."
 };

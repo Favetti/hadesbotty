@@ -1,7 +1,3 @@
-// ....  trying to unify all tech commands in one easier to understand
-
-// prior to normalizeTech and spaced_setall_args... need some rework.
-
 exports.run = async (client, message, args, level) => { 
 
   const moment = require("moment"),
@@ -87,13 +83,32 @@ exports.run = async (client, message, args, level) => {
 
     let allTech = client.hsTech.get(targetID);
     let msg = (targetID == message.author.id ? "here are your Tech levels: " : `here are Tech levels for <@${targetID}>`);
+    let lineBreaker = "Base";
 
     Object.keys(client.config.hadesTech).forEach(techID => {
       let techLevel = allTech[techID];
-      if (techLevel >0) msg += (`\n${client.config.hadesTech[techID].desc}: ${techLevel}`);    
+      if (techLevel >0) {
+        //msg += (`\n${client.config.hadesTech[techID].desc}: ${techLevel}`);
+        hasData=true;
+        let splitTech = client.config.hadesTech[techID].desc.split(" - ");
+        if ( lineBreaker != splitTech[0] ) {
+          dataTable.cell('Group', "-------");
+          dataTable.cell('Tech', "----------------------");
+          dataTable.cell('Level', "-----");
+          dataTable.cell('Score', "-----");
+          dataTable.newRow();
+          lineBreaker = splitTech[0];
+        }
+        dataTable.cell('Group', splitTech[0]);
+        dataTable.cell('Tech', splitTech[1]);
+        dataTable.cell('Level', "  "+techLevel);
+        dataTable.cell('Score', client.config.hadesTech[techID].levels[Number(techLevel-1)], table.number(0));
+        dataTable.newRow();
+      }
     });  
-
-    return message.reply(msg);    
+    if (!hasData) return message.reply("No data found");
+    else return message.reply(msg + "```" + dataTable.toString()+"```"); 
+    //return message.reply(msg);    
   }
   else if (action === "score"){
     searchObj.members.forEach(function (value, index){
@@ -179,7 +194,7 @@ exports.conf = {
 exports.help = {
   name: "tech",
   category: "Hades Star",
-  description: "Input and retrieve tech info.",
+  description: "Input and retrieve tech info",
   usage: `tech [set|get|score|search] [all|@role|@user] [...args...]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 GET/SET - only work for @user (or self, if omitted)
