@@ -92,14 +92,14 @@ exports.run = async (client, message, args, level) => {
         hasData=true;
         let splitTech = client.config.hadesTech[techID].desc.split(" - ");
         if ( lineBreaker != splitTech[0] ) {
-          dataTable.cell('Group', "-------");
-          dataTable.cell('Tech', "----------------------");
+          //dataTable.cell('Group', "-------");
+          dataTable.cell('Tech', "--------------"+splitTech[0]+"-");
           dataTable.cell('Level', "-----");
           dataTable.cell('Score', "-----");
           dataTable.newRow();
           lineBreaker = splitTech[0];
         }
-        dataTable.cell('Group', splitTech[0]);
+        //dataTable.cell('Group', splitTech[0]);
         dataTable.cell('Tech', splitTech[1]);
         dataTable.cell('Level', "  "+techLevel);
         dataTable.cell('Score', client.config.hadesTech[techID].levels[Number(techLevel-1)], table.number(0));
