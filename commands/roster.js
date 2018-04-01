@@ -74,7 +74,7 @@ exports.run = async (client, message, args, level) => {
     var rosterEntry;
     rosterEntry = client.rosterDB.has(targetID) ? new Map(client.rosterDB.get(targetID)) : false;
     if (!rosterEntry) {
-      errors += "No roster entry for "+targetID+"\n";// Debug
+      //errors += "No roster entry for "+targetID+"\n";// Debug
       rosterEntry = new Map([['active', false], ['battleBuild', false], ['supportBuild', false]]);
     } else {
       //errors += "rosterEntry is:\n" + util.inspect(rosterEntry) + "\n";// Debug
