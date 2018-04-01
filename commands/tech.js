@@ -1,3 +1,6 @@
+// TO-DO:  accept SPACE instead of ',' for set multiple tech levels
+
+
 exports.run = async (client, message, args, level) => { 
 
   const moment = require("moment"),
@@ -150,6 +153,7 @@ exports.run = async (client, message, args, level) => {
 
     let allTech = client.hsTech.get(targetID) || {rs: 0, transp: 0,	miner: 0,	bs: 0,	cargobay: 0,	computer: 0,	tradeboost: 0,	rush: 0,	tradeburst: 0,	autopilot: 0,	offload: 0,	beam: 0,	entrust: 0,	recall: 0,	hydrobay: 0,	miningboost: 0,	enrich: 0,	remote: 0,	hydroupload: 0,	miningunity: 0,	crunch: 0,	genesis: 0,	battery: 0,	laser: 0,	mass: 0,	dual: 0,	barrage: 0,	alpha: 0,	delta: 0,	pas: 0,	omega: 0,	mirror: 0,	area: 0, emp: 0,	teleport: 0,	rsextender: 0,	repair: 0,	warp: 0,	unity: 0,	sanctuary: 0,	stealth: 0,	fortify: 0,	impulse: 0,	rocket: 0,	salvage: 0,	suppress: 0,	destiny: 0,	barrier: 0,	vengeance: 0,	leap: 0 };
     let msg = "Setting tech for <@"+targetID+">";
+    let invalid = "Invalid Levels:";
 
     if (!techGroup) { // single Tech
       if (!techID || !techLevel)
@@ -170,9 +174,14 @@ exports.run = async (client, message, args, level) => {
         if (client.config.hadesTech[techID].group == techGroup) {
           techLevel = techLevels[i++];
           if (!client.config.hadesTech[techID].levels[techLevel-1] && techLevel != 0) 
-            msg += "\nInvalid Level ("+techLevel+") for "+client.config.hadesTech[techID].desc;
+            invalid += "\n"+techLevel+" -> "+client.config.hadesTech[techID].desc;
+            //msg += "\nInvalid Level ("+techLevel+") for "+client.config.hadesTech[techID].desc;
           else {          
-            msg += `\n${client.config.hadesTech[techID].desc} : set to ${techLevel} (was ${allTech[techID]})`;
+            //msg += `\n${client.config.hadesTech[techID].desc} : set to ${techLevel} (was ${allTech[techID]})`;
+            dataTable.cell('Tech', client.config.hadesTech[techID].desc);
+            dataTable.cell('New Lvl', techLevel);
+            dataTable.cell('Old Lvl', allTech[techID]);
+            dataTable.newRow();
             allTech[techID] = techLevel;     
           }
         }
@@ -180,6 +189,8 @@ exports.run = async (client, message, args, level) => {
     }  
     client.hsTech.set(targetID, allTech);
     //client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
+    msg += "```" + dataTable.toString()+"```";
+    if (invalid != "Invalid Levels:") msg += invalid;
     return message.reply(msg);    
   }
 };
