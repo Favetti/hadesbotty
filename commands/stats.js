@@ -19,8 +19,6 @@ exports.run = (client, message, args, level) => { // eslint-disable-line no-unus
 
   if (args[0]) {
     if (args[0] === "full"){
-      msg += "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - -\n";
-
       let corps = {};
       client.userDB.forEach(function (target, targetID){
         Object.keys(target).forEach(function (key){
@@ -32,14 +30,17 @@ exports.run = (client, message, args, level) => { // eslint-disable-line no-unus
         });
       });
       Object.keys(corps).forEach(function (key){
-        //msg += "\n•• "+corps[key].name+" ("+corps[key].users+" users)";
-        table.cell('Corps', "• "+corps[key].name);
-        table.cell('Users', corps[key].users);
-        table.newRow();
+        if (corps[key].users >= 5) {
+          table.cell('Corps', "• "+corps[key].name.substr(0,20));
+          table.cell('Users', corps[key].users);
+          table.newRow();
+        }
       });
     }
   }  
-  message.channel.send(msg+table.sort(['Users|des']).toString(), {code: "asciidoc"})
+  message.channel.send(msg, {code: "asciidoc"})
+  message.channel.send(table.sort(['Users|des']).toString(), {code: "asciidoc"})
+  message.channel.send("*Only showing channels with 5 or more users...")
 };
 
 exports.conf = {

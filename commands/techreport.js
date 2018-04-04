@@ -44,8 +44,10 @@ exports.run = async (client, message, args, level) => {
           return true; //Skip to next member of args
         }
         message.guild.roles.get(roleID).members.forEach(function(targetDB, targetID){
-          targetDB = client.userDB.get(targetID);
-          members.set(targetID, targetDB);
+          if (client.checkPrivacy(targetID, message.guild.id)) {
+            targetDB = client.userDB.get(targetID);
+            members.set(targetID, targetDB);
+          }
         });
       }
       else if (arg.indexOf("<@") >= 0 ) { //target is a USER
@@ -60,12 +62,17 @@ exports.run = async (client, message, args, level) => {
         } else {
           //errors += `Showing member: ${arg}\n`; //Debug
         }
-        members.set(targetID, targetDB);
+        if (client.checkPrivacy(targetID, message.guild.id)) 
+          members.set(targetID, targetDB);
+        else
+          return message.reply(`<@${targetID}> has set his tech as private to another server.`);
       } else if (arg.trim() == 'all') {
         //errors += `Showing all: ${arg}\n`; //Debug
         message.guild.members.forEach(function(targetDB, targetID){
-          targetDB = client.userDB.get(targetID);
-          members.set(targetID, targetDB);
+          if (client.checkPrivacy(targetID, message.guild.id)) {
+            targetDB = client.userDB.get(targetID);
+            members.set(targetID, targetDB);
+          }
         });
       } else {
         errors += `I do not recognize the User argument: ${arg}\n`;

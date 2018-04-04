@@ -1,5 +1,15 @@
 module.exports = (client) => {
   
+  client.checkPrivacy = (targetID, guildID) => {
+
+    if (!client.userDB.has(targetID))           return true; //OK to proceed  
+    let targetDB = client.userDB.get(targetID);
+    if (!targetDB.hasOwnProperty("privacy"))    return true; //OK to proceed 
+    if (targetDB.privacy === guildID)           return true; //OK to proceed 
+    
+    return false; //do NOT proceed
+  }
+
   client.normalizeTechName = (name) => {
 
     name = name.toLowerCase();

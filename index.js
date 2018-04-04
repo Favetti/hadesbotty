@@ -75,11 +75,11 @@ const init = async () => {
   app.listen(process.env.PORT);
   
   // Express Keepalive for Glitch
-  if(process.env.BOTTY_ENVIRONMENT === "PRD") {
+  //if(process.env.BOTTY_ENVIRONMENT === "PRD") {
     setInterval(() => {
       http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
     }, 250000);
-  }
+  //}
   
 };
 

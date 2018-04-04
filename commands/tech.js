@@ -7,26 +7,26 @@ exports.run = async (client, message, args, level) => {
         table = require('easy-table');
  
   var targetID = message.author.id,
-      targetDB = message.userDB,
       searchObj = message.guild,
       dataTable = new table,
       singleTarget = true,
       hasData = false,
+      missedArg = "",
       techLevels,
       techLevel,
       techGroup,
       techID,
       action;
   
-  // ** PARSE and SORT OUT arguments
+  // *** PARSE and SORT OUT arguments
   args.forEach(function(arg) {
     arg = client.normalizeTechName(arg);
     
-    // ** Find ACTION
+    // *** Find ACTION
     if (arg === "set")           action = "set";
     else if (arg === "get")      action = "get";
     else if (arg === "score")    action = "score";
-    else if (arg === "search")   action = "search";    
+    else if (arg === "search")   action = "search";  
    
     // *** Find TARGET
     else if (arg === "all") { //target is the guild
@@ -38,10 +38,8 @@ exports.run = async (client, message, args, level) => {
       if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
       searchObj = message.guild.roles.get(roleID);
     }
-    else if (arg.indexOf("<@") >= 0 ) { //target is a USER
+    else if (arg.indexOf("<@") >= 0 )  //target is a USER
       targetID = arg.replace("<@","").replace(">","");
-      targetDB = client.userDB.get(targetID) || {username: arg}
-    }
     else if (client.config.hadesTechSize[arg]) // target is Tech Group
       techGroup = arg;
     
@@ -53,12 +51,14 @@ exports.run = async (client, message, args, level) => {
     else if (arg.indexOf(",") >0)
       techLevels = arg.split(",");
     else 
-      message.reply("I did not understand the '"+arg+"' part... gonna try to reply ignoring that!");
+      missedArg += arg+" ";
       //client.logger.log("<!> Unidentified ARG: "+arg);
   });
   
+  if (missedArg)
+    message.reply("I did not understand all you said... gonna try to reply ignoring: "+missedArg);
   
-  //** VALIDATE ARGUMENTs COMPOSITION
+  // *** VALIDATE ARGUMENTs COMPOSITION
   if (!action)
     return message.reply("I could not understand what you want... \n ... GET ? SET ? SCORE ? SEARCH ?\n ... Go to the Beach ?");
 
@@ -68,9 +68,18 @@ exports.run = async (client, message, args, level) => {
     if (level <= 1 && targetID != message.author.id)
       return message.reply("Only Moderators or higher can SET other people's tech... safety stuff, you know...");
   }
-  
-  if (action === "get" && !singleTarget) 
-    return message.reply("GET can only return a single user.");
+    
+  if (action === "get") {
+    if (!singleTarget) 
+      return message.reply("GET can only return a single user.");
+    
+    if (!client.hsTech.has(targetID))
+      return message.reply(`<@${targetID}> doesn't have any data`);
+    
+    if (!client.checkPrivacy(targetID, message.guild.id))
+      return message.reply(`<@${targetID}> has set his tech as private to another server.`);
+      
+  }
 
   if (action === "search") {
     if (techGroup)
@@ -78,11 +87,9 @@ exports.run = async (client, message, args, level) => {
     else if (!techID)
       return message.reply("SEARCH needs a valid tech.");
   }
-  
-  // ** DO-IT
+
+  // *** EXECUTE THE COMMAND
   if (action === "get"){
-    if (!client.hsTech.has(targetID))
-      return message.reply(`<@${targetID}> doesn't have any data`);
 
     let allTech = client.hsTech.get(targetID);
     let msg = (targetID == message.author.id ? "here are your Tech levels: " : `here are Tech levels for <@${targetID}>`);
@@ -134,7 +141,7 @@ exports.run = async (client, message, args, level) => {
   }  
   else if (action === "search"){
     searchObj.members.forEach(function (value, index){
-      if (client.hsTech.has(index)) {
+      if (client.hsTech.has(index) && client.checkPrivacy(index, message.guild.id)) {
         let allTech = client.hsTech.get(index);
         let tDB = client.userDB.get(index) || {username: `<@${index}>`}
         let techLevel = allTech[techID] || 0;
