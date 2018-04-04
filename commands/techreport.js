@@ -87,7 +87,7 @@ exports.run = async (client, message, args, level) => {
     }
   });
     
-    if (filteredUsers !== "") message.reply("your query had users that choose not to allow tech to be viewed in this channel: "+filteredUsers+". You can ask them to WhiteList this channel or clear their WhiteList.")
+    if (filteredUsers !== "") message.reply("your query had users that choose not to allow tech to be viewed in this channel: `"+filteredUsers+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
     
   if (members.size < 1) {
     errors += `Unable to find any matching users\n`;

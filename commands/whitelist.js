@@ -8,51 +8,52 @@ exports.run = async (client, message, args, level) => {
   if (!(message.userDB.whitelist instanceof Array))
       message.userDB.whitelist = []
   
+  client.logger.debug(":"+args[0]+"::"+JSON.stringify(message.userDB.whitelist))
+  
   if (args[0] === "add") {
-    client.logger.log("Adding whitelist for "+message.userDB.username+" on "+message.guild.name);
-
     if (!message.userDB.whitelist.includes(message.guild.id)) {
-      return message.reply("adding channel to your WhiteList: "+message.guild.name);
       message.userDB.whitelist.push(message.guild.id);
       client.userDB.set(message.author.id, message.userDB)
+      return message.reply("adding channel to your WhiteList: `"+message.guild.name+"`");
     }
     else
       return message.reply("channel is already on your WhiteList: "+message.guild.name);
   }
 
   if (args[0] === "remove") {
-    client.logger.log("Removing whitelist for "+message.userDB.username+" on "+message.guild.name);
-  
     let index = message.userDB.whitelist.indexOf(message.guild.id);
     if (index >= 0) {
       message.userDB.whitelist.splice(index, 1);
       client.userDB.set(message.author.id, message.userDB)
-      return message.reply("removing server from your WhiteList: "+message.guild.name);
+      return message.reply("removing server from your WhiteList: `"+message.guild.name+"`");
     }
     else 
       return message.reply("server not found on your WhiteList: "+message.guild.name);
   }
   
   if (args[0] === "list") {
-    if (message.userDB.whitelist !== []) {
+    if (message.userDB.whitelist.length > 0) {
       let msg = "";
-      message.userDB.whitelist.foreach(function(guildID) {
-        msg += message.userDB[guildID].name+"\n";
+      message.userDB.whitelist.forEach(function(guildID, index) {
+        if (!message.userDB[guildID])
+          msg += "• "+guildID+"\n";
+        else
+          msg += "• "+message.userDB[guildID].name+"\n";
       });
-      return message.reply("here are the channels on your WhiteList:\n````"+msg+"````");
+      return message.reply("here are the channels on your WhiteList:```"+msg+"```");
     }
     else
       return message.reply("you don't have any channels on your WhiteList.");
   }  
   
   if (args[0] === "clear") {
-    message.userDB.whitelist = []
+    message.userDB.whitelist = [];
     client.userDB.set(message.author.id, message.userDB)
     return message.reply("your WhiteList is now empty and your tech can be viewed anywhere.");
   } 
   
   if (args[0] === "test") {
-    message.userDB.whitelist = ["teste"]
+    message.userDB.whitelist.push("teste");
     client.userDB.set(message.author.id, message.userDB)
     return message.reply("your WhiteList is now just a TEST!");
   }
@@ -62,12 +63,12 @@ exports.conf = {
   enabled: true,
   guildOnly: true,
   aliases: ["wl"],
-  permLevel: "Bot Support"
+  permLevel: "Users"
 };
 
 exports.help = {
   name: "whitelist",
   category: "Miscelaneous",
-  description: "Makes your tech levels private to the WhiteListed servers - they will not show on any other channel.",
-  usage: "privacy [add|remove|list|clear]"
+  description: "Makes your tech levels private to the WhiteListed servers - they will not show on any other channel.\nIf your WhiteList is empty, your tech will be open to view anywhere.",
+  usage: "whitelist [add|remove|list|clear]"
 };

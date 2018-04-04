@@ -158,7 +158,7 @@ exports.run = async (client, message, args, level) => {
           filteredUsers +=  tDB.username+", ";       
       }
     });
-    if (filteredUsers !== "") message.reply("your query had users that choose not to allow tech to be viewed in this channel: "+filteredUsers+". You can ask them to WhiteList this channel or clear their WhiteList.")
+    if (filteredUsers !== "") message.reply("your query had users that choose not to allow tech to be viewed in this channel: `"+filteredUsers+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
     if (!hasData) return message.reply("No data found.");
     else return message.reply(`Tech level recorded for everyone of ${args[0]} ${searchObj.name}:\n` + "```" + dataTable.sort(['Level|des']).toString()+"```");
   }  
@@ -183,7 +183,7 @@ exports.run = async (client, message, args, level) => {
         return message.reply(`Invalid number of techs: ${techLevels.length} instead of ${client.config.hadesTechSize[techGroup]}`);
 
       let i = 0;
-      Object.keys(client.config.hadesTech).forEach(techID => {
+      client.config.hadesTech.forEach(techID => {
         if (client.config.hadesTech[techID].group == techGroup) {
           techLevel = techLevels[i++];
           if (!client.config.hadesTech[techID].levels[techLevel-1] && techLevel != 0) 
