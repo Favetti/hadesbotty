@@ -146,15 +146,16 @@ module.exports = (client) => {
     if (message.channel.type !=='text') return;
     const settings = client.settings.get(message.guild.id);
     
+    //Welcome a new user
+    if (!client.userDB.has(message.author.id))
+      message.author.send("Hello, it seems to be the first time i see you here. I´m a BOT designed to deal with Hade's Star technologies.\nYou may type "+settings.prefix+"help at anytime to view the available commands, and "+settings.prefix+"help <command> to describe any one of them.\n I suggest your first inputs to be using the "+settings.prefix+"Tech set command, using TechGroups (so you can batch input all your research levels).");
+    
     // For ease of use in commands and functions, attach the current userDB to the message object
     message.userDB = client.userDB.get(message.author.id) || {username: message.author.username};
 
     // ** Points system
-    if (!message.userDB[message.guild.id]) {
+    if (!message.userDB[message.guild.id])
       message.userDB[message.guild.id] = {name: message.guild.name, level: 0, points: 0, commands: 0 };
-      //Welcome a new user
-      message.author.send("Hello, it seems to be the first time i see you here. I´m a BOT designed to deal with Hade's Star technologies.\nYou may type "+settings.prefix+"help at anytime to view the available commands, and "+settings.prefix+"help <command> to describe any one of them.\n I suggest your first inputs to be using the "+settings.prefix+"Tech set command, using TechGroups (so you can batch input all your research levels).");
-    }
     if (message.content.indexOf(settings.prefix) === 0) 
       message.userDB[message.guild.id].commands++;
     else
