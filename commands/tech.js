@@ -76,7 +76,7 @@ exports.run = async (client, message, args, level) => {
       return message.reply(`<@${targetID}> doesn't have any data`);
     
     if (!client.checkPrivacy(targetID, message.guild.id))
-      return message.reply(`<@${targetID}> has set his tech as private to another server.`);
+      return message.reply("this user chose not to allow his tech to be viewed in this channel. You can ask him to WhiteList this channel or clear his WhiteList.")
       
   }
 
@@ -139,20 +139,27 @@ exports.run = async (client, message, args, level) => {
     else return message.reply(`Score recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` + "```" + dataTable.sort(['Level|des']).toString()+"```"); 
   }  
   else if (action === "search"){
+    let filteredUsers = "";
+    
     searchObj.members.forEach(function (value, index){
-      if (client.hsTech.has(index) && client.checkPrivacy(index, message.guild.id)) {
+      if (client.hsTech.has(index)) {
         let allTech = client.hsTech.get(index);
         let tDB = client.userDB.get(index) || {username: `<@${index}>`}
-        let techLevel = allTech[techID] || 0;
-        if (techLevel >0) {
-          hasData=true;
-          dataTable.cell('Level', techLevel);
-          dataTable.cell('User', tDB.username);
-          dataTable.newRow();
+        if (client.checkPrivacy(index, message.guild.id)) {
+          let techLevel = allTech[techID] || 0;
+          if (techLevel >0) {
+            hasData=true;
+            dataTable.cell('Level', techLevel);
+            dataTable.cell('User', tDB.username);
+            dataTable.newRow();
+          }
         }
+        else
+          filteredUsers +=  tDB.username+", ";       
       }
-    });  
-    if (!hasData) return message.reply("No data found");
+    });
+    if (filteredUsers !== "") message.reply("your query had users that choose not to allow tech to be viewed in this channel: "+filteredUsers+". You can ask them to WhiteList this channel or clear their WhiteList.")
+    if (!hasData) return message.reply("No data found.");
     else return message.reply(`Tech level recorded for everyone of ${args[0]} ${searchObj.name}:\n` + "```" + dataTable.sort(['Level|des']).toString()+"```");
   }  
   else if (action === "set"){

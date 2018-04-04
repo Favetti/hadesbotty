@@ -167,10 +167,15 @@ module.exports = (client) => {
     }
 
     // Update username and lastseen
+    let lastseen = message.userDB.lastSeen;
     message.userDB.lastSeen = Date.now();
-    message.guild.fetchMember(message.author.id)
-      .then(result => message.userDB.username = result.displayName)
-      .then(client.userDB.set(message.author.id, message.userDB)); //Update into client to permanetly store in levelDB 
+    if (!message.userDB[message.guild.id].hasOwnProperty("nickname") || (lastseen < Date.now()-(2*3600000))) //update only after 2 hours 
+      message.guild.fetchMember(message.author.id)
+        .then(result => { 
+          message.userDB.username = result.displayName;
+          message.userDB[message.guild.id].nickname = result.displayName;
+        })
+        .then(client.userDB.set(message.author.id, message.userDB)); //Update into client to permanetly store in levelDB 
 
     //client.logger.debug("> "+JSON.stringify(message.userDB));
   };

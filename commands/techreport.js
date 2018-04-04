@@ -12,7 +12,8 @@ exports.run = async (client, message, args, level) => {
       members = new Map(),
       reports = new Array(),
       techLists = new Array(),
-      argSection = 'users';
+      argSection = 'users',
+      filteredUsers = "";
     
   args.forEach(function(arg) {
     if ('|' == arg.trim()) {
@@ -44,10 +45,12 @@ exports.run = async (client, message, args, level) => {
           return true; //Skip to next member of args
         }
         message.guild.roles.get(roleID).members.forEach(function(targetDB, targetID){
+          targetDB = client.userDB.get(targetID);
           if (client.checkPrivacy(targetID, message.guild.id)) {
-            targetDB = client.userDB.get(targetID);
             members.set(targetID, targetDB);
           }
+          else
+            filteredUsers += targetDB.username+", ";
         });
       }
       else if (arg.indexOf("<@") >= 0 ) { //target is a USER
@@ -65,14 +68,16 @@ exports.run = async (client, message, args, level) => {
         if (client.checkPrivacy(targetID, message.guild.id)) 
           members.set(targetID, targetDB);
         else
-          return message.reply(`<@${targetID}> has set his tech as private to another server.`);
+          return message.reply("this user chose not to allow his tech to be viewed in this channel. You can ask him to WhiteList this channel or clear his WhiteList.");
       } else if (arg.trim() == 'all') {
         //errors += `Showing all: ${arg}\n`; //Debug
         message.guild.members.forEach(function(targetDB, targetID){
+          targetDB = client.userDB.get(targetID);
           if (client.checkPrivacy(targetID, message.guild.id)) {
-            targetDB = client.userDB.get(targetID);
             members.set(targetID, targetDB);
           }
+          else
+            filteredUsers += targetDB.username+", ";
         });
       } else {
         errors += `I do not recognize the User argument: ${arg}\n`;
@@ -81,6 +86,8 @@ exports.run = async (client, message, args, level) => {
       errors += `Invalid argument section: ${argSection}\n`;
     }
   });
+    
+    if (filteredUsers !== "") message.reply("your query had users that choose not to allow tech to be viewed in this channel: "+filteredUsers+". You can ask them to WhiteList this channel or clear their WhiteList.")
     
   if (members.size < 1) {
     errors += `Unable to find any matching users\n`;
