@@ -71,8 +71,9 @@ exports.run = async (client, message, args, level) => {
   
   members.forEach( (targetDB, targetID) => {
     //client.logger.error(util.inspect(client.rosterDB));
+    
     var rosterEntry;
-    rosterEntry = client.rosterDB.has(targetID) ? new Map(client.rosterDB.get(targetID)) : false;
+    rosterEntry = client.rosterDB.has(message.guild.id+"."+targetID) ? new Map(client.rosterDB.get(message.guild.id+"."+targetID)) : false;
     if (!rosterEntry) {
       //errors += "No roster entry for "+targetID+"\n";// Debug
       rosterEntry = new Map([['active', false], ['battleBuild', false], ['supportBuild', false]]);
@@ -197,7 +198,7 @@ exports.run = async (client, message, args, level) => {
     }// end of switch (callType) {
     
     //Save our updated data before we do anything else.
-    client.rosterDB.set(targetID, [...rosterEntry]);
+    client.rosterDB.set(message.guild.id+"."+targetID, [...rosterEntry]);
     if (!rosterEntry.get('active')) {
       return true; //
     }

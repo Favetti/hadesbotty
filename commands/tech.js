@@ -23,10 +23,9 @@ exports.run = async (client, message, args, level) => {
     arg = client.normalizeTechName(arg);
     
     // *** Find ACTION
-    if (arg === "set")           action = "set";
-    else if (arg === "get")      action = "get";
-    else if (arg === "score")    action = "score";
-    else if (arg === "search")   action = "search";  
+    if (["set", "get", "score", "search"].includes(arg))
+        action = arg;
+
    
     // *** Find TARGET
     else if (arg === "all") { //target is the guild
