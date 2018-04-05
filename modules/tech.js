@@ -4,15 +4,9 @@ module.exports = (client) => {
 
     if (!client.userDB.has(targetID))             return true; //OK to proceed  
     let targetDB = client.userDB.get(targetID);
-    if (!(targetDB.whitelist instanceof Array))   return true; //OK to proceed 
+    if (!Array.isArray(targetDB.whitelist) || !targetDB.whitelist.length)   return true; //OK to proceed 
     if (targetDB.whitelist.includes(guildID))     return true; //OK to proceed 
     
-/*
-    if (!client.userDB.has(targetID))             return true; //OK to proceed  
-    let targetDB = client.userDB.get(targetID);
-    if (!targetDB.hasOwnProperty("privacy"))      return true; //OK to proceed 
-    if (targetDB.privacy === guildID)             return true; //OK to proceed 
-*/    
     return false; //do NOT proceed
   }
 
