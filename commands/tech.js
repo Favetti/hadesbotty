@@ -183,7 +183,7 @@ exports.run = async (client, message, args, level) => {
         return message.reply(`Invalid number of techs: ${techLevels.length} instead of ${client.config.hadesTechSize[techGroup]}`);
 
       let i = 0;
-      client.config.hadesTech.forEach(techID => {
+      Object.keys(client.config.hadesTech).forEach(techID => {
         if (client.config.hadesTech[techID].group == techGroup) {
           techLevel = techLevels[i++];
           if (!client.config.hadesTech[techID].levels[techLevel-1] && techLevel != 0) 
