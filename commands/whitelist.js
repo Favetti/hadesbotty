@@ -5,10 +5,12 @@ exports.run = async (client, message, args, level) => {
   
   args = args.map(function(x){ return x.toLowerCase() });
 
-  if (!(message.userDB.whitelist instanceof Array))
-      message.userDB.whitelist = []
-  
-  client.logger.debug(":"+args[0]+"::"+JSON.stringify(message.userDB.whitelist))
+  //client.logger.debug(":"+args[0]+"::"+typeof message.userDB.whitelist+":::"+JSON.stringify(message.userDB.whitelist))
+
+  if (!Array.isArray(message.userDB.whitelist) || !message.userDB.whitelist.length) {
+      message.userDB.whitelist = new Array()
+      client.userDB.set(message.author.id, message.userDB)
+  }
   
   if (args[0] === "add") {
     if (!message.userDB.whitelist.includes(message.guild.id)) {
@@ -22,13 +24,21 @@ exports.run = async (client, message, args, level) => {
 
   if (args[0] === "remove") {
     let index = message.userDB.whitelist.indexOf(message.guild.id);
+    let name = message.guild.name;
+    if (message.userDB.whitelist.indexOf(args[1]) >= 0) {
+      index = message.userDB.whitelist.indexOf(args[1]);
+      if (message.userDB[args[1]])
+        name = message.userDB[args[1]].name;
+      else
+        name = args[1];
+    }
     if (index >= 0) {
       message.userDB.whitelist.splice(index, 1);
       client.userDB.set(message.author.id, message.userDB)
-      return message.reply("removing server from your WhiteList: `"+message.guild.name+"`");
+      return message.reply("removing server from your WhiteList: `"+name+"`");
     }
     else 
-      return message.reply("server not found on your WhiteList: "+message.guild.name);
+      return message.reply("server not found on your WhiteList: "+name);
   }
   
   if (args[0] === "list") {
@@ -47,13 +57,13 @@ exports.run = async (client, message, args, level) => {
   }  
   
   if (args[0] === "clear") {
-    message.userDB.whitelist = [];
+    message.userDB.whitelist = new Array();
     client.userDB.set(message.author.id, message.userDB)
     return message.reply("your WhiteList is now empty and your tech can be viewed anywhere.");
   } 
   
   if (args[0] === "test") {
-    message.userDB.whitelist.push("teste");
+    message.userDB.whitelist.push("test");
     client.userDB.set(message.author.id, message.userDB)
     return message.reply("your WhiteList is now just a TEST!");
   }
