@@ -19,7 +19,7 @@ exports.run = async (client, message, args, level) => {
       return message.reply("adding channel to your WhiteList: `"+message.guild.name+"`");
     }
     else
-      return message.reply("channel is already on your WhiteList: "+message.guild.name);
+      return message.reply("channel is already on your WhiteList: `"+message.guild.name+"`");
   }
 
   if (args[0] === "remove") {
@@ -38,7 +38,7 @@ exports.run = async (client, message, args, level) => {
       return message.reply("removing server from your WhiteList: `"+name+"`");
     }
     else 
-      return message.reply("server not found on your WhiteList: "+name);
+      return message.reply("server not found on your WhiteList: `"+name+"`");
   }
   
   if (args[0] === "list") {
