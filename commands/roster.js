@@ -82,8 +82,10 @@ exports.run = async (client, message, args, level) => {
     }
     switch (callType) {
       case 'reset':
-        return message.reply("Sorry, reset is DISABLED for now...");
+        if (level <= 8)
+          return message.reply("Only Bot Support or higher can RESET the roster... safety stuff, you know...");        
         rosterEntry = new Map([['active', false], ['battleBuild', false], ['supportBuild', false]]);
+        break;
       case 'remove':
         rosterEntry.set('active', false);
         break;
@@ -258,8 +260,8 @@ exports.run = async (client, message, args, level) => {
     if (errors) {
       message.reply(`\n${errors}`);
     }
-    message.reply(battleEmbed);
-    message.reply(supportEmbed);
+    message.channel.send(battleEmbed);
+    message.channel.send(supportEmbed);
     
   } catch (error) { 
     message.reply(`\nThere was an error: ${error}\n${errors}`); 

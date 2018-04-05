@@ -6,7 +6,8 @@ exports.run = async (client, message, args, level) => {
         table = require('easy-table');
     
   var hasData=false,
-      dataTable = new table;
+      dataTable = new table,
+      i=0;
 
   switch(args[0]) {
     case "clean":
@@ -20,6 +21,7 @@ exports.run = async (client, message, args, level) => {
       client.redstarQue.forEach(function (value, key, mapObj) {  
         var keyObj = client.redstarQue.get(key);
         hasData=true;
+        dataTable.cell('#', ++i);
         dataTable.cell('Key', key);
         dataTable.cell('Data', JSON.stringify(keyObj));
         dataTable.newRow();
@@ -31,9 +33,13 @@ exports.run = async (client, message, args, level) => {
       client.rosterDB.forEach(function (value, key, mapObj) {  
         var keyObj = client.rosterDB.get(key);
         hasData=true;
+        dataTable.cell('#', ++i);
         dataTable.cell('Key', key);
         dataTable.cell('Data', JSON.stringify(keyObj));
         dataTable.newRow();
+        if (args[1] === "RESET" && level >= 9)
+          client.rosterDB.delete(key);
+
       }); 
       break;
     case "user":
@@ -41,6 +47,7 @@ exports.run = async (client, message, args, level) => {
       client.userDB.forEach(function (value, key, mapObj) {  
         var keyObj = client.userDB.get(key);
         hasData=true;
+        dataTable.cell('#', ++i);
         dataTable.cell('Key', key);
         dataTable.cell('Data', JSON.stringify(keyObj));
         dataTable.newRow();
@@ -50,6 +57,7 @@ exports.run = async (client, message, args, level) => {
       client.settings.forEach(function (value, key, mapObj) {  
         var keyObj = client.settings.get(key);
         hasData=true;
+        dataTable.cell('#', ++i);
         dataTable.cell('Key', key);
         dataTable.cell('Data', JSON.stringify(keyObj));
         dataTable.newRow();
@@ -60,6 +68,7 @@ exports.run = async (client, message, args, level) => {
       client.hsTech.forEach(function (value, key, mapObj) {  
         var keyObj = client.hsTech.get(key);
         hasData=true;
+        dataTable.cell('#', ++i);
         dataTable.cell('Key', key);
         dataTable.cell('Data', JSON.stringify(keyObj));
         dataTable.newRow();
@@ -82,7 +91,7 @@ exports.conf = {
   enabled: true,
   guildOnly: false,
   aliases: [],
-  permLevel: "Bot Owner"
+  permLevel: "Bot Admin"
 };
 
 exports.help = {
