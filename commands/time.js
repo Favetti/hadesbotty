@@ -24,7 +24,7 @@ exports.run = async (client, message, args, level) => {
     else if (arg.indexOf("<@") >= 0 ) { //target is a USER
       singleTarget = true;
       targetID = arg.replace("<@","").replace(">","");
-      targetDB = client.userDB.get(targetID) || {username: arg}
+      targetDB = client.userDB.get(targetID) || {username: arg, [message.guild.id]: {nickname: arg}}
     }
     else if (arg === "set") {
       isSet = true;

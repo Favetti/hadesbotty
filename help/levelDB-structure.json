@@ -1,0 +1,68 @@
+settings {
+  guildID : {
+    "prefix": String,           //command prefix
+    "modLogChannel": String,    //i have no idea what this is for... ;)
+    "modRole": String,          //role name
+    "adminRole": String,        //role name
+    "systemNotice": String,     //(true/false)
+    "welcomeChannel": String,   //channel to display welcome message to new users
+    "welcomeMessage": String,   //message to be displayed
+    "welcomeEnabled": String,   //(true/false)
+    "webSheet": String,         //URL to be shown on EXPORT command
+  }
+  //guildID *repeat for all guilds
+},
+
+
+hsTech {                        //better name would be techDB
+  userID : {
+    techID : Number             //tech LEVEL (1 to *max)
+    //techID *repeat for all techs
+  }
+}
+
+
+userDB {
+  userID : {
+    "username": String,         //username or last nickname (to be replaced by nickname per guild, keep only username)
+    "lastSeen": Number,         //timestamp
+    "timeOffset": Number,       //difference from GMT
+    "privacy": guildID,         //if set, only show tech details on such guild
+    guildID: {
+      "name": String,           //guild Name
+      "nickname" : String,      //channel's specific nickname (to replace "username")
+      "level": Number,          //chat level
+      "points": Number,         //number of chat messages seen
+      "commands": Number        //number of commands seen
+    }
+    //guildID *repeat for all guilds
+}
+
+rosterDB {
+  userID : [
+    ["active", Boolean],
+    ["battleBuild", {
+      "shipType": String,
+      "weaponType": String,
+      "shieldType": String,
+      "supportModules": [String, ...],
+      "tradeModules": [String, ...],
+      "miningModules": [String, ...]
+    }],
+    ["supportBuild",false]]
+}
+  
+redstarQue {
+  
+} 
+  
+/*
+RedditWikki {
+  tech {
+    name: String
+    Levels: Number
+    n: {array}
+    ...
+  }
+}
+*/

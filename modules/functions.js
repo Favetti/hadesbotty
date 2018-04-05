@@ -146,15 +146,16 @@ module.exports = (client) => {
     if (message.channel.type !=='text') return;
     const settings = client.settings.get(message.guild.id);
     
+    //Welcome a new user
+    if (!client.userDB.has(message.author.id))
+      message.author.send("Hello, it seems to be the first time i see you here. I´m a BOT designed to deal with Hade's Star technologies.\nYou may type "+settings.prefix+"help at anytime to view the available commands, and "+settings.prefix+"help <command> to describe any one of them.\n I suggest your first inputs to be using the "+settings.prefix+"Tech set command, using TechGroups (so you can batch input all your research levels).");
+    
     // For ease of use in commands and functions, attach the current userDB to the message object
     message.userDB = client.userDB.get(message.author.id) || {username: message.author.username};
 
     // ** Points system
-    if (!message.userDB[message.guild.id]) {
+    if (!message.userDB[message.guild.id])
       message.userDB[message.guild.id] = {name: message.guild.name, level: 0, points: 0, commands: 0 };
-      //Welcome a new user
-      message.author.send("Hello, it seems to be the first time i see you here. I´m a BOT designed to deal with Hade's Star technologies.\nYou may type "+settings.prefix+"help at anytime to view the available commands, and "+settings.prefix+"help <command> to describe any one of them.\n I suggest your first inputs to be using the "+settings.prefix+"Tech set command, using TechGroups (so you can batch input all your research levels).");
-    }
     if (message.content.indexOf(settings.prefix) === 0) 
       message.userDB[message.guild.id].commands++;
     else
@@ -166,10 +167,15 @@ module.exports = (client) => {
     }
 
     // Update username and lastseen
+    let lastseen = message.userDB.lastSeen;
     message.userDB.lastSeen = Date.now();
-    message.guild.fetchMember(message.author.id)
-      .then(result => message.userDB.username = result.displayName)
-      .then(client.userDB.set(message.author.id, message.userDB)); //Update into client to permanetly store in levelDB 
+    if (!message.userDB[message.guild.id].hasOwnProperty("nickname") || (lastseen < Date.now()-(2*3600000))) //update only after 2 hours 
+      message.guild.fetchMember(message.author.id)
+        .then(result => { 
+          message.userDB.username = result.displayName;
+          message.userDB[message.guild.id].nickname = result.displayName;
+        })
+        .then(client.userDB.set(message.author.id, message.userDB)); //Update into client to permanetly store in levelDB 
 
     //client.logger.debug("> "+JSON.stringify(message.userDB));
   };
