@@ -33,12 +33,14 @@ exports.run = async (client, message, args, level) => {
     }
     else if (arg.indexOf("<@&") >= 0) { //target is a ROLE
       singleTarget = false;
-      const roleID = arg.replace("<@&","").replace(">","");
+      //const roleID = arg.replace("<@&","").replace(">","");
+      const roleID = arg.replace(/[^0-9]/g,"");
       if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
       searchObj = message.guild.roles.get(roleID);
     }
-    else if (arg.indexOf("<@") >= 0 )  //target is a USER
-      targetID = arg.replace("<@","").replace(">","");
+    else if (arg.indexOf("<@") >= 0 ) //target is a USER
+      //targetID = arg.replace("<@","").replace(">","");
+      targetID = arg.replace(/[^0-9]/g,"");
     else if (client.config.hadesTechSize[arg]) // target is Tech Group
       techGroup = arg;
     
@@ -164,6 +166,8 @@ exports.run = async (client, message, args, level) => {
   }  
   else if (action === "set"){
 
+    client.logger.debug(message.author.id+"|SET:"+targetID+"|tGroup:"+techGroup+"|tLvls:"+techLevels+":|tID:"+techID+"|tLvl:"+techLevel);
+    
     let allTech = client.hsTech.get(targetID) || {rs: 0, transp: 0,	miner: 0,	bs: 0,	cargobay: 0,	computer: 0,	tradeboost: 0,	rush: 0,	tradeburst: 0,	autopilot: 0,	offload: 0,	beam: 0,	entrust: 0,	recall: 0,	hydrobay: 0,	miningboost: 0,	enrich: 0,	remote: 0,	hydroupload: 0,	miningunity: 0,	crunch: 0,	genesis: 0,	battery: 0,	laser: 0,	mass: 0,	dual: 0,	barrage: 0,	alpha: 0,	delta: 0,	pas: 0,	omega: 0,	mirror: 0,	area: 0, emp: 0,	teleport: 0,	rsextender: 0,	repair: 0,	warp: 0,	unity: 0,	sanctuary: 0,	stealth: 0,	fortify: 0,	impulse: 0,	rocket: 0,	salvage: 0,	suppress: 0,	destiny: 0,	barrier: 0,	vengeance: 0,	leap: 0 };
     let msg = "Setting tech for <@"+targetID+">";
     let invalid = "Invalid Levels:";
@@ -199,10 +203,10 @@ exports.run = async (client, message, args, level) => {
           }
         }
       });
+      msg += "```" + dataTable.toString()+"```";
     }  
     client.hsTech.set(targetID, allTech);
     //client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
-    msg += "```" + dataTable.toString()+"```";
     if (invalid != "Invalid Levels:") msg += invalid;
     return message.reply(msg);    
   }
