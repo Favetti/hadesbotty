@@ -2,8 +2,13 @@
 
 exports.run = async (client, message, args, level) => { 
 
+  args = args.map(function(x){ return x.toLowerCase() });
   const moment = require("moment"),
-        table = require('easy-table');
+        table = require('easy-table'),
+        fs = require('fs'),
+        dir = '/app/public/',
+        url = `https://${process.env.PROJECT_DOMAIN}.glitch.me/`;
+
     
   var hasData=false,
       dataTable = new table,
@@ -81,10 +86,24 @@ exports.run = async (client, message, args, level) => {
   
   if (!hasData)
     client.logger.debug("No data found on: "+args.join());
-  else
-    //return message.reply(`Audit for ${args[0]}:\n` + dataTable.toString());
+  else {
+    if (args[2] === "file") {
+      var filename = "audit"+Date.now()+".html";
+
+      fs.writeFile(dir+filename, " "+dataTable.toString(), function(err) {
+        if(err) {
+          client.logger.error(err);
+          return message.reply("Erro salvando arquivo..."+dir+filename+"\n"+err);
+        }
+        client.logger.log("The file was saved: "+dir+filename);
+      }); 
+      return message.reply("Audit exportedto: "+url+filename); 
+    }
+    else
+          //return message.reply(`Audit for ${args[0]}:\n` + dataTable.toString());
     client.logger.debug(`Audit for ${args[0]}:\n` + dataTable.toString());
-  
+
+  }
 };
 
 exports.conf = {
