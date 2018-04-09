@@ -76,7 +76,7 @@ exports.run = async (client, message, args, level) => {
       return message.reply("GET can only return a single user.");
     
     if (!client.hsTech.has(targetID))
-      return message.reply(`<@${targetID}> doesn't have any data`);
+      return message.reply(client.getDisplayName(targetID, message.guild)+" doesn't have any data.");
     
     if (!client.checkPrivacy(targetID, message.guild.id))
       return message.reply("this user chose not to allow his tech to be viewed in this channel. You can ask him to WhiteList this channel or clear his WhiteList.")
@@ -94,7 +94,7 @@ exports.run = async (client, message, args, level) => {
   if (action === "get"){
 
     var allTech = client.hsTech.get(targetID),
-        msg = (targetID == message.author.id ? `<@${targetID}>, here are your Tech levels: ` : `here are Tech levels for <@${targetID}>: `),
+        msg = (targetID == message.author.id ? client.getDisplayName(targetID, message.guild)+", here are your Tech levels: " : "here are Tech levels for "+client.getDisplayName(targetID, message.guild)+": "),
         lineBreaker = "Base";
     
     Object.keys(client.config.hadesTech).forEach(techID => {
@@ -186,7 +186,7 @@ exports.run = async (client, message, args, level) => {
     //client.logger.debug(message.author.id+"|SET:"+targetID+"|tGroup:"+techGroup+"|tLvls:"+techLevels+":|tID:"+techID+"|tLvl:"+techLevel);
     
     let allTech = client.hsTech.get(targetID) || {rs: 0, transp: 0,	miner: 0,	bs: 0,	cargobay: 0,	computer: 0,	tradeboost: 0,	rush: 0,	tradeburst: 0,	autopilot: 0,	offload: 0,	beam: 0,	entrust: 0,	recall: 0,	hydrobay: 0,	miningboost: 0,	enrich: 0,	remote: 0,	hydroupload: 0,	miningunity: 0,	crunch: 0,	genesis: 0,	battery: 0,	laser: 0,	mass: 0,	dual: 0,	barrage: 0,	alpha: 0,	delta: 0,	pas: 0,	omega: 0,	mirror: 0,	area: 0, emp: 0,	teleport: 0,	rsextender: 0,	repair: 0,	warp: 0,	unity: 0,	sanctuary: 0,	stealth: 0,	fortify: 0,	impulse: 0,	rocket: 0,	salvage: 0,	suppress: 0,	destiny: 0,	barrier: 0,	vengeance: 0,	leap: 0 };
-    let msg = "Setting tech for <@"+targetID+">";
+    let msg = "Setting tech for: "+client.getDisplayName(targetID, message.guild);
     let invalid = "Invalid Levels:";
 
     if (!techGroup) { // single Tech
@@ -225,7 +225,7 @@ exports.run = async (client, message, args, level) => {
     client.hsTech.set(targetID, allTech);
     //client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
     if (invalid != "Invalid Levels:") msg += invalid;
-    return message.reply(msg);    
+    return message.channel.send(msg);    
   }
 };
 
