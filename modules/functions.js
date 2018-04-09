@@ -219,10 +219,12 @@ module.exports = (client) => {
         if (userDB[guild.id].hasOwnProperty("nickname")) 
           returnName = userDB[guild.id].nickname;
 
-      client.logger.debug("getDisplayName:"+returnName+":"+userID+"::"+guild.id); //+"\n"+JSON.stringify(userDB));
+      //client.logger.debug("getDisplayName:"+returnName+":"+userID+"::"+guild.id); //+"\n"+JSON.stringify(userDB));
 
-      if (returnName.indexOf("@") >= 0)
-        client.updateDisplayName(userID, returnName.replace("@",""), guild);
+      //if (returnName.indexOf("@") >= 0)
+      //if (returnName.search(/\@[0-9]{10,}/) >= 0)
+      if (returnName.replace(/[^0-9]/g,"") == userID)
+        client.updateDisplayName(userID, returnName.replace(/[^0-9]/g,""), guild);
 
       return returnName;
 

@@ -149,7 +149,7 @@ exports.run = async (client, message, args, level) => {
         });
         hasData=true;
         dataTable.cell('Score', techLevel);
-        dataTable.cell('User', client.getDisplayName(index, message.guild));
+        dataTable.cell('User', client.getDisplayName(index, message.guild).substr(0,20));
         dataTable.newRow();
       }
     });  
