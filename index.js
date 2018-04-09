@@ -8,6 +8,7 @@ const promisify = util.promisify;
 const readdir = promisify(require("fs").readdir);
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
+const DBL = require("dblapi.js");
 
 const client = new Discord.Client();
 client.config = require("./config.js");
@@ -25,8 +26,6 @@ client.rosterDB = new Enmap({provider: new EnmapLevel({name: "rosterDB", dataDir
 client.redstarQue = new Enmap({provider: new EnmapLevel({name: "redstarQue", dataDir: ".data"})});
 client.wikiTech = new Enmap({provider: new EnmapLevel({name: "wikiTech", dataDir: ".data"})});
 
-// We're doing real fancy node 8 async/await stuff here, and to do that
-// we need to wrap stuff in an anonymous function. It's annoying but it works.
 const init = async () => {
   
   const cmdFiles = await readdir("./commands/");
@@ -52,10 +51,7 @@ const init = async () => {
     client.levelCache[thisLevel.name] = thisLevel.level;
   }
   
-  // Here we login the client.
   client.login(client.config.token);
-
-  // End top-level async/await function.
   
   // *** HTTP SERVER ***
   var http = require('http'),
@@ -74,12 +70,13 @@ const init = async () => {
 
   app.listen(process.env.PORT);
   
-  // Express Keepalive for Glitch
-  //if(process.env.BOTTY_ENVIRONMENT === "PRD") {
-    setInterval(() => {
-      http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-    }, 250000);
-  //}
+  // Express Keepalive for Glitch and post DBL stats  
+  const dbl = new DBL(process.env.DISCORDBOTS_TOKEN);
+  setInterval(() => {
+    http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+    if(process.env.BOTTY_ENVIRONMENT === "PRD") 
+      dbl.postStats(client.guilds.size);
+  }, 250000);
   
 };
 

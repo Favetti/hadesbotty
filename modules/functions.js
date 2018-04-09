@@ -210,7 +210,7 @@ module.exports = (client) => {
   };
 
   client.getDisplayName = (userID, guild) => {
-     try {
+    try {
 
       const userDB = client.userDB.get(userID) || {username: userID};
       let returnName = userDB.username || userID;
@@ -220,13 +220,14 @@ module.exports = (client) => {
           returnName = userDB[guild.id].nickname;
 
       client.logger.debug("getDisplayName:"+returnName+":"+userID+"::"+guild.id); //+"\n"+JSON.stringify(userDB));
+
+      if (returnName.indexOf("@") >= 0)
+        client.updateDisplayName(userID, returnName.replace("@",""), guild);
+
       return returnName;
-       
+
     } catch (error) { client.logger.error(`There was an error in getDisplayName: ${error}`); } 
       
   };
-  
-  
-  
   
 };

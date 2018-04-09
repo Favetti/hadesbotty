@@ -17,13 +17,15 @@ exports.run = async (client, message, args, level) => {
 
   args.forEach(function(arg) {
     if (arg.indexOf("<@&") >= 0) { //target is a ROLE
-      const roleID = arg.replace("<@&","").replace(">","");
+      //const roleID = arg.replace("<@&","").replace(">","");
+      const roleID = arg.replace(/[^0-9]/g,"");
       if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
       searchObj = message.guild.roles.get(roleID);
     }
     else if (arg.indexOf("<@") >= 0 ) { //target is a USER
       singleTarget = true;
-      targetID = arg.replace("<@","").replace(">","");
+      //targetID = arg.replace("<@","").replace(">","");
+      targetID = arg.replace(/[^0-9]/g,"");
       targetDB = client.userDB.get(targetID) || {username: arg, [message.guild.id]: {nickname: arg}}
     }
     else if (arg === "set") {

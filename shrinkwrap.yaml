@@ -1,6 +1,7 @@
 dependencies:
   chalk: 2.3.2
   dateformat: 3.0.3
+  dblapi.js: 2.0.0
   discord.js: 11.3.2
   easy-table: 1.1.1
   enmap: 0.4.6
@@ -311,6 +312,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
+  /dblapi.js/2.0.0:
+    dependencies:
+      snekfetch: 3.6.4
+    dev: false
+    resolution:
+      integrity: sha512-MRdgIhJZm85K47FMDmC/R5snWbiuo2yTzAe2vwmsnfyAS3bdHyeTIMTtixYf21gVz9Favg1ukqfYo/CZVAzHbA==
   /debug/2.6.9:
     dependencies:
       ms: 2.0.0
@@ -1660,6 +1667,7 @@ shrinkwrapVersion: 3
 specifiers:
   chalk: ^2.3.1
   dateformat: ^3.0.3
+  dblapi.js: ^2.0.0
   discord.js: ^11.3.0
   easy-table: ^1.1.1
   enmap: ^0.4.2
