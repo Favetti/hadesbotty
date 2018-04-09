@@ -156,28 +156,54 @@ module.exports = (client) => {
     // ** Points system
     if (!message.userDB[message.guild.id])
       message.userDB[message.guild.id] = {name: message.guild.name, level: 0, points: 0, commands: 0 };
-    if (message.content.indexOf(settings.prefix) === 0) 
-      message.userDB[message.guild.id].commands++;
-    else
-      message.userDB[message.guild.id].points++;
+    if (message.content.indexOf(settings.prefix) === 0) {
+      if (!message.userDB[message.guild.id].commands) // avoid situation where data was null and woulndt ++
+        message.userDB[message.guild.id].commands = 1;
+      else
+        message.userDB[message.guild.id].commands++;
+    }
+    else {
+      if (!message.userDB[message.guild.id].points) // avoid situation where data was null and woulndt ++
+        message.userDB[message.guild.id].points = 1;
+      else
+        message.userDB[message.guild.id].points++;
+    }
     const curLevel = Math.floor(0.1 * Math.sqrt(message.userDB[message.guild.id].points));
     if (message.userDB[message.guild.id].level < curLevel) {
       //message.reply(`You've leveled up to chat level **${curLevel}**!`);
       message.userDB[message.guild.id].level = curLevel;
     }
 
-    // Update username and lastseen
-    let lastseen = message.userDB.lastSeen;
+    // Update lastseen and save
     message.userDB.lastSeen = Date.now();
-    if (!message.userDB[message.guild.id].hasOwnProperty("nickname") || (lastseen < Date.now()-(2*3600000))) //update only after 2 hours 
-      message.guild.fetchMember(message.author.id)
-        .then(result => { 
-          message.userDB.username = result.displayName;
-          message.userDB[message.guild.id].nickname = result.displayName;
-        })
-        .then(client.userDB.set(message.author.id, message.userDB)); //Update into client to permanetly store in levelDB 
+    client.userDB.set(message.author.id, message.userDB)
 
     //client.logger.debug("> "+JSON.stringify(message.userDB));
+
+    // Update username
+    client.updateDisplayName(client, message.author.id, message.author.username, message.guild);
+
   };
+
+  client.updateDisplayName = async (client, userID, username, guild) => {
+    
+    const now = Date.now(),
+          delay = 1; //delay for update if user not seen, in hours
+          
+    var userDB = client.userDB.get(userID) || {username: userID};
+    
+    //client.logger.debug(!userDB[guild.id].hasOwnProperty("nickname")+" || "+(userDB.lastSeen <= now-(delay*3600000))+" || "+(userDB.username.indexOf("@") >= 0))
+    
+    if ((!userDB[guild.id].hasOwnProperty("nickname")) || (userDB.lastSeen <= now-(delay*3600000)) || (userDB.username.indexOf("@") >= 0)) { 
+      guild.fetchMember(userID)
+        .then(result => { 
+          client.logger.debug(JSON.stringify(userDB)+"\n udate user name to: "+result.displayName)
+          userDB.username = result.displayName;  // revert to USERNAME later
+          userDB[guild.id].nickname = result.displayName;
+          client.userDB.set(userID, userDB);
+        });
+    }
+  };
+  
   
 };
