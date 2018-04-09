@@ -54,7 +54,7 @@ exports.run = async (client, message, args, level) => {
         if (targetDB.timeOffset <= 12 && targetDB.timeOffset >= -12) {
           hasData=true;
           dataTable.cell('Time', moment(Date.now() + (targetDB.timeOffset * 3600000)).format("MMM-DD, HH:mm"));
-          dataTable.cell('User', targetDB.username);
+          dataTable.cell('User', client.getDisplayName(targetID, message.guild));
           dataTable.newRow();
         }
       }
@@ -66,9 +66,9 @@ exports.run = async (client, message, args, level) => {
   else {
     if (targetDB.timeOffset <= 12 && targetDB.timeOffset >= -12) {
       var targetTime = Date.now() + (targetDB.timeOffset * 3600000);
-      return message.reply(`${targetDB.username} local time is: `+moment(targetTime).format("MMM-DD, HH:mm"));
+      return message.reply(`${client.getDisplayName(targetID, message.guild)} local time is: `+moment(targetTime).format("MMM-DD, HH:mm"));
     }
-    else return message.reply(`${targetDB.username} doesn't have a timezone set.`);
+    else return message.reply(`${client.getDisplayName(targetID, message.guild)} doesn't have a timezone set.`);
   }
   
 };

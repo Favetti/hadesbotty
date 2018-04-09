@@ -50,7 +50,7 @@ exports.run = async (client, message, args, level) => {
             members.set(targetID, targetDB);
           }
           else
-            filteredUsers += targetDB.username+", ";
+            filteredUsers += client.getDisplayName(targetID, message.guild)+", ";
         });
       }
       else if (arg.indexOf("<@") >= 0 ) { //target is a USER
@@ -77,7 +77,7 @@ exports.run = async (client, message, args, level) => {
             members.set(targetID, targetDB);
           }
           else
-            filteredUsers += targetDB.username+", ";
+            filteredUsers += client.getDisplayName(targetID, message.guild)+", ";
         });
       } else {
         errors += `I do not recognize the User argument: ${arg}\n`;
@@ -136,7 +136,7 @@ exports.run = async (client, message, args, level) => {
             return errors += "Expected end to reportTables iteration\n";
           }
           currentTable = nextVal.value;
-          currentTable.cell('name',targetDB.username, val => String(val).substr(0,13));//Math.min(13,String(val).length);
+          currentTable.cell('name',client.getDisplayName(targetID, message.guild), val => String(val).substr(0,13));//Math.min(13,String(val).length);
         }
         //errors += `Processing ${techID} for memberID ${targetID}\n`; // Debug
         let techLevel = Number( allTech[techID] ) || 0;

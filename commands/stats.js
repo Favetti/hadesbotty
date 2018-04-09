@@ -22,7 +22,7 @@ exports.run = (client, message, args, level) => { // eslint-disable-line no-unus
       let corps = {};
       client.userDB.forEach(function (target, targetID){
         Object.keys(target).forEach(function (key){
-          if ( key !== "username" && key !== "lastSeen" && key !== "timeOffset" ) {
+          if (key !== "username" && key !== "lastSeen" && key !== "timeOffset"  && key !== "whitelist") {
             if (!corps[key]) corps[key] = {users: 0};
             corps[key].users++;
             corps[key].name = target[key].name;

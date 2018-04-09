@@ -16,7 +16,8 @@ exports.run = async (client, message, args, level) => {
       techLevel,
       techGroup,
       techID,
-      action;
+      action,
+      msg="";
   
   // *** PARSE and SORT OUT arguments
   args.forEach(function(arg) {
@@ -92,10 +93,10 @@ exports.run = async (client, message, args, level) => {
   // *** EXECUTE THE COMMAND
   if (action === "get"){
 
-    let allTech = client.hsTech.get(targetID);
-    let msg = (targetID == message.author.id ? "here are your Tech levels: " : `here are Tech levels for <@${targetID}>`);
-    let lineBreaker = "Base";
-
+    var allTech = client.hsTech.get(targetID),
+        msg = (targetID == message.author.id ? `<@${targetID}>, here are your Tech levels: ` : `here are Tech levels for <@${targetID}>: `),
+        lineBreaker = "Base";
+    
     Object.keys(client.config.hadesTech).forEach(techID => {
       let techLevel = allTech[techID];
       if (techLevel >0) {
@@ -103,7 +104,10 @@ exports.run = async (client, message, args, level) => {
         hasData=true;
         let splitTech = client.config.hadesTech[techID].desc.split(" - ");
         if ( lineBreaker != splitTech[0] ) {
-          //dataTable.cell('Group', "-------");
+          if (dataTable.toString().length > 1800) {
+            msg[i++] = dataTable.sort(['Score|des']).toString()
+            dataTable = new table;
+          }
           dataTable.cell('Tech', "--------------"+splitTech[0]+"-");
           dataTable.cell('Level', "-----");
           dataTable.cell('Score', "-----");
@@ -118,27 +122,40 @@ exports.run = async (client, message, args, level) => {
       }
     });  
     if (!hasData) return message.reply("No data found");
-    else return message.reply(msg + "```" + dataTable.toString()+"```"); 
-    //return message.reply(msg);    
+    //else return message.reply(msg + "```" + dataTable.toString()+"```"); 
+    //return message.reply(msg);
+ 
+    let i = 0,
+        sendMsg = "";
+    message.channel.send(msg);
+    msg = dataTable.toString();
+    while (msg.length > 1990) {
+      let index = msg.lastIndexOf("--------------", 1990);
+      message.channel.send("```"+msg.slice(0, index)+"```");
+      msg = msg.slice(index+1);
+    }
+    message.channel.send("```"+msg+"```");
+
   }
   else if (action === "score"){
     searchObj.members.forEach(function (value, index){
       if (client.hsTech.has(index)) {
         let allTech = client.hsTech.get(index);
-        let tDB = client.userDB.get(index) || {username: `<@${index}>`}
+        //let tDB = client.userDB.get(index) || {username: `<@${index}>`}
         let techLevel = 0;
         Object.keys(allTech).map(function(techID, index) {
           if (client.config.hadesTech[techID]) 
             techLevel += client.config.hadesTech[techID].levels[Number(allTech[techID]-1)] || 0;
         });
         hasData=true;
-        dataTable.cell('Level', techLevel);
-        dataTable.cell('User', tDB.username);
+        dataTable.cell('Score', techLevel);
+        dataTable.cell('User', client.getDisplayName(index, message.guild));
         dataTable.newRow();
       }
     });  
     if (!hasData) return message.reply("No data found");
-    else return message.reply(`Score recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` + "```" + dataTable.sort(['Level|des']).toString()+"```"); 
+    else return message.reply(`Score recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` + "```" + dataTable.sort(['Score|des']).toString()+"```"); 
+    
   }  
   else if (action === "search"){
     let filteredUsers = "";
@@ -146,18 +163,18 @@ exports.run = async (client, message, args, level) => {
     searchObj.members.forEach(function (value, index){
       if (client.hsTech.has(index)) {
         let allTech = client.hsTech.get(index);
-        let tDB = client.userDB.get(index) || {username: `<@${index}>`}
+        //let tDB = client.userDB.get(index) || {username: `<@${index}>`}
         if (client.checkPrivacy(index, message.guild.id)) {
           let techLevel = allTech[techID] || 0;
           if (techLevel >0) {
             hasData=true;
             dataTable.cell('Level', techLevel);
-            dataTable.cell('User', tDB.username);
+            dataTable.cell('User', client.getDisplayName(targetID, message.guild));
             dataTable.newRow();
           }
         }
         else
-          filteredUsers +=  tDB.username+", ";       
+          filteredUsers +=  client.getDisplayName(targetID, message.guild)+", ";       
       }
     });
     if (filteredUsers !== "") message.reply("your query had users that choose not to allow tech to be viewed in this channel: `"+filteredUsers+"`. You can ask them to WhiteList this channel or clear their WhiteList.")

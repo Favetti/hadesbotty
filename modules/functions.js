@@ -142,7 +142,7 @@ module.exports = (client) => {
   });
  
   // *** userDB stores user information
-  client.checkUserDB = (client, message) => {
+  client.checkUserDB = (message) => {
     if (message.channel.type !=='text') return;
     const settings = client.settings.get(message.guild.id);
     
@@ -180,30 +180,53 @@ module.exports = (client) => {
 
     //client.logger.debug("> "+JSON.stringify(message.userDB));
 
-    // Update username
-    client.updateDisplayName(client, message.author.id, message.author.username, message.guild);
+    // Update username ASYNC
+    client.updateDisplayName(message.author.id, message.author.username, message.guild);
 
   };
 
-  client.updateDisplayName = async (client, userID, username, guild) => {
-    
-    const now = Date.now(),
-          delay = 1; //delay for update if user not seen, in hours
-          
-    var userDB = client.userDB.get(userID) || {username: userID};
-    
-    //client.logger.debug(!userDB[guild.id].hasOwnProperty("nickname")+" || "+(userDB.lastSeen <= now-(delay*3600000))+" || "+(userDB.username.indexOf("@") >= 0))
-    
-    if ((!userDB[guild.id].hasOwnProperty("nickname")) || (userDB.lastSeen <= now-(delay*3600000)) || (userDB.username.indexOf("@") >= 0)) { 
-      guild.fetchMember(userID)
-        .then(result => { 
-          client.logger.debug(JSON.stringify(userDB)+"\n udate user name to: "+result.displayName)
-          userDB.username = result.displayName;  // revert to USERNAME later
-          userDB[guild.id].nickname = result.displayName;
-          client.userDB.set(userID, userDB);
-        });
-    }
+  client.updateDisplayName = async (userID, username, guild) => {
+    try {
+      const now = Date.now(),
+            delay = 1; //delay for update if user not seen, in hours
+
+      var userDB = client.userDB.get(userID) || {username: userID};
+      if (!userDB.hasOwnProperty(guild.id))
+        userDB[guild.id] = {name: guild.name, lastUpdate: 0}
+
+      //client.logger.debug(guild.id+":"+!userDB[guild.id].hasOwnProperty("nickname")+" || "+userDB[guild.id].lastUpdate+"/"+now+":"+(userDB[guild.id].lastUpdate <= now-(delay*3600000))+" || "+userDB.username+":"+(userDB.username.indexOf("@") >= 0)+"\n"+JSON.stringify(userDB))
+
+        if ((!userDB[guild.id].hasOwnProperty("nickname")) || (!userDB[guild.id].hasOwnProperty("lastUpdate")) || (userDB[guild.id].lastUpdate <= now-(delay*3600000)) || (userDB.username.indexOf("@") >= 0)) { 
+        guild.fetchMember(userID)
+          .then(result => { 
+            client.logger.debug("Update username: "+username+"|"+result.displayName); //+"\n"+JSON.stringify(userDB))
+            userDB.username = username;
+            userDB[guild.id].nickname = result.displayName;
+            userDB[guild.id].lastUpdate = now;
+            client.userDB.set(userID, userDB);
+          });
+      }
+    } catch (error) { client.logger.error(`There was an error in updateDisplayName: ${error}`); } 
   };
+
+  client.getDisplayName = (userID, guild) => {
+     try {
+
+      const userDB = client.userDB.get(userID) || {username: userID};
+      let returnName = userDB.username || userID;
+
+      if (userDB.hasOwnProperty(guild.id))
+        if (userDB[guild.id].hasOwnProperty("nickname")) 
+          returnName = userDB[guild.id].nickname;
+
+      client.logger.debug("getDisplayName:"+returnName+":"+userID+"::"+guild.id); //+"\n"+JSON.stringify(userDB));
+      return returnName;
+       
+    } catch (error) { client.logger.error(`There was an error in getDisplayName: ${error}`); } 
+      
+  };
+  
+  
   
   
 };
