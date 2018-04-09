@@ -54,7 +54,18 @@ rosterDB {
   
 redstarQue {
   
-} 
+}
+
+tradeDB {
+  randomID : {
+    "user" : userID,
+    "scope" : String, //(all|guildID)
+    "type" : String, //(offer|request)
+    "object" : String, //(pink/blue/yellow/hydro)
+    "level" : Number, //(1-10)
+    "counter" : String //whats been asked/offered for it... free text
+  }
+}
   
 /*
 RedditWikki {

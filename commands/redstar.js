@@ -260,7 +260,7 @@ function action_join(client, userID, rsQueName) {
   if (client.redstarQue.has('userQue'+userID) && rsQueName !== client.redstarQue.get('userQue'+userID).rsQueName) {
     action_leave(client, userID);
   }
-  client.logger.error("About to set " + 'userQue'+userID);
+  //client.logger.error("About to set " + 'userQue'+userID);
   client.redstarQue.set('userQue'+userID, {rsQueName:rsQueName, ready: false});
   rsQueInfo.users.push(userID);
   if (rsQueInfo.users.length >= MATCH_MIN && !rsQueInfo.kickTime) {
