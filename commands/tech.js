@@ -16,7 +16,8 @@ exports.run = async (client, message, args, level) => {
       techLevel,
       techGroup,
       techID,
-      action;
+      action,
+      msg="";
   
   // *** PARSE and SORT OUT arguments
   args.forEach(function(arg) {
@@ -75,7 +76,7 @@ exports.run = async (client, message, args, level) => {
       return message.reply("GET can only return a single user.");
     
     if (!client.hsTech.has(targetID))
-      return message.reply(`<@${targetID}> doesn't have any data`);
+      return message.reply(client.getDisplayName(targetID, message.guild)+" doesn't have any data.");
     
     if (!client.checkPrivacy(targetID, message.guild.id))
       return message.reply("this user chose not to allow his tech to be viewed in this channel. You can ask him to WhiteList this channel or clear his WhiteList.")
@@ -92,10 +93,10 @@ exports.run = async (client, message, args, level) => {
   // *** EXECUTE THE COMMAND
   if (action === "get"){
 
-    let allTech = client.hsTech.get(targetID);
-    let msg = (targetID == message.author.id ? "here are your Tech levels: " : `here are Tech levels for <@${targetID}>`);
-    let lineBreaker = "Base";
-
+    var allTech = client.hsTech.get(targetID),
+        msg = (targetID == message.author.id ? client.getDisplayName(targetID, message.guild)+", here are your Tech levels: " : "here are Tech levels for "+client.getDisplayName(targetID, message.guild)+": "),
+        lineBreaker = "Base";
+    
     Object.keys(client.config.hadesTech).forEach(techID => {
       let techLevel = allTech[techID];
       if (techLevel >0) {
@@ -103,7 +104,10 @@ exports.run = async (client, message, args, level) => {
         hasData=true;
         let splitTech = client.config.hadesTech[techID].desc.split(" - ");
         if ( lineBreaker != splitTech[0] ) {
-          //dataTable.cell('Group', "-------");
+          if (dataTable.toString().length > 1800) {
+            msg[i++] = dataTable.sort(['Score|des']).toString()
+            dataTable = new table;
+          }
           dataTable.cell('Tech', "--------------"+splitTech[0]+"-");
           dataTable.cell('Level', "-----");
           dataTable.cell('Score', "-----");
@@ -118,27 +122,40 @@ exports.run = async (client, message, args, level) => {
       }
     });  
     if (!hasData) return message.reply("No data found");
-    else return message.reply(msg + "```" + dataTable.toString()+"```"); 
-    //return message.reply(msg);    
+    //else return message.reply(msg + "```" + dataTable.toString()+"```"); 
+    //return message.reply(msg);
+ 
+    let i = 0,
+        sendMsg = "";
+    message.channel.send(msg);
+    msg = dataTable.toString();
+    while (msg.length > 1990) {
+      let index = msg.lastIndexOf("--------------", 1990);
+      message.channel.send("```"+msg.slice(0, index)+"```");
+      msg = msg.slice(index+1);
+    }
+    message.channel.send("```"+msg+"```");
+
   }
   else if (action === "score"){
     searchObj.members.forEach(function (value, index){
       if (client.hsTech.has(index)) {
         let allTech = client.hsTech.get(index);
-        let tDB = client.userDB.get(index) || {username: `<@${index}>`}
+        //let tDB = client.userDB.get(index) || {username: `<@${index}>`}
         let techLevel = 0;
         Object.keys(allTech).map(function(techID, index) {
           if (client.config.hadesTech[techID]) 
             techLevel += client.config.hadesTech[techID].levels[Number(allTech[techID]-1)] || 0;
         });
         hasData=true;
-        dataTable.cell('Level', techLevel);
-        dataTable.cell('User', tDB.username);
+        dataTable.cell('Score', techLevel);
+        dataTable.cell('User', client.getDisplayName(index, message.guild));
         dataTable.newRow();
       }
     });  
     if (!hasData) return message.reply("No data found");
-    else return message.reply(`Score recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` + "```" + dataTable.sort(['Level|des']).toString()+"```"); 
+    else return message.reply(`Score recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` + "```" + dataTable.sort(['Score|des']).toString()+"```"); 
+    
   }  
   else if (action === "search"){
     let filteredUsers = "";
@@ -146,18 +163,18 @@ exports.run = async (client, message, args, level) => {
     searchObj.members.forEach(function (value, index){
       if (client.hsTech.has(index)) {
         let allTech = client.hsTech.get(index);
-        let tDB = client.userDB.get(index) || {username: `<@${index}>`}
+        //let tDB = client.userDB.get(index) || {username: `<@${index}>`}
         if (client.checkPrivacy(index, message.guild.id)) {
           let techLevel = allTech[techID] || 0;
           if (techLevel >0) {
             hasData=true;
             dataTable.cell('Level', techLevel);
-            dataTable.cell('User', tDB.username);
+            dataTable.cell('User', client.getDisplayName(targetID, message.guild));
             dataTable.newRow();
           }
         }
         else
-          filteredUsers +=  tDB.username+", ";       
+          filteredUsers +=  client.getDisplayName(targetID, message.guild)+", ";       
       }
     });
     if (filteredUsers !== "") message.reply("your query had users that choose not to allow tech to be viewed in this channel: `"+filteredUsers+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
@@ -169,7 +186,7 @@ exports.run = async (client, message, args, level) => {
     //client.logger.debug(message.author.id+"|SET:"+targetID+"|tGroup:"+techGroup+"|tLvls:"+techLevels+":|tID:"+techID+"|tLvl:"+techLevel);
     
     let allTech = client.hsTech.get(targetID) || {rs: 0, transp: 0,	miner: 0,	bs: 0,	cargobay: 0,	computer: 0,	tradeboost: 0,	rush: 0,	tradeburst: 0,	autopilot: 0,	offload: 0,	beam: 0,	entrust: 0,	recall: 0,	hydrobay: 0,	miningboost: 0,	enrich: 0,	remote: 0,	hydroupload: 0,	miningunity: 0,	crunch: 0,	genesis: 0,	battery: 0,	laser: 0,	mass: 0,	dual: 0,	barrage: 0,	alpha: 0,	delta: 0,	pas: 0,	omega: 0,	mirror: 0,	area: 0, emp: 0,	teleport: 0,	rsextender: 0,	repair: 0,	warp: 0,	unity: 0,	sanctuary: 0,	stealth: 0,	fortify: 0,	impulse: 0,	rocket: 0,	salvage: 0,	suppress: 0,	destiny: 0,	barrier: 0,	vengeance: 0,	leap: 0 };
-    let msg = "Setting tech for <@"+targetID+">";
+    let msg = "Setting tech for: "+client.getDisplayName(targetID, message.guild);
     let invalid = "Invalid Levels:";
 
     if (!techGroup) { // single Tech
@@ -208,7 +225,7 @@ exports.run = async (client, message, args, level) => {
     client.hsTech.set(targetID, allTech);
     //client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
     if (invalid != "Invalid Levels:") msg += invalid;
-    return message.reply(msg);    
+    return message.channel.send(msg);    
   }
 };
 

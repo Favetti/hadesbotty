@@ -32,7 +32,7 @@ const config = {
   "hadesTechSize" : {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":6,"support":18},
 
   "hadesTech" : {
-    "rs": {desc: "Base - RedStar Scanner", group: "base", redditURL: "red_stars", levels: [1,2,20,60,120,250,1000,2000]},
+    "rs": {desc: "Base - RedStar Scanner", group: "base", redditURL: "red_stars", levels: [1,2,20,60,120,250,1000,2000,4000,8000]},
     "transp": {desc: "Ships - Transport", group: "ships", redditURL: "ships/transport", levels: [1,10,60,300,1000]},
     "miner": {desc: "Ships - Miner", group: "ships", redditURL: "ships/miner", levels: [1,5,50,250,800]},
     "bs": {desc: "Ships - Battleship", group: "ships", redditURL: "ships/battleship", levels: [1,10,80,400,1500]},
@@ -52,8 +52,8 @@ const config = {
     "remote": {desc: "Mining - Remote Mining", group: "mining", redditURL: "modules/remote_mining", levels: [15,25,50,100,200,350,550,800,2000,5000]},
     "hydroupload": {desc: "Mining - Hydrogen Upload", group: "mining", redditURL: "modules/hydrogen_upload", levels: [20,35,65,100,200,350,700,1000,2500,5000]},
     "miningunity": {desc: "Mining - Mining Unity", group: "mining", redditURL: "modules/mining_unity", levels: [30,50,75,100,200,350,700,1000,2500,5000]},
-    "crunch": {desc: "Mining - Crunch", group: "mining", redditURL: "modules/crunch", levels: [150,230,360,550,850,1300,2000,5000,8000]},
-    "genesis": {desc: "Mining - Genesis", group: "mining", redditURL: "modules/genesis", levels: [200,250,500,800,1500,2000,3000,5000,8000]},
+    "crunch": {desc: "Mining - Crunch", group: "mining", redditURL: "modules/crunch", levels: [150,230,360,550,850,1300,2000,3000,5000,8000]},
+    "genesis": {desc: "Mining - Genesis", group: "mining", redditURL: "modules/genesis", levels: [200,250,350,500,800,1500,2000,3000,5000,8000]},
     "battery": {desc: "Weapons - Battery", group: "weapons", redditURL: "modules/battery", levels: [2,5,12,25,50,100,250,500,750,1000]},
     "laser": {desc: "Weapons - Laser", group: "weapons", redditURL: "modules/laser", levels: [8,12,25,50,100,250,500,1000,2000,4000]},
     "mass": {desc: "Weapons - Mass Battery", group: "weapons", redditURL: "modules/mass_battery", levels: [15,25,50,100,200,350,550,800,2000,5000]},

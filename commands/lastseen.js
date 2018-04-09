@@ -30,7 +30,7 @@ exports.run = async (client, message, args, level) => {
       var targetID = arg.replace("<@","").replace(">","").replace("!","");
       var targetDB = client.userDB.get(targetID) || {username: targetID, lastSeen: false}
       if (!targetDB.lastSeen) {
-        errors += `I have never seen ${targetDB.username}.\n`;
+        errors += `I have never seen ${client.getDisplayName(targetID, message.guild)}.\n`;
         return true; //Skip to next member of args
       }
       if (message.author.id === targetID) {
@@ -57,7 +57,7 @@ exports.run = async (client, message, args, level) => {
       targetDB = client.userDB.get(targetID) || targetDB || {lastSeen: false}
       if (targetDB.lastSeen) {
         let timeDiff = Math.round((Date.now() - targetDB.lastSeen) / 360000) / 10; //One 10 outside the round() call so we have a single decimal
-        scoreTable.cell('User', targetDB.username);
+        scoreTable.cell('User', client.getDisplayName(targetID, message.guild));
         let lastSeenString = timeDiff ? `${timeDiff} hours ago` : "just now...";
         //if(targetDB.timeOffset) lastSeen += " at "+moment(Date.now() + (targetDB.timeOffset * 3600000)).format("YY-MM-DD, HH:mm");
         scoreTable.cell('LastSeen', lastSeenString);

@@ -34,9 +34,11 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   client.hsTech.forEach(function (target, targetID, mapObj){
     if (targetMembers.includes(targetID)) {
       hasData=true;
-      let targetDB = client.userDB.get(targetID) || {username: targetID}
+      //let targetDB = client.userDB.get(targetID) || {username: targetID}
       
-      html += "<TR><TD>"+targetDB.username+"</TD>";
+      //html += "<TR><TD>"+targetDB.username+"</TD>";
+      html += "<TR><TD>"+client.getDisplayName(targetID, message.guild)+"</TD>";
+      
       let techScore = 0;
       Object.keys(client.config.hadesTech).forEach(techID => { 
         let techLevel = client.hsTech.get(targetID)[techID] || 0;

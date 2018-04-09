@@ -225,7 +225,7 @@ exports.run = async (client, message, args, level) => {
       buildText = "_No Build_";
     }
     supportEmbed.embed.fields[supportEmbed.embed.fields.length] = {
-      'name': targetDB.username,
+      'name': client.getDisplayName(targetID, message.guild),
       'value': buildText,
     };
     
@@ -253,7 +253,7 @@ exports.run = async (client, message, args, level) => {
       buildText = "_No Build_";
     }
     battleEmbed.embed.fields[battleEmbed.embed.fields.length] = {
-      'name': targetDB.username,
+      'name': client.getDisplayName(targetID, message.guild),
       'value': buildText,
     };
   });// end of members.forEach( (targetDB, targetID) => {
