@@ -58,14 +58,15 @@ const init = async () => {
       path = require('path'),
       express = require('express'),
       moment = require("moment"),
-      app = express();
+      app = express(),
+      html = '<HTML><BODY><a href="https://discordbots.org/bot/410562547092160522" ><img src="https://discordbots.org/api/widget/410562547092160522.svg" alt="Discord Bot" /></a></BODY></HTML>';
   
   app.use(express.static(path.join(__dirname, 'public')));
   
   app.get("/", (request, response) => {
     //client.logger.log(" HTTPS Ping Received from " + request.headers['x-forwarded-for'].split(",",1));
-    response.sendStatus(200);
-    //response.sendFile(__dirname + '/web/index.html')
+    //response.sendStatus(200);
+    response.send(html);
   });
 
   app.listen(process.env.PORT);
