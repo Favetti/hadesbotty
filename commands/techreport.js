@@ -13,7 +13,7 @@ exports.run = async (client, message, args, level) => {
       reports = new Array(),
       techLists = new Array(),
       argSection = 'users',
-      filteredUsers = "";
+      filteredUsers = new Array();
     
   args.forEach(function(arg) {
     if ('|' == arg.trim()) {
@@ -39,22 +39,23 @@ exports.run = async (client, message, args, level) => {
       //errors += client.ParseMembersArg(arg, members, message.guild);//members is passed by refernce-by-value so it can be updated
       //errors += `arg ${argNum}: ${arg}\n`; // Debug
       if (arg.indexOf("<@&") >= 0) { //target is a ROLE
-        const roleID = arg.replace("<@&","").replace(">","");
+        //const roleID = arg.replace("<@&","").replace(">","");
+        const roleID = arg.replace(/[^0-9]/g,"");
         if (!message.guild.roles.has(roleID)) {
           errors += "Role not found! Maybe i can't mention it...\n";
           return true; //Skip to next member of args
         }
         message.guild.roles.get(roleID).members.forEach(function(targetDB, targetID){
           targetDB = client.userDB.get(targetID);
-          if (client.checkPrivacy(targetID, message.guild.id)) {
+          if (client.checkPrivacy(targetID, message.guild.id))
             members.set(targetID, targetDB);
-          }
           else
-            filteredUsers += client.getDisplayName(targetID, message.guild)+", ";
+            filteredUsers.push(client.getDisplayName(targetID, message.guild));
         });
       }
       else if (arg.indexOf("<@") >= 0 ) { //target is a USER
-        var targetID = arg.replace("<@","").replace(">","").replace("!","");
+        //var targetID = arg.replace("<@","").replace(">","").replace("!","");
+        var targetID = arg.replace(/[^0-9]/g,"");
         var targetDB = client.userDB.get(targetID);// || {username: targetID, lastSeen: false}
 //         if (!targetDB.lastSeen) {
 //           errors += `I have no records for ${targetDB.username}.\n`;
@@ -68,16 +69,15 @@ exports.run = async (client, message, args, level) => {
         if (client.checkPrivacy(targetID, message.guild.id)) 
           members.set(targetID, targetDB);
         else
-          return message.reply("this user chose not to allow his tech to be viewed in this channel. You can ask him to WhiteList this channel or clear his WhiteList.");
+          return message.reply("This user have privacy seetings forbidding his tech to be viewed here. You can ask him to WhiteList this channel or clear his WhiteList.");
       } else if (arg.trim() == 'all') {
         //errors += `Showing all: ${arg}\n`; //Debug
         message.guild.members.forEach(function(targetDB, targetID){
           targetDB = client.userDB.get(targetID);
-          if (client.checkPrivacy(targetID, message.guild.id)) {
+          if (client.checkPrivacy(targetID, message.guild.id))
             members.set(targetID, targetDB);
-          }
           else
-            filteredUsers += client.getDisplayName(targetID, message.guild)+", ";
+            filteredUsers.push(client.getDisplayName(targetID, message.guild));
         });
       } else {
         errors += `I do not recognize the User argument: ${arg}\n`;
@@ -87,7 +87,8 @@ exports.run = async (client, message, args, level) => {
     }
   });
     
-    if (filteredUsers !== "") message.reply("your query had users that choose not to allow tech to be viewed in this channel: `"+filteredUsers+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
+    if (filteredUsers.length > 0)
+    message.channel.send("Some users on your query have privacy seetings forbidding their tech to be viewed here: `"+filteredUsers.toString()+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
     
   if (members.size < 1) {
     errors += `Unable to find any matching users\n`;

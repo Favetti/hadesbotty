@@ -188,7 +188,7 @@ module.exports = (client) => {
   client.updateDisplayName = async (userID, username, guild) => {
     try {
       const now = Date.now(),
-            delay = 1; //delay for update if user not seen, in hours
+            delay = 2; //delay for update if user not seen, in hours
 
       var userDB = client.userDB.get(userID) || {username: userID};
       if (!userDB.hasOwnProperty(guild.id))
@@ -199,7 +199,7 @@ module.exports = (client) => {
         if ((!userDB[guild.id].hasOwnProperty("nickname")) || (!userDB[guild.id].hasOwnProperty("lastUpdate")) || (userDB[guild.id].lastUpdate <= now-(delay*3600000)) || (userDB.username.indexOf("@") >= 0)) { 
         guild.fetchMember(userID)
           .then(result => { 
-            client.logger.debug("Update username: "+username+"|"+result.displayName); //+"\n"+JSON.stringify(userDB))
+            //client.logger.debug("Update username: "+username+"|"+result.displayName+"("+guild.name+")"); //+"\n"+JSON.stringify(userDB))
             userDB.username = username;
             userDB[guild.id].nickname = result.displayName;
             userDB[guild.id].lastUpdate = now;
@@ -210,7 +210,7 @@ module.exports = (client) => {
   };
 
   client.getDisplayName = (userID, guild) => {
-     try {
+    try {
 
       const userDB = client.userDB.get(userID) || {username: userID};
       let returnName = userDB.username || userID;
@@ -219,14 +219,17 @@ module.exports = (client) => {
         if (userDB[guild.id].hasOwnProperty("nickname")) 
           returnName = userDB[guild.id].nickname;
 
-      client.logger.debug("getDisplayName:"+returnName+":"+userID+"::"+guild.id); //+"\n"+JSON.stringify(userDB));
+      //client.logger.debug("getDisplayName:"+returnName+":"+userID+"::"+guild.id); //+"\n"+JSON.stringify(userDB));
+
+      //if (returnName.indexOf("@") >= 0)
+      //if (returnName.search(/\@[0-9]{10,}/) >= 0)
+      if (returnName.replace(/[^0-9]/g,"") == userID)
+        client.updateDisplayName(userID, returnName.replace(/[^0-9]/g,""), guild);
+
       return returnName;
-       
+
     } catch (error) { client.logger.error(`There was an error in getDisplayName: ${error}`); } 
       
   };
-  
-  
-  
   
 };

@@ -15,6 +15,7 @@ exports.run = async (client, message, args, level) => {
       members = new Map(),
       techLists = new Array(),
       callType = 'get',
+      filteredUsers = new Array(),
       battleEmbed = {  'embed': {'title':  "__Battle Roster__",  'fields': new Array()}},
       supportEmbed = {  'embed': {'title': "__Support Roster__", 'fields': new Array()}};
       
@@ -33,18 +34,25 @@ exports.run = async (client, message, args, level) => {
       }
       message.guild.roles.get(roleID).members.forEach(function(targetDB, targetID){
         targetDB = client.userDB.get(targetID);
-        members.set(targetID, targetDB);
+        if (!client.checkPrivacy(targetID, message.guild.id))
+          filteredUsers.push(client.getDisplayName(targetID, message.guild));
+        else
+          members.set(targetID, targetDB);
       });
     } else if (arg.indexOf("<@") >= 0 ) { //target is a USER
       //errors += "found user: "+arg+"\n";// Debug
-      var targetID = arg.replace("<@","").replace(">","").replace("!","");
+      //var targetID = arg.replace("<@","").replace(">","").replace("!","");
+      var targetID = arg.replace(/[^0-9]/g,"");
       var targetDB = client.userDB.get(targetID);// || {username: targetID, lastSeen: false}
       if (!targetDB) {
         errors += `User ${arg} has no data`;
         return true; //Skip to next member of args
       } 
       //errors += "added user: "+arg+"\n";// Debug
-      members.set(targetID, targetDB);
+      if (!client.checkPrivacy(targetID, message.guild.id))
+        filteredUsers.push(client.getDisplayName(targetID, message.guild));
+      else
+        members.set(targetID, targetDB);
     } else if ('all' === arg) {
       if (callType === 'set') {
         errors += `Cannot use 'all' when setting roster builds but you can target a specific role\n`;
@@ -53,7 +61,10 @@ exports.run = async (client, message, args, level) => {
       //errors += `Using all active users`;// Debug
       message.guild.members.forEach(function(targetDB, targetID){
           targetDB = client.userDB.get(targetID);
-          members.set(targetID, targetDB);
+          if (!client.checkPrivacy(targetID, message.guild.id))
+            filteredUsers.push(client.getDisplayName(targetID, message.guild));
+          else
+            members.set(targetID, targetDB);
         });
     } else {
       let techID = client.normalizeTechName(arg);
@@ -61,13 +72,16 @@ exports.run = async (client, message, args, level) => {
     }
   });
     
-  if (members.size < 1) {
-    errors += `Unable to find any matching users\n`;
-  }
+  client.logger.debug( ":"+filteredUsers.toString());
     
-  if (techLists.length < 1) {
+  if (filteredUsers.length > 0)
+    message.channel.send("Some users on your query have privacy seetings forbidding their tech to be viewed here: `"+filteredUsers.toString()+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
+    
+  if (members.size < 1)
+    return message.channel.send("Unable to find any matching users.");
+    
+  if (techLists.length < 1)
     errors += `Unable to find any matching technologies\n`;
-  }
   
   members.forEach( (targetDB, targetID) => {
     //client.logger.error(util.inspect(client.rosterDB));
