@@ -9,6 +9,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   
   var hasData=false,
       searchObj = message.guild,
+      filteredUsers = new Array(),
       dataObj = {},
       html = "";
     
@@ -33,22 +34,29 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
 
   client.hsTech.forEach(function (target, targetID, mapObj){
     if (targetMembers.includes(targetID)) {
-      hasData=true;
-      //let targetDB = client.userDB.get(targetID) || {username: targetID}
-      
-      //html += "<TR><TD>"+targetDB.username+"</TD>";
-      html += "<TR><TD>"+client.getDisplayName(targetID, message.guild)+"</TD>";
-      
-      let techScore = 0;
-      Object.keys(client.config.hadesTech).forEach(techID => { 
-        let techLevel = client.hsTech.get(targetID)[techID] || 0;
-        techScore += client.config.hadesTech[techID].levels[Number(techLevel)-1] || 0;
-        html += "<TD>"+techLevel+"</TD>";
-      });
-      html += "<TD>"+techScore+"</TD></TR>";   
-    }
-  });
+      if (client.checkPrivacy(targetID, message.guild.id)) {
+        hasData=true;
+        //let targetDB = client.userDB.get(targetID) || {username: targetID}
 
+        //html += "<TR><TD>"+targetDB.username+"</TD>";
+        html += "<TR><TD>"+client.getDisplayName(targetID, message.guild)+"</TD>";
+
+        let techScore = 0;
+        Object.keys(client.config.hadesTech).forEach(techID => {
+            let techLevel = client.hsTech.get(targetID)[techID] || 0;
+            techScore += client.config.hadesTech[techID].levels[Number(techLevel)-1] || 0;
+            html += "<TD>"+techLevel+"</TD>";
+          });
+          html += "<TD>"+techScore+"</TD></TR>";   
+      }
+      else
+        filteredUsers.push(client.getDisplayName(targetID, message.guild));
+    }
+
+  });
+  
+  if (filteredUsers.length > 0)
+    message.channel.send("Some users on your query have privacy seetings forbidding their tech to be viewed here: `"+filteredUsers.toString()+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
   // close the html
   html += "</TABLE></BODY></HTML>";
   
