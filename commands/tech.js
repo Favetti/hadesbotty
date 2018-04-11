@@ -79,7 +79,7 @@ exports.run = async (client, message, args, level) => {
       return message.reply(client.getDisplayName(targetID, message.guild)+" doesn't have any data.");
     
     if (!client.checkPrivacy(targetID, message.guild.id))
-      return message.reply("this user chose not to allow his tech to be viewed in this channel. You can ask him to WhiteList this channel or clear his WhiteList.")
+      return message.reply("This user have privacy seetings forbidding his tech to be viewed here. You can ask him to WhiteList this channel or clear his WhiteList.")
       
   }
 
@@ -158,7 +158,7 @@ exports.run = async (client, message, args, level) => {
     
   }  
   else if (action === "search"){
-    let filteredUsers = "";
+    let filteredUsers = new Array();
     
     searchObj.members.forEach(function (value, index){
       if (client.hsTech.has(index)) {
@@ -174,12 +174,15 @@ exports.run = async (client, message, args, level) => {
           }
         }
         else
-          filteredUsers +=  client.getDisplayName(targetID, message.guild)+", ";       
+          filteredUsers.push(client.getDisplayName(targetID, message.guild));
       }
     });
-    if (filteredUsers !== "") message.reply("your query had users that choose not to allow tech to be viewed in this channel: `"+filteredUsers+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
-    if (!hasData) return message.reply("No data found.");
-    else return message.reply(`Tech level recorded for everyone of ${args[0]} ${searchObj.name}:\n` + "```" + dataTable.sort(['Level|des']).toString()+"```");
+    if (filteredUsers.length > 0)
+      message.channel.send("Some users on your query have privacy seetings forbidding their tech to be viewed here: `"+filteredUsers.toString()+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
+    if (!hasData)
+      return message.reply("No data found.");
+    else
+      return message.reply(`Tech level recorded for everyone of ${args[0]} ${searchObj.name}:\n` + "```" + dataTable.sort(['Level|des']).toString()+"```");
   }  
   else if (action === "set"){
 
