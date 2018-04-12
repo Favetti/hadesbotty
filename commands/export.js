@@ -76,7 +76,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
         fs.unlink(dir+filename, (err) => {
           if (err)
             throw err;
-          console.log('successfully deleted /tmp/hello');
+          client.logger.log('successfully deleted /tmp/hello');
         }); 
       }, 1800000); // remove file after 30min
   }); 
