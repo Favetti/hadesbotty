@@ -62,7 +62,8 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   
   if (!hasData) return message.reply("No data found");
   
-  var filename = searchObj.id+".html";
+  var exportCode = client.settings.get(message.guild.id).exportCode || "";
+  var filename = exportCode+searchObj.id+".html";
   
   fs.writeFile(dir+filename, html, function(err) {
     if(err) {
@@ -70,6 +71,14 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
       client.logger.error(err);
     }
     client.logger.log("The file was saved: "+dir+filename);
+    if (exportCode)
+      setTimeout(function(){ 
+        fs.unlink(dir+filename, (err) => {
+          if (err)
+            throw err;
+          console.log('successfully deleted /tmp/hello');
+        }); 
+      }, 1800000); // remove file after 30min
   }); 
   var webData = client.settings.get(message.guild.id).webSheet || url+filename;
   
@@ -88,5 +97,13 @@ exports.help = {
   name: "export",
   category: "Hades Star",
   description: "Export Guild's Tech data to a webpage",
-  usage: "export  [role @role]\nYou can set another URL to be replied with !set add webSheet <URL> (case sensitive)\nFor an example of import Sheet, visit: https://goo.gl/zfPDoz"
+  usage: `export  [@role]
+For an example of import Sheet, visit: https://goo.gl/zfPDoz
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+• set a custom reply URL: '!set add webSheet [URL]'
+    example, if you have a sheet that reads the default
+
+• add a code on the name of the exported file:
+    '!set add exportCode [code]'
+    this will also cause the file to be erased in 30min`
 };
