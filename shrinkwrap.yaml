@@ -11,6 +11,7 @@ dependencies:
   moment-duration-format: 2.2.2
   moment-timezone: 0.5.14
   path: 0.12.7
+  random-string: 0.2.0
   reddit-oauth-helper: 0.3.0
   snoowrap: 1.15.2
   tableify: 1.1.0
@@ -1302,6 +1303,12 @@ packages:
       node: '>=0.6'
     resolution:
       integrity: sha512-eRzhrN1WSINYCDCbrz796z37LOe3m5tmW7RQf6oBntukAG1nmovJvhnwHHRMAfeoItc1m2Hk02WER2aQ/iqs+A==
+  /random-string/0.2.0:
+    dev: false
+    engines:
+      node: '>= 0.10.0'
+    resolution:
+      integrity: sha1-pG5DdTUr7amg17DRntbTIezR2C0=
   /range-parser/1.2.0:
     dev: false
     engines:
@@ -1820,6 +1827,7 @@ specifiers:
   moment-duration-format: ^2.2.2
   moment-timezone: ^0.5.14
   path: ^0.12.7
+  random-string: ^0.2.0
   reddit-oauth-helper: ^0.3.0
   snoowrap: ^1.15.2
   tableify: ^1.1.0

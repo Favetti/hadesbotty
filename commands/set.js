@@ -43,6 +43,9 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
     case "websheet":
       key = "webSheet";
       break;
+    case "exportcode":
+      key = "exportCode";
+      break;      
   }
   
   // First, if a user does `-set add <key> <new value>`, let's add it

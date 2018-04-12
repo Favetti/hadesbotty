@@ -97,7 +97,14 @@ exports.run = async (client, message, args, level) => {
         }
         client.logger.log("The file was saved: "+dir+filename);
       }); 
-      return message.reply("Audit exportedto: "+url+filename); 
+      return message.reply("Audit exported to: "+url+filename);
+      setTimeout(function(){ 
+        fs.unlink(dir+filename, (err) => {
+          if (err)
+            throw err;
+          client.logger.log('successfully deleted /tmp/hello');
+        }); 
+      }, 1800000); // remove file after 30min
     }
     else
           //return message.reply(`Audit for ${args[0]}:\n` + dataTable.toString());
