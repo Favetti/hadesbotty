@@ -6,8 +6,8 @@ exports.run = async (client, message, args, level) => {
 
   args = args.map(x => x.toLowerCase());
 
-  const util = require('util');
-  const table = require('easy-table');
+  //const util = require('util');
+  //const table = require('easy-table');
   await client.redstarQue.defer;
   try {
     var errors = "";
@@ -170,7 +170,7 @@ function action_status(client, userID, rsQueName, message) {
     message = "You are #**"+quePosition+"** in the que and must wait for this match to start or kick users\n"+message;
   }
   if (false !== rsQueInfo.kickTime) {
-    var tillKick = Math.round((extraKickTime + rsQueInfo.kickTime - Date.now()) / 1000, 0);
+    var tillKick = Math.round((extraKickTime + rsQueInfo.kickTime - Date.now()) / 1000);
     if (0 < tillKick) {
       message += ` **${tillKick}**s until you can kick unready players`
     } else {
@@ -249,7 +249,7 @@ function action_join(client, userID, rsQueName) {
     };
     client.redstarQue.set('redstarQue'+rsQueName, rsQueInfo);
   } else {
-    var rsQueInfo = client.redstarQue.get('redstarQue'+rsQueName);
+    rsQueInfo = client.redstarQue.get('redstarQue'+rsQueName);
   }
   if (-1 !== rsQueInfo.users.indexOf(userID)) {
     client.fetchUser(userID).then(user => {user.send("You are already in the RS"+rsQueName+" que!")});
@@ -343,7 +343,7 @@ function action_kick(client, userID) {
     }
   });
   if (!inCurrentMatch && (0 - MATCH_KICK_EXTRA) < timeTillKick) {
-    client.fetchUser(userID).then(user => {user.send("You are not in the current RS"+rsQueName+" match so cannot kick people yet. Please wait another "+Math.round((timeTillKick + MATCH_KICK_EXTRA)/1000,0)+" seconds.")});
+    client.fetchUser(userID).then(user => {user.send("You are not in the current RS"+rsQueName+" match so cannot kick people yet. Please wait another "+Math.round((timeTillKick + MATCH_KICK_EXTRA)/1000)+" seconds.")});
     return true;
   }
   rsQueInfo.kickTime = false;

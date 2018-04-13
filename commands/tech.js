@@ -3,8 +3,8 @@
 
 exports.run = async (client, message, args, level) => { 
 
-  const moment = require("moment"),
-        table = require('easy-table');
+  //const moment = require("moment"),
+    const table = require('easy-table');
  
   var targetID = message.author.id,
       searchObj = message.guild,
@@ -96,8 +96,9 @@ exports.run = async (client, message, args, level) => {
   if (action === "get"){
 
     var allTech = client.hsTech.get(targetID),
-        msg = (targetID == message.author.id ? client.getDisplayName(targetID, message.guild)+", here are your Tech levels: " : "here are Tech levels for "+client.getDisplayName(targetID, message.guild)+": "),
         lineBreaker = "Base";
+
+    msg = (targetID == message.author.id ? client.getDisplayName(targetID, message.guild)+", here are your Tech levels: " : "here are Tech levels for "+client.getDisplayName(targetID, message.guild)+": "),
     
     Object.keys(client.config.hadesTech).forEach(techID => {
       let techLevel = allTech[techID];

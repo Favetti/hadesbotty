@@ -65,7 +65,7 @@ module.exports = (client) => {
       case "trade_boost":
       case "tboost":
          return "tradeboost";
-         return "rush"; //can't reach
+         //return "rush";
       case "trade_burst":
       case "tburst":
          return "tradeburst";
@@ -83,8 +83,8 @@ module.exports = (client) => {
       case "sbeam":
       case "sb":
          return "beam";
-         return "entrust";//can't reach
-         return "recall";//can't reach
+         //return "entrust";
+         //return "recall";
         
       // INDIVIDUAL TECH - mining:
       case "hydrogen_bay_extension":
@@ -108,8 +108,8 @@ module.exports = (client) => {
       case "munity":
       case "mu":
          return "miningunity";
-         return "crunch";//can't reach
-         return "genesis";//can't reach
+         //return "crunch";
+         //return "genesis";
         
       // INDIVIDUAL TECH - weapons:
       case "batt":
@@ -123,7 +123,7 @@ module.exports = (client) => {
       case "duallaser":
       case "dualaser":
          return "dual";
-         return "barrage";//can't reach
+         //return "barrage";
         
       // INDIVIDUAL TECH - shields:
       case "alpha_shield":
@@ -156,7 +156,7 @@ module.exports = (client) => {
          return "area";
         
       // INDIVIDUAL TECH - support:
-         return "emp";//can't reach
+         //return "emp";
       case "tel":
       case "tele":
          return "teleport";
@@ -178,14 +178,14 @@ module.exports = (client) => {
       case "tw":
       case "twarp":
          return "warp";
-         return "unity";//can't reach
+         //return "unity";
       case "sanc":
       case "sanct":
          return "sanctuary";
-         return "stealth";//can't reach
+         //return "stealth";
       case "fort":
          return "fortify";
-         return "impulse";//can't reach
+         //return "impulse";
       case "alpha_rocket":
       case "alpharocket":
       case "arocket":
@@ -198,11 +198,11 @@ module.exports = (client) => {
          return "suppress";
       case "dest":
          return "destiny";
-         return "barrier";//can't reach
+         //return "barrier";
       case "veng":
       case "venge":
          return "vengeance";
-         return "leap";//can't reach
+         //return "leap";
       case "alpha_drone":
       case "alphadrone":
       case "drones":

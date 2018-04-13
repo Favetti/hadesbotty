@@ -57,7 +57,7 @@ const init = async () => {
   var http = require('http'),
       path = require('path'),
       express = require('express'),
-      moment = require("moment"),
+      //moment = require("moment"),
       app = express(),
       html = '<HTML><BODY><a href="https://discordbots.org/bot/410562547092160522" ><img src="https://discordbots.org/api/widget/410562547092160522.svg" alt="Discord Bot" /></a></BODY></HTML>';
   

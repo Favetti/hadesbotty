@@ -38,7 +38,8 @@ module.exports = (client, message) => {
 
   // Some commands may not be useable in DMs. This check prevents those commands from running
   // and return a friendly error message.
-  if (cmd && !message.guild && cmd.conf.guildOnly)
+  //if (cmd && !message.guild && cmd.conf.guildOnly)
+  if (!message.guild && cmd.conf.guildOnly)
     return message.channel.send("This command is unavailable via private message. Please run this command in a guild.");
 
   if (level < client.levelCache[cmd.conf.permLevel]) {
