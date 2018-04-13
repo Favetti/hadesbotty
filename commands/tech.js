@@ -146,7 +146,7 @@ exports.run = async (client, message, args, level) => {
         let allTech = client.hsTech.get(index);
         //let tDB = client.userDB.get(index) || {username: `<@${index}>`}
         let techLevel = 0;
-        Object.keys(allTech).map(function(techID, index) {
+        Object.keys(allTech).forEach(function(techID, index) {
           if (client.config.hadesTech[techID]) 
             techLevel += client.config.hadesTech[techID].levels[Number(allTech[techID]-1)] || 0;
         });

@@ -95,7 +95,7 @@ module.exports = (client) => {
       case "mboost":
       case "mb":
          return "miningboost";
-         return "enrich";
+         //return "enrich";
       case "remote_mining":
       case "remotemining":
       case "rm":
@@ -114,12 +114,12 @@ module.exports = (client) => {
       // INDIVIDUAL TECH - weapons:
       case "batt":
          return "battery";
-         return "laser";
+         //return "laser";
       case "mass_battery":
       case "massbattery":
       case "massbatt":
          return "mass";
-      case "dual_Laser":
+      case "dual_laser":
       case "duallaser":
       case "dualaser":
          return "dual";

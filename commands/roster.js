@@ -7,7 +7,7 @@ exports.run = async (client, message, args, level) => {
   args = args.map(x => x.toLowerCase());
   if (0 >= args.length) { args[0] = 'all'}
   //const util = require('util');
-  const table = require('easy-table');
+  //const table = require('easy-table');
   await client.rosterDB.defer;
   try {
   var hasData=false,
