@@ -1,13 +1,25 @@
 module.exports = (client) => {
   
-  client.checkPrivacy = (targetID, guildID) => {
+  client.checkPrivacy = (targetID, message) => {
 
-    if (!client.userDB.has(targetID))             return true; //OK to proceed  
-    let targetDB = client.userDB.get(targetID);
-    if (!Array.isArray(targetDB.whitelist) || !targetDB.whitelist.length)   return true; //OK to proceed 
-    if (targetDB.whitelist.includes(guildID))     return true; //OK to proceed 
+    if (!client.userDB.has(targetID))             
+      return true; //OK to proceed  : target not in the DB
     
-    return false; //do NOT proceed
+    let targetDB = client.userDB.get(targetID);
+    if (!Array.isArray(targetDB.whitelist) || !targetDB.whitelist.length)
+      return true; //OK to proceed : target has no whitelist
+
+    if (!message.guild)
+      if (message.author.id !== targetID)
+        return false; //do NOT proceed : PM by another user
+      else
+        return true; //OK to proceed : dealing with user's own tech
+        
+    let guildID = message.guild.id;
+    if (targetDB.whitelist.includes(guildID))
+      return true; //OK to proceed : guild is in the whitelist
+    
+    return false; //do NOT proceed : default, whitelist exists and guild is not there
   }
 
   client.normalizeTechName = (name) => {

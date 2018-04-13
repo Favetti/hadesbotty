@@ -47,7 +47,7 @@ exports.run = async (client, message, args, level) => {
         }
         message.guild.roles.get(roleID).members.forEach(function(targetDB, targetID){
           targetDB = client.userDB.get(targetID);
-          if (client.checkPrivacy(targetID, message.guild.id))
+          if (client.checkPrivacy(targetID, message))
             members.set(targetID, targetDB);
           else
             filteredUsers.push(client.getDisplayName(targetID, message.guild));
@@ -66,7 +66,7 @@ exports.run = async (client, message, args, level) => {
         } else {
           //errors += `Showing member: ${arg}\n`; //Debug
         }
-        if (client.checkPrivacy(targetID, message.guild.id)) 
+        if (client.checkPrivacy(targetID, message)) 
           members.set(targetID, targetDB);
         else
           return message.reply("This user have privacy seetings forbidding his tech to be viewed here. You can ask him to WhiteList this channel or clear his WhiteList.");
@@ -74,7 +74,7 @@ exports.run = async (client, message, args, level) => {
         //errors += `Showing all: ${arg}\n`; //Debug
         message.guild.members.forEach(function(targetDB, targetID){
           targetDB = client.userDB.get(targetID);
-          if (client.checkPrivacy(targetID, message.guild.id))
+          if (client.checkPrivacy(targetID, message))
             members.set(targetID, targetDB);
           else
             filteredUsers.push(client.getDisplayName(targetID, message.guild));

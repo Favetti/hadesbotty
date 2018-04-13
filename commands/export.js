@@ -34,7 +34,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
 
   client.hsTech.forEach(function (target, targetID, mapObj){
     if (targetMembers.includes(targetID)) {
-      if (client.checkPrivacy(targetID, message.guild.id)) {
+      if (client.checkPrivacy(targetID, message)) {
         hasData=true;
         //let targetDB = client.userDB.get(targetID) || {username: targetID}
 

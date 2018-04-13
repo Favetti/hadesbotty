@@ -78,12 +78,14 @@ exports.run = async (client, message, args, level) => {
     if (!client.hsTech.has(targetID))
       return message.reply(client.getDisplayName(targetID, message.guild)+" doesn't have any data.");
     
-    if (!client.checkPrivacy(targetID, message.guild.id))
+    if (!client.checkPrivacy(targetID, message))
       return message.reply("This user have privacy seetings forbidding his tech to be viewed here. You can ask him to WhiteList this channel or clear his WhiteList.")
       
   }
 
   if (action === "search") {
+    if (!message.guild)
+      return message.reply("SEARCH only makes sense in a corp. channel...");
     if (techGroup)
       return message.reply("SEARCH only works with a single tech. Use TechReport for broader options.");
     else if (!techID)
@@ -159,22 +161,20 @@ exports.run = async (client, message, args, level) => {
   }  
   else if (action === "search"){
     let filteredUsers = new Array();
-    
     searchObj.members.forEach(function (value, index){
       if (client.hsTech.has(index)) {
-        let allTech = client.hsTech.get(index);
-        //let tDB = client.userDB.get(index) || {username: `<@${index}>`}
-        if (client.checkPrivacy(index, message.guild.id)) {
+        if (client.checkPrivacy(index, message)) {
+          let allTech = client.hsTech.get(index);
           let techLevel = allTech[techID] || 0;
           if (techLevel >0) {
             hasData=true;
             dataTable.cell('Level', techLevel);
-            dataTable.cell('User', client.getDisplayName(targetID, message.guild));
+            dataTable.cell('User', client.getDisplayName(index, message.guild));
             dataTable.newRow();
           }
         }
         else
-          filteredUsers.push(client.getDisplayName(targetID, message.guild));
+          filteredUsers.push(client.getDisplayName(index, message.guild));
       }
     });
     if (filteredUsers.length > 0)
@@ -234,7 +234,7 @@ exports.run = async (client, message, args, level) => {
 
 exports.conf = {
   enabled: true,
-  guildOnly: true,
+  guildOnly: false,
   aliases: ["t"],
   permLevel: "User"
 };
