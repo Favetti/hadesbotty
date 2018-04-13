@@ -34,7 +34,7 @@ exports.run = async (client, message, args, level) => {
       }
       message.guild.roles.get(roleID).members.forEach(function(targetDB, targetID){
         targetDB = client.userDB.get(targetID);
-        if (!client.checkPrivacy(targetID, message.guild.id))
+        if (!client.checkPrivacy(targetID, message))
           filteredUsers.push(client.getDisplayName(targetID, message.guild));
         else
           members.set(targetID, targetDB);
@@ -49,7 +49,7 @@ exports.run = async (client, message, args, level) => {
         return true; //Skip to next member of args
       } 
       //errors += "added user: "+arg+"\n";// Debug
-      if (!client.checkPrivacy(targetID, message.guild.id))
+      if (!client.checkPrivacy(targetID, message))
         filteredUsers.push(client.getDisplayName(targetID, message.guild));
       else
         members.set(targetID, targetDB);
@@ -61,7 +61,7 @@ exports.run = async (client, message, args, level) => {
       //errors += `Using all active users`;// Debug
       message.guild.members.forEach(function(targetDB, targetID){
           targetDB = client.userDB.get(targetID);
-          if (!client.checkPrivacy(targetID, message.guild.id))
+          if (!client.checkPrivacy(targetID, message))
             filteredUsers.push(client.getDisplayName(targetID, message.guild));
           else
             members.set(targetID, targetDB);

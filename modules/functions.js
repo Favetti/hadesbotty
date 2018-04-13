@@ -215,14 +215,13 @@ module.exports = (client) => {
       const userDB = client.userDB.get(userID) || {username: userID};
       let returnName = userDB.username || userID;
 
+      if (!guild)
+        return returnName
+
       if (userDB.hasOwnProperty(guild.id))
         if (userDB[guild.id].hasOwnProperty("nickname")) 
           returnName = userDB[guild.id].nickname;
 
-      //client.logger.debug("getDisplayName:"+returnName+":"+userID+"::"+guild.id); //+"\n"+JSON.stringify(userDB));
-
-      //if (returnName.indexOf("@") >= 0)
-      //if (returnName.search(/\@[0-9]{10,}/) >= 0)
       if (returnName.replace(/[^0-9]/g,"") == userID)
         client.updateDisplayName(userID, returnName.replace(/[^0-9]/g,""), guild);
 
