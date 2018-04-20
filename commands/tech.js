@@ -20,8 +20,8 @@ exports.run = async (client, message, args, level) => {
       hasData = false,
       missedArg = new Array(),
       //missedArgLog = new Array(),
-      techLevels,
-      techLevel,
+      techLevels = new Array(),
+      techLevel = false,
       techGroup,
       techID,
       action,
@@ -62,8 +62,19 @@ exports.run = async (client, message, args, level) => {
     // Other ARGS
     else if (client.config.hadesTech[arg]) // found techID
       techID = arg;
-    else if (arg >= 0 && arg <=10)
-      techLevel = arg;
+    else if (arg >= 0 && arg <=10) {
+      if (techLevel === false) {
+        if (techLevels.length > 0)
+          techLevels.push(arg);
+        else
+          techLevel = arg;
+      }
+      else {
+        techLevels.push(techLevel);
+        techLevels.push(arg);
+        techLevel = false;
+      }
+    }
     else if (arg.indexOf(",") >0)
       techLevels = arg.split(",");
     else {
