@@ -2,6 +2,9 @@
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
 
+  if (!args)
+    return message.reply ("Please, specify the tech to query.");
+      
   args = args.map(function(x){ return x.toLowerCase() });
   const techID = client.normalizeTechName(args[0]),  
         easyTable = require('easy-table');

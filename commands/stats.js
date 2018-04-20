@@ -17,6 +17,8 @@ exports.run = (client, message, args, level) => { // eslint-disable-line no-unus
 • Discord.js :: v${version}
 • Node       :: ${process.version}`;
 
+  message.channel.send(msg, {code: "asciidoc"})
+
   if (args[0]) {
     if (args[0] === "full"){
       let corps = {};
@@ -36,11 +38,10 @@ exports.run = (client, message, args, level) => { // eslint-disable-line no-unus
           table.newRow();
         }
       });
+      message.channel.send(table.sort(['Users|des']).toString(), {code: "asciidoc"})
+      message.channel.send("*Only showing channels with 5 or more users...")
     }
   }  
-  message.channel.send(msg, {code: "asciidoc"})
-  message.channel.send(table.sort(['Users|des']).toString(), {code: "asciidoc"})
-  message.channel.send("*Only showing channels with 5 or more users...")
 };
 
 exports.conf = {

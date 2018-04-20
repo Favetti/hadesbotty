@@ -24,6 +24,6 @@ exports.conf = {
 exports.help = {
   name: "setalltech",
   category: "x Deprecated - HS x",
-  description: "DEPRECATED! Use: !tech set",
+  description: "Use: !tech set",
   usage: "This command was replaced by the TECH command, this remais as an ALIAS.\nsetalltech [group] [n,n...,n]\n Where each group need all it's techs:\n >>Ships	3\n >>Trade	10\n >>Mining	8\n >>Weapons	5\n >>Shields	6\n >>Support	18\n\nExample:\n : setalltech ships 4,4,4"
 };

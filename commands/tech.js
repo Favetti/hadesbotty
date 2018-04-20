@@ -1,17 +1,25 @@
 // TO-DO:  accept SPACE instead of ',' for set multiple tech levels
 
-
 exports.run = async (client, message, args, level) => { 
 
+  if(!args)
+    message.reply("You may wish to check the !help...");
+    //could just output the HELP here...
+  
+  args = args.map(x => x.toLowerCase());  
+  if (args.join("").indexOf("gotothebeach") > 0)
+    return message.reply("Yeah.... the beach... i wish...  \nwell, not really... sand and salty water wouldn't go well in my circuits");
+      
   //const moment = require("moment"),
-    const table = require('easy-table');
+  const table = require('easy-table');
  
   var targetID = message.author.id,
       searchObj = message.guild,
       dataTable = new table,
       singleTarget = true,
       hasData = false,
-      missedArg = "",
+      missedArg = new Array(),
+      //missedArgLog = new Array(),
       techLevels,
       techLevel,
       techGroup,
@@ -20,7 +28,13 @@ exports.run = async (client, message, args, level) => {
       msg="";
   
   // *** PARSE and SORT OUT arguments
-  args.forEach(function(arg) {
+  //args.forEach(function(arg) {
+  for (let i = 0; i < args.length; i++) {
+    
+    let arg = args[i];
+    
+    client.logger.debug(i+"parsing: "+arg);
+
     arg = client.normalizeTechName(arg);
     
     // *** Find ACTION
@@ -52,13 +66,22 @@ exports.run = async (client, message, args, level) => {
       techLevel = arg;
     else if (arg.indexOf(",") >0)
       techLevels = arg.split(",");
-    else 
-      missedArg += arg+" ";
-      //client.logger.log("<!> Unidentified ARG: "+arg);
-  });
+    else {
+      missedArg.push(arg);
+      client.logger.debug("missed: "+JSON.stringify(missedArg));
+      if (missedArg.length === 2) {
+        //missedArgLog[missedArg.join("")] = missedArg.join(",");
+        args.push(missedArg.join(""));
+        client.logger.debug("args: "+JSON.stringify(args));
+        missedArg = new Array();
+      }
+      //missedArgLog.push(arg);
+    }
+  }
+  //});
   
-  if (missedArg)
-    message.reply("I did not understand all you said... gonna try to reply ignoring: "+missedArg);
+  //if (missedArgLog.length > 0)
+  //    message.reply("I did not understand all you said... gonna try to reply ignoring: "+missedArgLog.toString());
   
   // *** VALIDATE ARGUMENTs COMPOSITION
   if (!action)
@@ -67,8 +90,24 @@ exports.run = async (client, message, args, level) => {
   if (action === "set") {
     if (!singleTarget) 
       return message.reply("Cannot SET parameters for a GROUP.");
+    
     if (level <= 1 && targetID != message.author.id)
       return message.reply("Only Moderators or higher can SET other people's tech... safety stuff, you know...");
+    
+    if (!techGroup) { // single Tech
+      if (!techID)
+        return message.reply("I could not understand that TECH name...");
+      
+      if (!techLevel)
+        return message.reply("I could not understand the TECH LEVEL...");
+    }
+    else{
+      if (techLevel)
+        return message.reply("I believe you wish to set a group of techs("+techGroup+"), but could only understand one level("+techLevel+")");
+
+      if (!techLevels) 
+        return message.reply("I believe you wish to set a group of techs("+techGroup+"), but i could not understand the TECH LEVELS...");
+    }
   }
     
   if (action === "get") {
@@ -194,16 +233,13 @@ exports.run = async (client, message, args, level) => {
     let invalid = "Invalid Levels:";
 
     if (!techGroup) { // single Tech
-      if (!techID || !techLevel)
-        return message.reply("Did you forget something ?? Missing the tech levels...");
+
       if (!client.config.hadesTech[techID].levels[techLevel-1] && techLevel != 0)
         return message.reply("Invalid Level ("+techLevel+") for "+client.config.hadesTech[techID].desc);
       msg += `\n${client.config.hadesTech[techID].desc} : set to ${techLevel} (was ${allTech[techID]})`
       allTech[techID] = techLevel;
     }  
     else { // group
-      if (!techLevels) 
-        return message.reply("Did you forget something ?? Missing the tech levels...");
       if (client.config.hadesTechSize[techGroup] != techLevels.length)
         return message.reply(`Invalid number of techs: ${techLevels.length} instead of ${client.config.hadesTechSize[techGroup]}`);
 

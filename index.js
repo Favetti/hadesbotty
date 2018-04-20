@@ -25,6 +25,7 @@ client.userDB = new Enmap({provider: new EnmapLevel({name: "userDB", dataDir: ".
 client.rosterDB = new Enmap({provider: new EnmapLevel({name: "rosterDB", dataDir: ".data"})});
 client.redstarQue = new Enmap({provider: new EnmapLevel({name: "redstarQue", dataDir: ".data"})});
 client.wikiTech = new Enmap({provider: new EnmapLevel({name: "wikiTech", dataDir: ".data"})});
+client.activityDB = new Enmap({provider: new EnmapLevel({name: "activityDB", dataDir: ".data"})});
 
 const init = async () => {
   

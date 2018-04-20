@@ -156,7 +156,8 @@ module.exports = (client) => {
          return "area";
         
       // INDIVIDUAL TECH - support:
-         //return "emp";
+      case "e.m.p.":
+         return "emp";
       case "tel":
       case "tele":
          return "teleport";

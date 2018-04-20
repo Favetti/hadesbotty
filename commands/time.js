@@ -61,8 +61,11 @@ exports.run = async (client, message, args, level) => {
         }
       }
       });
-      if (!hasData) return message.reply("No data found");
-      else return message.reply(`Time recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` +"```"+ dataTable.sort(['Time']).toString()+"```"); 
+    
+      if (!hasData) 
+        return message.reply("No data found");
+      else 
+        return message.reply(`Time recorded for everyone on ${searchObj.name || "guild"}:\n` +"```"+ dataTable.sort(['Time']).toString()+"```"); 
   }
   // GET for single target
   else {
