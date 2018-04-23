@@ -60,7 +60,7 @@ const init = async () => {
       express = require('express'),
       //moment = require("moment"),
       app = express(),
-      html = '<HTML><BODY><a href="https://discordbots.org/bot/410562547092160522" ><img src="https://discordbots.org/api/widget/410562547092160522.svg" alt="Discord Bot" /></a></BODY></HTML>';
+      html = '<HTML><BODY><a href="https://discordbots.org/bot/410562547092160522" ><img src="https://discordbots.org/api/widget/410562547092160522.svg" alt="Discord Bot" /></a><br><br><p>More at <a href="https://hadesbotty.weebly.com/">https://hadesbotty.weebly.com/</a></p></BODY></HTML>';
   
   app.use(express.static(path.join(__dirname, 'public')));
   
@@ -68,6 +68,7 @@ const init = async () => {
     //client.logger.log(" HTTPS Ping Received from " + request.headers['x-forwarded-for'].split(",",1));
     //response.sendStatus(200);
     response.send(html);
+    //response.sendFile(path.join(__dirname + '/web/index.html'));
   });
 
   app.listen(process.env.PORT);

@@ -28,12 +28,11 @@ exports.run = async (client, message, args, level) => {
       msg="";
   
   // *** PARSE and SORT OUT arguments
-  //args.forEach(function(arg) {
+  //args.forEach(function(arg) { //doesnt work if you PUSH additional args into the array
   for (let i = 0; i < args.length; i++) {
     
     let arg = args[i];
-    
-    client.logger.debug(i+"parsing: "+arg);
+    //client.logger.debug(i+"parsing: "+arg);
 
     arg = client.normalizeTechName(arg);
     
@@ -79,11 +78,11 @@ exports.run = async (client, message, args, level) => {
       techLevels = arg.split(",");
     else {
       missedArg.push(arg);
-      client.logger.debug("missed: "+JSON.stringify(missedArg));
+      //client.logger.debug("missed: "+JSON.stringify(missedArg));
       if (missedArg.length === 2) {
         //missedArgLog[missedArg.join("")] = missedArg.join(",");
         args.push(missedArg.join(""));
-        client.logger.debug("args: "+JSON.stringify(args));
+        //client.logger.debug("args: "+JSON.stringify(args));
         missedArg = new Array();
       }
       //missedArgLog.push(arg);

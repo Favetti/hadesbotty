@@ -31,6 +31,7 @@ exports.run = (client, message, args, level) => {
       }
       output += `${settings.prefix}${c.help.name}${" ".repeat(longest - c.help.name.length)} :: ${c.help.description}\n`;
     });
+    output += "\nhttps://hadesbotty.weebly.com/"
     message.channel.send(output, {code: "asciidoc", split: { char: "\u200b" }});
   } else {
     // Show individual command's help.

@@ -68,6 +68,7 @@ module.exports = (client) => {
          //return "rush";
       case "trade_burst":
       case "tburst":
+      case "burst":
          return "tradeburst";
       case "shipment_autopilot":
       case "shipmentautopilot":
