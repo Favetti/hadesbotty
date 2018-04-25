@@ -17,7 +17,9 @@ exports.run = async (client, message, args, level) => {
       callType = 'get',
       filteredUsers = new Array(),
       battleEmbed = {  'embed': {'title':  "__Battle Roster__",  'fields': new Array()}},
-      supportEmbed = {  'embed': {'title': "__Support Roster__", 'fields': new Array()}};
+      supportEmbed = {  'embed': {'title': "__Support Roster__", 'fields': new Array()}},
+      techID = "",
+      buildText = "";
       
   techLists[techLists.length] = new Map();
   args.forEach(function(arg, index) {
@@ -224,8 +226,8 @@ exports.run = async (client, message, args, level) => {
     if (rosterEntry.get('supportBuild')) {
       //errors += `Found a support build in roster for ${targetID}\n`;// Debug
       //errors += util.inspect(rosterEntry.get('supportBuild')) + "\n";// Debug
-      var techID = rosterEntry.get('supportBuild').shipType;
-      var buildText = techID+" ("+(Number( allTech[techID] ) || 0)+")";
+      techID = rosterEntry.get('supportBuild').shipType;
+      buildText = techID+" ("+(Number( allTech[techID] ) || 0)+")";
       rosterEntry.get('supportBuild').supportModules.forEach( (techID) => {
         buildText += "\t"+techID+" ("+(Number( allTech[techID] ) || 0)+")";
       });
@@ -247,8 +249,8 @@ exports.run = async (client, message, args, level) => {
       //errors += `Found a battle build in roster for ${targetID}\n`;// Debug
       //errors += util.inspect(rosterEntry.get('battleBuild')) + "\n";// Debug
       
-      var techID = rosterEntry.get('battleBuild').shipType;
-      var buildText = techID+" ("+(Number( allTech[techID] ) || 0)+")";
+      techID = rosterEntry.get('battleBuild').shipType;
+      buildText = techID+" ("+(Number( allTech[techID] ) || 0)+")";
       
       techID = rosterEntry.get('battleBuild').weaponType;
       buildText += "\t"+( techID 

@@ -23,4 +23,4 @@ A Discord Bot born to user manage data for the mobile game **Hades's Star**.
 **!whitelist** : A way to set your tech as private.
 
 ===============================================================================
-*This is build upon the [Idiots Guide Bot](https://github.com/An-Idiots-Guide/guidebot.git). :+1: Thank you for your guide, it's great!*
+*This was build upon the [Idiots Guide Bot](https://github.com/An-Idiots-Guide/guidebot.git). :+1: Thank you for the great guide*

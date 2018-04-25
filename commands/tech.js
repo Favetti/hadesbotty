@@ -3,7 +3,7 @@
 exports.run = async (client, message, args, level) => { 
 
   if(!args)
-    message.reply("You may wish to check the !help...");
+    return message.reply("You may wish to check the !help...");
     //could just output the HELP here...
   
   args = args.map(x => x.toLowerCase());  
