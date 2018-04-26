@@ -7,9 +7,9 @@ dependencies:
   enmap: 2.1.1
   enmap-level: 2.1.0
   express: 4.16.3
-  moment: 2.22.0
+  moment: 2.22.1
   moment-duration-format: 2.2.2
-  moment-timezone: 0.5.14
+  moment-timezone: 0.5.16
   path: 0.12.7
   random-string: 0.2.0
   reddit-oauth-helper: 0.3.0
@@ -1034,20 +1034,16 @@ packages:
     dev: false
     resolution:
       integrity: sha1-uVdhLeJgFsmtnrYIfAVFc+USd3k=
-  /moment-timezone/0.5.14:
+  /moment-timezone/0.5.16:
     dependencies:
-      moment: 2.21.0
+      moment: 2.22.1
     dev: false
     resolution:
-      integrity: sha1-TrOP+VOLgBCLpGekWPPtQmjM/LE=
-  /moment/2.21.0:
+      integrity: sha512-4d1l92plNNqnMkqI/7boWNVXJvwGL2WyByl1Hxp3h/ao3HZiAqaoQY+6KBkYdiN5QtNDpndq+58ozl8W4GVoNw==
+  /moment/2.22.1:
     dev: false
     resolution:
-      integrity: sha512-TCZ36BjURTeFTM/CwRcViQlfkMvL1/vFISuNLO5GkcVm1+QHfbSiNqZuWeMFjj1/3+uAjXswgRk30j1kkLYJBQ==
-  /moment/2.22.0:
-    dev: false
-    resolution:
-      integrity: sha512-1muXCh8jb1N/gHRbn9VDUBr0GYb8A/aVcHlII9QSB68a50spqEVLIGN6KVmCOnSvJrUhC0edGgKU5ofnGXdYdg==
+      integrity: sha512-shJkRTSebXvsVqk56I+lkb2latjBs8I+pc2TzWc545y2iFnSjm7Wg0QMh+ZWcdSLQyGEau5jI8ocnmkyTgr9YQ==
   /ms/2.0.0:
     dev: false
     resolution:
@@ -1823,9 +1819,9 @@ specifiers:
   enmap: ^2.1.0
   enmap-level: ^2.0.2
   express: ^4.16.3
-  moment: ^2.22.0
+  moment: ^2.22.1
   moment-duration-format: ^2.2.2
-  moment-timezone: ^0.5.14
+  moment-timezone: ^0.5.16
   path: ^0.12.7
   random-string: ^0.2.0
   reddit-oauth-helper: ^0.3.0
