@@ -75,7 +75,7 @@ module.exports = (client) => {
     var msg = "";
     try {
       const props = require(`../commands/${commandName}`);
-      msg += `${props.help.name}👌;  `;
+      //msg += `${props.help.name}👌;  `;
       if (props.init) {
         props.init(client);
       }
@@ -87,7 +87,7 @@ module.exports = (client) => {
     } catch (e) {
       return `Unable to load command ${commandName}: ${e.stack}`;
     }    
-    client.logger.log(`Loading Commands: ${msg}`);
+    //client.logger.log(`Loading Commands: ${msg}`);
   };
 
   client.unloadCommand = async (commandName) => {

@@ -3,8 +3,7 @@
 exports.run = async (client, message, args, level) => { 
 
   args = args.map(function(x){ return x.toLowerCase() });
-  const moment = require("moment"),
-        table = require('easy-table'),
+  const table = require('easy-table'),
         fs = require('fs'),
         dir = '/app/public/',
         url = `https://${process.env.PROJECT_DOMAIN}.glitch.me/`;
@@ -90,14 +89,14 @@ exports.run = async (client, message, args, level) => {
     if (args[2] === "file") {
       var filename = "audit"+Date.now()+".html";
 
-      fs.writeFile(dir+filename, " "+dataTable.toString(), function(err) {
+      //fs.writeFile(dir+filename, " "+dataTable.toString(), function(err) {
+      fs.writeFile(dir+filename, " "+dataTable.toString().replace(/\r?\n|\r/g, "<BR>").replace().replace(/\s\s+/g, '|'), function(err) {  
         if(err) {
           client.logger.error(err);
           return message.reply("Erro salvando arquivo..."+dir+filename+"\n"+err);
         }
         client.logger.log("The file was saved: "+dir+filename);
       }); 
-      return message.reply("Audit exported to: "+url+filename);
       setTimeout(function(){ 
         fs.unlink(dir+filename, (err) => {
           if (err)
@@ -105,6 +104,7 @@ exports.run = async (client, message, args, level) => {
           client.logger.log('successfully deleted /tmp/hello');
         }); 
       }, 1800000); // remove file after 30min
+      return message.reply("Audit exported to: "+url+filename);
     }
     else
           //return message.reply(`Audit for ${args[0]}:\n` + dataTable.toString());

@@ -67,8 +67,8 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   
   fs.writeFile(dir+filename, html, function(err) {
     if(err) {
-      return message.reply(`Erro salvando arquivo...`+dir+filename);
       client.logger.error(err);
+      return message.reply(`Erro salvando arquivo...`+dir+filename);
     }
     client.logger.log("The file was saved: "+dir+filename);
     if (exportCode)

@@ -4,8 +4,8 @@
 exports.run = async (client, message, args, level) => { 
 
   args = args.map(function(x){ return x.toLowerCase() });
-  const moment = require("moment"),
-        table = require('easy-table');
+  //const moment = require("moment"),
+    const table = require('easy-table');
   try {
   var hasData=false,
       scoreTable = new table,

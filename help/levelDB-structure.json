@@ -56,7 +56,17 @@ redstarQue {
   
 }
 
-tradeDB {
+activityDB {
+  userID : {
+    daystamp: { //yyyymmdd
+      "level": Number,           //user level in game
+      "influence" : Number,      //user current influence
+      "techscore": Number        //automated - tech level
+    }
+    //daystamp *repeat for all recorded days
+}
+
+tradeDB { //WiP
   randomID : {
     "user" : userID,
     "scope" : String, //(all|guildID)

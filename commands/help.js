@@ -31,10 +31,11 @@ exports.run = (client, message, args, level) => {
       }
       output += `${settings.prefix}${c.help.name}${" ".repeat(longest - c.help.name.length)} :: ${c.help.description}\n`;
     });
+    output += "\nhttps://hadesbotty.weebly.com/"
     message.channel.send(output, {code: "asciidoc", split: { char: "\u200b" }});
   } else {
     // Show individual command's help.
-    let command = args[0];
+    let command = args[0].replace(/[^0-9a-zA-Z]/g,"");
     if (client.commands.has(command)) {
       command = client.commands.get(command);
       if (level < client.levelCache[command.conf.permLevel]) return;

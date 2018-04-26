@@ -1,6 +1,6 @@
 {
   "name": "hadesbotty",
-  "description": "A copy of the Idiot's Guide Bot to serv Hades Star Tech info.",
+  "description": "A Discord Bot born to user manage data for the mobile game Hades's Star.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/Favetti/hadesbotty/issues"
   },
-  "homepage": "https://github.com/Favetti/hadesbotty",
+  "homepage": "https://hadesbotty.weebly.com",
   "dependencies": {
     "chalk": "^2.3.2",
     "dateformat": "^3.0.3",
@@ -29,9 +29,9 @@
     "enmap": "^2.1.0",
     "enmap-level": "^2.0.2",
     "express": "^4.16.3",
-    "moment": "^2.22.0",
+    "moment": "^2.22.1",
     "moment-duration-format": "^2.2.2",
-    "moment-timezone": "^0.5.14",
+    "moment-timezone": "^0.5.16",
     "path": "^0.12.7",
     "random-string": "^0.2.0",
     "reddit-oauth-helper": "^0.3.0",
