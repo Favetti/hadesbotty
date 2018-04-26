@@ -30,7 +30,9 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   // Make Header
   html = "<HTML><BODY><TABLE><TR><TH>User</TH>";
   Object.keys(client.config.hadesTech).forEach(techID => {html += "<TH>"+techID+"</TH>";});
-  html += "<TH>techScore</TH></TR>";  
+  html += "<TH>techScore</TH>";  
+  html += "<TH>Level</TH>";  
+  html += "<TH>Influence</TH></TR>";  
 
   client.hsTech.forEach(function (target, targetID, mapObj){
     if (targetMembers.includes(targetID)) {
@@ -47,7 +49,16 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
             techScore += client.config.hadesTech[techID].levels[Number(techLevel)-1] || 0;
             html += "<TD>"+techLevel+"</TD>";
           });
-          html += "<TD>"+techScore+"</TD></TR>";   
+        html += "<TD>"+techScore+"</TD>";
+        if (client.activityDB.has(targetID)) {
+          let log = client.activityDB.get(targetID);
+          let last = Math.max(...Object.keys(log));
+          html += "<TD>"+log[last].lvl+"</TD>";
+          html += "<TD>"+log[last].inf+"</TD></TR>";
+        }
+        else {
+          html += "<TD>0</TD><TD>0</TD></TR>";
+        }
       }
       else
         filteredUsers.push(client.getDisplayName(targetID, message.guild));
