@@ -78,6 +78,17 @@ exports.run = async (client, message, args, level) => {
         dataTable.newRow();
       }); 
       break;
+    case "activity":
+    case "activitydb":
+      client.activityDB.forEach(function (value, key, mapObj) {  
+        var keyObj = client.activityDB.get(key);
+        hasData=true;
+        dataTable.cell('#', ++i);
+        dataTable.cell('Key', key);
+        dataTable.cell('Data', JSON.stringify(keyObj));
+        dataTable.newRow();
+      }); 
+      break;
     default:
       client.logger.debug("Please specify the DB to audit: "+args.join());
       return;

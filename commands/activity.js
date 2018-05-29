@@ -15,48 +15,39 @@ exports.run = async (client, message, args, level) => {
       action = false,
       lvl = 0,
       inf = 0,
-      ts = false,
+      ts = 0,
       noActivityUsers1 = new Array(),
       noActivityUsers2 = new Array(),
       noActivityUsers3 = new Array(),
-      log = client.activityDB.get(targetID) || new Object(),
+      //log = client.activityDB.get(targetID) || new Object(),
       today = moment().startOf('day').valueOf(); // isnt CONST for TESTING-MODE
   
   
   for (var i = 0; i < args.length; i++) {
-    if (args[i] === "x"){  //TESTING-MODE
-      if (args[i+1] > 0){
+    
+    if (args[i] === "x" && args[i+1] > 0)  //TESTING-MODE
         today = moment().subtract(args[++i], 'days').startOf('day').valueOf()
-      }
-    }
-    if (args[i] === "level" || args[i] === "lvl"){
-      if (args[i+1] > 0){
+
+    else if ((args[i] === "level" || args[i] === "lvl") && args[i+1] > 0)
         lvl = Number(args[++i]);
-        msg += " Level to "+ lvl;
-      }
-    }
-    else if (args[i] === "influence" || args[i] === "inf" || args[i] === "info"){
-      if (args[i+1] > 0) {
+
+    else if ((args[i] === "influence" || args[i] === "inf" || args[i] === "info") && args[i+1] > 0)
         inf = Number(args[++i]);
-        msg += " Influence to "+ inf;
-      }
-    }
-    if (args[i] === "techscore" || args[i] === "ts"){
-      if (args[i+1] > 0){
+
+    else if ((args[i] === "techscore" || args[i] === "ts") && args[i+1] > 0)
         ts = Number(args[++i]);
-        msg += " TechScore to "+ ts;
-      }
-    }
+
     else if (args[i].indexOf("<@&") >= 0 ) {
       let roleID = args[i].replace(/[^0-9]/g,"");
-      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
+      if (!message.guild.roles.has(roleID))
+        return message.reply("Role not found! Maybe i can't mention it...");
       searchObj = message.guild.roles.get(roleID);
     }
     else if (args[i].indexOf("<@") >= 0) {
       if (level > 1)
         targetID = args[i].replace(/[^0-9]/g,"");
       else
-        return message.reply("Only a moderator or higer can set activity for other people.");
+        return message.reply("Only a moderator or higer can use !activity on other people.");
     }
     else if (["audit", "history"].includes(args[i]))
         action = args[i];
@@ -70,8 +61,8 @@ exports.run = async (client, message, args, level) => {
     searchObj.members.forEach(function (tag, targetID){
       if (client.activityDB.has(targetID)) {
         let mostRecentDay = false,
-            pastDay = false;
-        log = client.activityDB.get(targetID);
+            pastDay = false,
+            log = client.activityDB.get(targetID);
         
         //client.logger.debug(":member:"+targetID+":"+JSON.stringify(log))
 
@@ -107,21 +98,21 @@ exports.run = async (client, message, args, level) => {
       message.channel.send(msg+ "```" + dataTable.sort(['User|asc']).toString()+"```");
 
     if (noActivityUsers1.length > 0)
-      message.channel.send("The following users don't have a RECENT data log: `"+noActivityUsers1.sort().join("`, `")+"`");
+      message.channel.send("Users without RECENT log: `"+noActivityUsers1.sort().join("`, `")+"`");
     if (noActivityUsers2.length > 0)
-      message.channel.send("The following users don't have a PAST data log: `"+noActivityUsers2.sort().join("`, `")+"`");
+      message.channel.send("Users without PAST log: `"+noActivityUsers2.sort().join("`, `")+"`");
     if (noActivityUsers3.length > 0)
       if (noActivityUsers3.length > 10)
         message.channel.send("More than 10 users have no data log at ALL");
       else
-        message.channel.send("The following users have no data log at ALL: `"+noActivityUsers3.sort().join("`, `")+"`");
+        message.channel.send("Users without ANY log: `"+noActivityUsers3.sort().join("`, `")+"`");
     
     return;
   }
   
   if (action === "history"){
     if (client.activityDB.has(targetID)) {
-      log = client.activityDB.get(targetID);
+      let log = client.activityDB.get(targetID);
       Object.keys(log).forEach(date => {
         dataTable.cell('Date', moment(Number(date)).format('YYYY MM DD'));
         dataTable.cell('Level', log[date].lvl);
@@ -133,42 +124,55 @@ exports.run = async (client, message, args, level) => {
     }
   }
   
-    if (!log.hasOwnProperty(today)) {
-    //let lastDay = Math.max(...Object.keys(log)) || false;
-    let lastDay = Object.keys(log).reduce(function(prevVal, element) {
-          return element < today ? Math.max(prevVal, element) : prevVal;
-        }, 0);
+  var log = client.activityDB.get(targetID) || new Object();
+  client.logger.debug("target:"+targetID+":today:"+today);
+  if (!log.hasOwnProperty(today)) {
+    let lastDay = Math.max(...Object.keys(log)) || false;
+    //let lastDay = Object.keys(log).reduce(function(prevVal, element) {
+    //    return element < today ? Math.max(prevVal, element) : prevVal;
+    //  }, 0);
     log[today] = log[lastDay] || {lvl: 0, inf: 0, ts: 0};
+    client.logger.debug("lastday:"+lastDay+":"+JSON.stringify(log[lastDay]));
   }
+  client.logger.debug("today..:"+today+":"+JSON.stringify(log[today]));
 
-  if (lvl > 0) log[today].lvl = lvl;
-  if (inf > 0) log[today].inf = inf;
-  if (ts > 0) log[today].ts = ts;
+  client.logger.debug(".in log:"+JSON.stringify(log));
 
-  client.logger.debug("Doing "+(action || "set/get")+" on date: "+moment(today).format("YYYY MMM DD")+" to: "+client.getDisplayName(targetID, message.guild).substr(0,15)+" ::"+JSON.stringify(log[today]));
-
-  if (!ts) {
+  if (ts === 0) {
     if (client.hsTech.has(targetID)) {
       let allTech = client.hsTech.get(targetID);
-      let ts = 0;
       Object.keys(allTech).forEach(function(techID) {
         if (client.config.hadesTech[techID]) 
           ts += client.config.hadesTech[techID].levels[Number(allTech[techID]-1)] || 0;
       });
-      if (log[today].ts !== ts) {
-        log[today].ts = Number(ts);
-        msg += " TechScore to "+ log[today].ts;      
-      }
     }
   }
+  
+  if (lvl > 0) {
+    log[today].lvl = lvl;
+    msg += " Level to "+ lvl;
+
+  }
+  if (inf > 0) {
+    log[today].inf = inf;
+    msg += " Influence to "+ inf;
+  }
+  if (ts > 0) {
+    log[today].ts  = ts;
+    msg += " TechScore to "+ ts;
+  }
+
+  client.logger.debug("out log:"+JSON.stringify(log));
+
+  client.logger.debug("Doing "+(action || "set/get")+" on date: "+moment(today).format("DD/MMM/YYYY")+" to: "+client.getDisplayName(targetID, message.guild).substr(0,15)+" ::"+JSON.stringify(log[today]));
 
   if(msg !== "Updating") {
     client.activityDB.set(targetID, log);
-    //client.logger.debug("write: "+JSON.stringify(log));
+    client.logger.debug("write: "+targetID+"::"+JSON.stringify(log));
     message.reply(msg);
   }
   else
-    message.reply("your current activity for today is: Level "+log[today].lvl+", Influence "+log[today].inf+", TechScore "+log[today].ts);
+    message.channel.send(client.getDisplayName(targetID, message.guild)+" current activity for today is: Level "+log[today].lvl+", Influence "+log[today].inf+", TechScore "+log[today].ts);
   
   
 }
