@@ -77,6 +77,10 @@ module.exports = (client) => {
       case "auto":
       case "sa":
          return "autopilot";
+      case "shipmentdrone":
+      case "shipment_drone":
+      case "sdrone":
+         return "shipdrone";
       case "off":
          return "offload";
       case "shipment_beam":
