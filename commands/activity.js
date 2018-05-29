@@ -5,7 +5,8 @@ exports.run = async (client, message, args, level) => {
   args = args.map(function(x){ return x.toLowerCase() });
 
   const moment = require("moment"),
-        table = require('easy-table');
+        table = require('easy-table'),
+        today = moment().startOf('day').valueOf(); 
   
   var targetID = message.author.id,
       searchObj = message.guild,
@@ -18,17 +19,17 @@ exports.run = async (client, message, args, level) => {
       ts = 0,
       noActivityUsers1 = new Array(),
       noActivityUsers2 = new Array(),
-      noActivityUsers3 = new Array(),
+      noActivityUsers3 = new Array();
       //log = client.activityDB.get(targetID) || new Object(),
-      today = moment().startOf('day').valueOf(); // isnt CONST for TESTING-MODE
+      
   
   
   for (var i = 0; i < args.length; i++) {
     
-    if (args[i] === "x" && args[i+1] > 0)  //TESTING-MODE
-        today = moment().subtract(args[++i], 'days').startOf('day').valueOf()
+    //if (args[i] === "x" && args[i+1] > 0)  //TESTING-MODE
+        //today = moment().subtract(args[++i], 'days').startOf('day').valueOf()
 
-    else if ((args[i] === "level" || args[i] === "lvl") && args[i+1] > 0)
+    if ((args[i] === "level" || args[i] === "lvl") && args[i+1] > 0)
         lvl = Number(args[++i]);
 
     else if ((args[i] === "influence" || args[i] === "inf" || args[i] === "info") && args[i+1] > 0)
@@ -151,7 +152,6 @@ exports.run = async (client, message, args, level) => {
   if (lvl > 0) {
     log[today].lvl = lvl;
     msg += " Level to "+ lvl;
-
   }
   if (inf > 0) {
     log[today].inf = inf;
