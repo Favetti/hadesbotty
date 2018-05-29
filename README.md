@@ -16,6 +16,8 @@ A Discord Bot born to user manage data for the mobile game **Hades's Star**.
 
 **!redstar** : Manages queues for public redstar's
 
+**!activity** : Follow up on members activity status (Level/Influence)
+
 **!time** : sets and gets Local Time for all|@role|@user 
 
 **!lastseen** : last time a user was seen

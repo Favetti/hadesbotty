@@ -29,7 +29,7 @@ const config = {
   },
 
   // Hades Star TechList
-  "hadesTechSize" : {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":6,"support":18},
+  "hadesTechSize" : {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":6,"support":19},
 
   "hadesTech" : {
     "rs": {desc: "Base - RedStar Scanner", group: "base", redditURL: "red_stars", levels: [1,2,20,60,120,250,1000,2000,4000,8000]},
@@ -41,7 +41,8 @@ const config = {
     "tradeboost": {desc: "Trade - Trade Boost", group: "trade", redditURL: "modules/trade_boost", levels: [15,25,50,100,200,350,550,800,2000,5000]},
     "rush": {desc: "Trade - Rush", group: "trade", redditURL: "modules/rush", levels: [15,25,50,100,200,350,550,800,2000,5000]},
     "tradeburst": {desc: "Trade - Trade Burst", group: "trade", redditURL: "modules/trade_burst", levels: [20,35,65,100,200,350,700,1000,2500,5000]},
-    "autopilot": {desc: "Trade - Shipment Autopilot", group: "trade", redditURL: "modules/shipment_autopilot", levels: [150,230,360,550,850,1300,2000,5000,8000]},
+//    "autopilot": {desc: "Trade - Shipment Autopilot", group: "trade", redditURL: "modules/shipment_autopilot", levels: [150,230,360,550,850,1300,2000,5000,8000]},
+    "shipdrone": {desc: "Trade - Shipment Drone", group: "trade", redditURL: "modules/shipment_drone", levels: [150,200,350,500,750,1000,2000,3000,5000,8000]},
     "offload": {desc: "Trade - Offload", group: "trade", redditURL: "modules/offload", levels: [100,120,140,160,180,200,250,300,400,500]},
     "beam": {desc: "Trade - Shipment Beam", group: "trade", redditURL: "modules/shipment_beam", levels: [80,100,120,140,160,180,250,300,350,400]},
     "entrust": {desc: "Trade - Entrust", group: "trade", redditURL: "modules/entrust", levels: [100,160,250,400,650,1000,1500,2500,4000,6000]},
@@ -82,7 +83,8 @@ const config = {
     "barrier": {desc: "Support - Barrier", group: "support", redditURL: "modules/barrier", levels: [150,300,400,500,600,800,1000,3500,6000,8000]},
     "vengeance": {desc: "Support - Vengeance", group: "support", redditURL: "modules/vengeance", levels: [200,300,400,500,600,800,1000,3500,6000,8000]},
     "leap": {desc: "Support - Leap" , group: "support", redditURL: "modules/leap", levels: [400,500,600,700,800,1000,2000,4000,6000,8000]},
-    "drone": {desc: "Support - Alpha Drone" , group: "support", redditURL: "modules/alpha_drone", levels: [1000]}
+    "drone": {desc: "Support - Alpha Drone" , group: "support", redditURL: "modules/alpha_drone", levels: [1000,2000,4000]},
+    "bond": {desc: "Support - Bond" , group: "support", redditURL: "modules/bond", levels: [400,600,1000,1500,2000,3000,4000,5000,6000,8000]}
   },
   
   // PERMISSION LEVEL DEFINITIONS.

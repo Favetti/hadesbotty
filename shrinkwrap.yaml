@@ -933,6 +933,7 @@ packages:
     dev: false
     engines:
       node: '>=4'
+    requiresBuild: true
     resolution:
       integrity: sha512-jIMBmvh/u0hagHWN+Ysbrom3Tx2Ck3V5lxcLgGnOSgq7ASGvqYq+dJVwOO62fU3P04jDSdienlRwdb+RUvhzkw==
   /leveldown/3.0.0:
@@ -945,6 +946,7 @@ packages:
     dev: false
     engines:
       node: '>=4'
+    requiresBuild: true
     resolution:
       integrity: sha512-CA2mRUDTgVscTDOCvHSgYvksqj1VW7g3ss2idWfITSB7l201ahQJ81cwLTupW76idbjpx7zmmmpdttYnnHWWtA==
   /levelup/2.0.2:
@@ -1808,7 +1810,7 @@ packages:
     resolution:
       integrity: sha1-pcbVMr5lbiPbgg77lDofBJmNY68=
 registry: 'https://registry.npmjs.org/'
-shrinkwrapMinorVersion: 4
+shrinkwrapMinorVersion: 6
 shrinkwrapVersion: 3
 specifiers:
   chalk: ^2.3.2
