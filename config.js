@@ -47,8 +47,8 @@ const config = {
     "beam": {desc: "Trade - Shipment Beam", group: "trade", redditURL: "modules/shipment_beam", levels: [80,100,120,140,160,180,250,300,350,400]},
     "entrust": {desc: "Trade - Entrust", group: "trade", redditURL: "modules/entrust", levels: [100,160,250,400,650,1000,1500,2500,4000,6000]},
     "recall": {desc: "Trade - Recall", group: "trade", redditURL: "modules/recall", levels: [150]},
-    "hydrobay": {desc: "Mining - Hydrogen Bay Extension", group: "mining", redditURL: "modules/hydrogen_bay_extension", levels: [2,5,20,50,100,200,500,1000,2000,4000]},
     "miningboost": {desc: "Mining - Mining Boost", group: "mining", redditURL: "modules/mining_boost", levels: [8,12,25,50,100,250,500,1000,2000,4000]},
+    "hydrobay": {desc: "Mining - Hydrogen Bay Extension", group: "mining", redditURL: "modules/hydrogen_bay_extension", levels: [2,5,20,50,100,200,500,1000,2000,4000]},
     "enrich": {desc: "Mining - Enrich", group: "mining", redditURL: "modules/enrich", levels: [8,12,25,50,100,250,500,1000,2000,4000]},
     "remote": {desc: "Mining - Remote Mining", group: "mining", redditURL: "modules/remote_mining", levels: [15,25,50,100,200,350,550,800,2000,5000]},
     "hydroupload": {desc: "Mining - Hydrogen Upload", group: "mining", redditURL: "modules/hydrogen_upload", levels: [20,35,65,100,200,350,700,1000,2500,5000]},
@@ -65,6 +65,7 @@ const config = {
     "passive": {desc: "Shields - Passive Shield", group: "shields", redditURL: "modules/passive_shield", levels: [15,25,50,100,200,350,550,800,2000,5000]},
     "omega": {desc: "Shields - Omega Shield", group: "shields", redditURL: "modules/omega_shield", levels: [30,45,75,100,200,350,700,1000,2500,5000]},
     "mirror": {desc: "Shields - Mirror Shield", group: "shields", redditURL: "modules/mirror_shield", levels: [50,100,200,400,600,800,1000,3500,6000,8000]},
+    "blast": {desc: "Shields - Blast Shield", group: "shields", redditURL: "modules/blast_shield", levels: [100,150,250,500,750,1000,2000,4000,6000,8000]},
     "area": {desc: "Shields - Area Shield", group: "shields", redditURL: "modules/area_shield", levels: [200,300,400,600,800,1000,3500,6000,8000,8000]},
     "emp": {desc: "Support - E.M.P.", group: "support", redditURL: "modules/emp", levels: [2,5,25,50,100,250,500,1000,2000,4000]},
     "teleport": {desc: "Support - Teleport", group: "support", redditURL: "modules/teleport", levels: [8,12,25,50,100,250,500,1000,2000,4000]},
@@ -82,9 +83,11 @@ const config = {
     "destiny": {desc: "Support - Destiny", group: "support", redditURL: "modules/destiny", levels: [200,300,400,500,600,800,1000,3500,6000,8000]},
     "barrier": {desc: "Support - Barrier", group: "support", redditURL: "modules/barrier", levels: [150,300,400,500,600,800,1000,3500,6000,8000]},
     "vengeance": {desc: "Support - Vengeance", group: "support", redditURL: "modules/vengeance", levels: [200,300,400,500,600,800,1000,3500,6000,8000]},
+    "deltarocket": {desc: "Support - Delta Rocket", group: "support", redditURL: "modules/delta_rocket", levels: [200,350,500,750,1000,2000,3000,4000,6000,8000]},
     "leap": {desc: "Support - Leap" , group: "support", redditURL: "modules/leap", levels: [400,500,600,700,800,1000,2000,4000,6000,8000]},
+    "bond": {desc: "Support - Bond" , group: "support", redditURL: "modules/bond", levels: [400,600,1000,1500,2000,3000,4000,5000,6000,8000]},
     "drone": {desc: "Support - Alpha Drone" , group: "support", redditURL: "modules/alpha_drone", levels: [1000,2000,4000]},
-    "bond": {desc: "Support - Bond" , group: "support", redditURL: "modules/bond", levels: [400,600,1000,1500,2000,3000,4000,5000,6000,8000]}
+    "omegarocket": {desc: "Support - Omega Rocket" , group: "support", redditURL: "modules/omega_rocket", levels: [2000,2500,3000,3500,4000,5000,6000,7000,8000]}
   },
   
   // PERMISSION LEVEL DEFINITIONS.
