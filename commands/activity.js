@@ -129,14 +129,12 @@ exports.run = async (client, message, args, level) => {
   client.logger.debug("target:"+targetID+":today:"+today);
   if (!log.hasOwnProperty(today)) {
     let lastDay = Math.max(...Object.keys(log)) || false;
-    //let lastDay = Object.keys(log).reduce(function(prevVal, element) {
-    //    return element < today ? Math.max(prevVal, element) : prevVal;
-    //  }, 0);
     log[today] = log[lastDay] || {lvl: 0, inf: 0, ts: 0};
     client.logger.debug("lastday:"+lastDay+":"+JSON.stringify(log[lastDay]));
   }
   client.logger.debug("today..:"+today+":"+JSON.stringify(log[today]));
 
+  //===============================================================================================================//
   client.logger.debug(".in log:"+JSON.stringify(log));
 
   if (ts === 0) {
@@ -163,6 +161,11 @@ exports.run = async (client, message, args, level) => {
   }
 
   client.logger.debug("out log:"+JSON.stringify(log));
+
+//output: [2018-06-02 04:44:54]: DEBUG .in log:{"1526947200000":{"lvl":60,"inf":2893,"ts":423},"1527120000000":{"lvl":66,"inf":3049,"ts":425},"1527552000000":{"lvl":66,"inf":3049,"ts":425},"1527897600000":{"lvl":66,"inf":3049,"ts":425}} 
+//output: [2018-06-02 04:44:54]: DEBUG out log:{"1526947200000":{"lvl":60,"inf":2893,"ts":423},"1527120000000":{"lvl":66,"inf":3049,"ts":425},"1527552000000":{"lvl":69,"inf":2800,"ts":1420},"1527897600000":{"lvl":69,"inf":2800,"ts":1420}} 
+
+//===============================================================================================================//
 
   client.logger.debug("Doing "+(action || "set/get")+" on date: "+moment(today).format("DD/MMM/YYYY")+" to: "+client.getDisplayName(targetID, message.guild).substr(0,15)+" ::"+JSON.stringify(log[today]));
 

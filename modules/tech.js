@@ -154,6 +154,10 @@ module.exports = (client) => {
       case "mshield":
       case "ms":
          return "mirror";
+      case "blastshield":
+      case "blast_shield":
+      case "bshield":
+         return "blast";
       case "area_shield":
       case "areashield":
       case "ashield":
@@ -208,11 +212,15 @@ module.exports = (client) => {
       case "veng":
       case "venge":
          return "vengeance";
+      case "delta_rocket":
+         return "deltarocket";
          //return "leap";
       case "alpha_drone":
       case "alphadrone":
       case "drones":
          return "drone";
+      case "omega_rocket":
+         return "omegarocket";
       default:
         break;
     }
