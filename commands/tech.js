@@ -304,6 +304,6 @@ Examples::
 • !t search destiny
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TechGroups:: 
- . . . ships   (x3), trade  (x10), mining   (x8), 
+ . . . ships   (x3), trade  (x10), mining   (x9), 
  . . . weapons (x5), shields (x6), support (x18)`
 };
