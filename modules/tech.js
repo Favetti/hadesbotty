@@ -115,6 +115,10 @@ module.exports = (client) => {
          return "miningunity";
          //return "crunch";
          //return "genesis";
+      case "miningdrone":
+      case "mining_drone":
+      case "mdrone":
+         return "minedrone";
         
       // INDIVIDUAL TECH - weapons:
       case "batt":
@@ -174,6 +178,7 @@ module.exports = (client) => {
       case "redstarextender":
       case "extender":
       case "rse":
+      case "rsle":
          return "rsextender";
       case "remote_repair":
       case "remoterepair":
