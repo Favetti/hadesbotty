@@ -55,6 +55,7 @@ const config = {
     "miningunity": {desc: "Mining - Mining Unity", group: "mining", redditURL: "modules/mining_unity", levels: [30,50,75,100,200,350,700,1000,2500,5000]},
     "crunch": {desc: "Mining - Crunch", group: "mining", redditURL: "modules/crunch", levels: [150,230,360,550,850,1300,2000,3000,5000,8000]},
     "genesis": {desc: "Mining - Genesis", group: "mining", redditURL: "modules/genesis", levels: [200,250,350,500,800,1500,2000,3000,5000,8000]},
+    "minedrone": {desc: "Mining - Mining Drone", group: "mining", redditURL: "modules/mining_drone", levels: [150,200,350,500,750,1000,2000,3000,5000,8000]},
     "battery": {desc: "Weapons - Battery", group: "weapons", redditURL: "modules/battery", levels: [2,5,12,25,50,100,250,500,750,1000]},
     "laser": {desc: "Weapons - Laser", group: "weapons", redditURL: "modules/laser", levels: [8,12,25,50,100,250,500,1000,2000,4000]},
     "mass": {desc: "Weapons - Mass Battery", group: "weapons", redditURL: "modules/mass_battery", levels: [15,25,50,100,200,350,550,800,2000,5000]},
