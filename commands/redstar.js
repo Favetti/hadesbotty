@@ -112,7 +112,7 @@ exports.run = async (client, message, args, level) => {
   } 
 };
 
-const MATCH_MAX = 5;
+const MATCH_MAX = 4;
 const MATCH_MIN = 2;
 const MATCH_KICK = 120 * 1000;
 const MATCH_KICK_EXTRA = MATCH_KICK;
