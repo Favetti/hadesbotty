@@ -34,13 +34,13 @@ exports.run = async (client, message, args, level) => {
     }
     else if (arg.indexOf("gmt") >= 0 )
       offset = Number(arg.replace("gmt",""));
-    else if (Number(arg)<= 12 && Number(arg) >= -12)
+    else if (Number(arg)<= 14 && Number(arg) >= -12)
       offset = Number(arg);
   });
 
   // SET
   if (isSet) {
-    if (offset <= 12 && offset >= -12) {
+    if (offset <= 14 && offset >= -12) {
       targetDB.timeOffset = offset;
       client.userDB.set(targetID, targetDB);
       return message.reply("Timezone set to "+offset);
@@ -53,7 +53,7 @@ exports.run = async (client, message, args, level) => {
     searchObj.members.forEach(function (target, targetID, mapObj){
       if (client.userDB.has(targetID)) {
         var targetDB = client.userDB.get(targetID);
-        if (targetDB.timeOffset <= 12 && targetDB.timeOffset >= -12) {
+        if (targetDB.timeOffset <= 14 && targetDB.timeOffset >= -12) {
           hasData=true;
           dataTable.cell('Time', moment(Date.now() + (targetDB.timeOffset * 3600000)).format("MMM-DD, HH:mm"));
           dataTable.cell('User', client.getDisplayName(targetID, message.guild));
@@ -69,7 +69,7 @@ exports.run = async (client, message, args, level) => {
   }
   // GET for single target
   else {
-    if (targetDB.timeOffset <= 12 && targetDB.timeOffset >= -12) {
+    if (targetDB.timeOffset <= 14 && targetDB.timeOffset >= -12) {
       var targetTime = Date.now() + (targetDB.timeOffset * 3600000);
       return message.reply(`${client.getDisplayName(targetID, message.guild)} local time is: `+moment(targetTime).format("MMM-DD, HH:mm"));
     }
