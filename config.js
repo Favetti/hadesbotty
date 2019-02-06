@@ -29,7 +29,7 @@ const config = {
   },
 
   // Hades Star TechList
-  "hadesTechSize" : {"ships":3,"trade":10,"mining":9,"weapons":5,"shields":7,"support":21},
+  "hadesTechSize" : {"ships":3,"trade":11,"mining":9,"weapons":6,"shields":7,"support":21},
 
   "hadesTech" : {
     "rs": {desc: "Base - RedStar Scanner", group: "base", redditURL: "red_stars", levels: [1,2,20,60,120,250,1000,2000,4000,8000]},
@@ -46,6 +46,7 @@ const config = {
     "offload": {desc: "Trade - Offload", group: "trade", redditURL: "modules/offload", levels: [100,120,140,160,180,200,250,300,400,500]},
     "beam": {desc: "Trade - Shipment Beam", group: "trade", redditURL: "modules/shipment_beam", levels: [80,100,120,140,160,180,250,300,350,400]},
     "entrust": {desc: "Trade - Entrust", group: "trade", redditURL: "modules/entrust", levels: [100,160,250,400,650,1000,1500,2500,4000,6000]},
+    "dispatch": {desc: "Trade - Dispatch", group: "trade", redditURL: "modules/dispatch", levels: [200,300,400,500,600,800,1000,3500,6000,8000]},
     "recall": {desc: "Trade - Recall", group: "trade", redditURL: "modules/recall", levels: [150]},
     "miningboost": {desc: "Mining - Mining Boost", group: "mining", redditURL: "modules/mining_boost", levels: [8,12,25,50,100,250,500,1000,2000,4000]},
     "hydrobay": {desc: "Mining - Hydrogen Bay Extension", group: "mining", redditURL: "modules/hydrogen_bay_extension", levels: [2,5,20,50,100,200,500,1000,2000,4000]},
@@ -61,6 +62,7 @@ const config = {
     "mass": {desc: "Weapons - Mass Battery", group: "weapons", redditURL: "modules/mass_battery", levels: [15,25,50,100,200,350,550,800,2000,5000]},
     "dual": {desc: "Weapons - Dual Laser", group: "weapons", redditURL: "modules/dual_laser", levels: [25,50,75,100,200,350,700,1000,2500,5000]},
     "barrage": {desc: "Weapons - Barrage", group: "weapons", redditURL: "modules/barrage", levels: [120,300,400,500,600,800,1000,3500,6000,8000]},
+    "dart": {desc: "Weapons - Dart Launcher", group: "weapons", redditURL: "modules/dart_launcher", levels: [4000,4500,5000,5500,6000,6500,7000,7500,8000,8000]},
     "alpha": {desc: "Shields - Alpha Shield", group: "shields", redditURL: "modules/alpha_shield", levels: [2,5,10,20,30]},
     "delta": {desc: "Shields - Delta Shield", group: "shields", redditURL: "modules/delta_shield", levels: [8,12,25,50,100,250,500,1000,2000,4000]},
     "passive": {desc: "Shields - Passive Shield", group: "shields", redditURL: "modules/passive_shield", levels: [15,25,50,100,200,350,550,800,2000,5000]},
