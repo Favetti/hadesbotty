@@ -133,7 +133,10 @@ module.exports = (client) => {
       case "dualaser":
          return "dual";
          //return "barrage";
-        
+      case "dart_launcher":
+      case "dartlauncher":
+         return "dart";
+   
       // INDIVIDUAL TECH - shields:
       case "alpha_shield":
       case "alphashield":
