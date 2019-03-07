@@ -128,7 +128,7 @@ exports.run = async (client, message, args, level) => {
       return message.reply(client.getDisplayName(targetID, message.guild)+" doesn't have any data.");
     
     if (!client.checkPrivacy(targetID, message))
-      return message.reply("This user has privacy seetings forbidding his tech to be viewed here. You can ask them to WhiteList this channel or clear their WhiteList.")
+      return message.reply("This user has privacy settings forbidding his tech to be viewed here. You can ask them to WhiteList this channel or clear their WhiteList.")
       
   }
 

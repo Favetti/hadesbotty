@@ -1,5 +1,5 @@
 {
-  "name": "hadesbotty-test",
+  "name": "hadesbotty",
   "description": "A Discord Bot born to user manage data for the mobile game Hades's Star.",
   "main": "index.js",
   "scripts": {
@@ -11,13 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bonez565/hadesbotty.git"
+    "url": "git+https://github.com/Favetti/hadesbotty.git"
   },
   "author": "Favetti",
   "contributors": [],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bonez565/hadesbotty/issues"
+    "url": "https://github.com/Favetti/hadesbotty/issues"
   },
   "homepage": "https://hadesbotty.weebly.com",
   "dependencies": {
