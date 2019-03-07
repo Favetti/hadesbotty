@@ -1,16 +1,15 @@
 const config = {
   // Bot Owner, level 10 by default. A User ID. Should never be anything else than the bot owner's ID.
-  "ownerID": process.env.DISCORD_BOT_OWNER,
+  "ownerID": "354551602398363648",
 
   // Bot Admins, level 9 by default. Array of user ID strings.
-  //"admins": process.env.DISCORD_BOT_ADMINS,
-  "admins": process.env.DISCORD_BOT_ADMIN.split(","),
-  
+  "admins": [],
+
   // Bot Support, level 8 by default. Array of user ID strings
-  "support": process.env.DISCORD_BOT_SUPPORT.split(","),
+  "support": [],
 
   // Your Bot's Token. Available on https://discordapp.com/developers/applications/me
-  "token": process.env.DISCORD_BOT_TOKEN,
+  "token": "NTUxOTgxNTUxMzQxMTQyMDI2.D19oUA.54r-zZLGxBZuLu6_NLh2uXlukTQ",
 
   // Default per-server settings. New guilds have these settings. 
 
