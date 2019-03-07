@@ -32,7 +32,8 @@ const config = {
   "hadesTechSize" : {"ships":3,"trade":11,"mining":9,"weapons":6,"shields":7,"support":21},
 
   "hadesTech" : {
-    "rs": {desc: "Base - RedStar Scanner", group: "base", redditURL: "red_stars", levels: [1,2,20,60,120,250,1000,2000,4000,8000]},
+    "rs": {desc: "Base - Redstar Scanner", group: "base", redditURL: "red_stars", levels: [1,2,20,60,120,250,1000,2000,4000,8000]},
+    "cargocap": {desc: "Base - Cargo Capacity", group: "base", redditURL: "mechanics/shipments", levels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]},
     "transp": {desc: "Ships - Transport", group: "ships", redditURL: "ships/transport", levels: [1,10,60,300,1000]},
     "miner": {desc: "Ships - Miner", group: "ships", redditURL: "ships/miner", levels: [1,5,50,250,800]},
     "bs": {desc: "Ships - Battleship", group: "ships", redditURL: "ships/battleship", levels: [1,10,80,400,1500]},
