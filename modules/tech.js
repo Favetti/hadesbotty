@@ -36,11 +36,13 @@ module.exports = (client) => {
          return "shields";
 
       // BASE TECH:
+      case "cargocapacity":
+      case "capacity":
+         return "cargocap";
       case "redstarscanner":
       case "scanner":
       case "rss":
          return "rs";
-        
       // INDIVIDUAL TECH - ships:
       case "ts":
       case "trans":
