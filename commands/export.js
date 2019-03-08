@@ -17,7 +17,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   args.forEach(function(arg) {
     if (arg.indexOf("<@&") >= 0) { //target is a ROLE
       const roleID = arg.replace("<@&","").replace(">","");
-      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
+      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe I can't mention it...");
       searchObj = message.guild.roles.get(roleID);
     }
   });
@@ -30,7 +30,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   // Make Header
   html = "<HTML><BODY><TABLE><TR><TH>User</TH>";
   Object.keys(client.config.hadesTech).forEach(techID => {html += "<TH>"+techID+"</TH>";});
-  html += "<TH>techScore</TH>";  
+  html += "<TH>TechScore</TH>";  
   html += "<TH>Level</TH>";  
   html += "<TH>Influence</TH></TR>";  
 
@@ -67,7 +67,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   });
   
   if (filteredUsers.length > 0)
-    message.channel.send("Some users on your query have privacy seetings forbidding their tech to be viewed here: `"+filteredUsers.toString()+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
+    message.channel.send("Some users in your query have privacy settings forbidding their tech from being viewed here: `"+filteredUsers.toString()+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
   // close the html
   html += "</TABLE></BODY></HTML>";
   
@@ -79,9 +79,9 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   fs.writeFile(dir+filename, html, function(err) {
     if(err) {
       client.logger.error(err);
-      return message.reply(`Erro salvando arquivo...`+dir+filename);
+      return message.reply("Error saving file..."+dir+filename);
     }
-    client.logger.log("The file was saved: "+dir+filename);
+    client.logger.log("The file has been saved: "+dir+filename);
     if (exportCode)
       setTimeout(function(){ 
         fs.unlink(dir+filename, (err) => {
@@ -93,7 +93,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   }); 
   var webData = client.settings.get(message.guild.id).webSheet || url+filename;
   
-  return message.reply(`Data exported for ${args[0]||"guild"} ${searchObj.name}:\n Check it on: `+webData); 
+  return message.reply(`Data exported for ${searchObj.name}:\n Check it out at: `+webData); 
  
 };
 
@@ -107,7 +107,7 @@ exports.conf = {
 exports.help = {
   name: "export",
   category: "Hades Star",
-  description: "Export Guild's Tech data to a webpage",
+  description: "Export Guild's Tech data to a webpage.",
   usage: `export  [@role]
 For an example of import Sheet, visit: https://goo.gl/zfPDoz
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

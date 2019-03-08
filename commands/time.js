@@ -19,7 +19,7 @@ exports.run = async (client, message, args, level) => {
     if (arg.indexOf("<@&") >= 0) { //target is a ROLE
       //const roleID = arg.replace("<@&","").replace(">","");
       const roleID = arg.replace(/[^0-9]/g,"");
-      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
+      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe I can't mention it...");
       searchObj = message.guild.roles.get(roleID);
     }
     else if (arg.indexOf("<@") >= 0 ) { //target is a USER
@@ -45,7 +45,7 @@ exports.run = async (client, message, args, level) => {
       client.userDB.set(targetID, targetDB);
       return message.reply("Timezone set to "+offset);
     } 
-    else return message.reply("Sorry, couldn't understand the timezone");
+    else return message.reply("Sorry, I couldn't understand that timezone");
   } 
 
   // GET for Guild or Role
