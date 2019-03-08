@@ -304,7 +304,12 @@ Examples::
 • !t score @ws_squad_1
 • !t search destiny
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TechGroups:: 
- . . . ships   (x3), trade  (x11), mining   (x9), 
- . . . weapons (x6), shields (x7), support (x18)`
+TechGroups::
+ . . . base (x2), ships (x3),
+ . . . trade (x11), mining (x9), 
+ . . . weapons (x6), shields (x7), support (x21)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Techgroup Order::
+ . . . base: redstar, cargocapacity
+ . . . ships: transport, miner, battleship`
 };

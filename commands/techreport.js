@@ -69,7 +69,7 @@ exports.run = async (client, message, args, level) => {
         if (client.checkPrivacy(targetID, message)) 
           members.set(targetID, targetDB);
         else
-          return message.reply("This user have privacy seetings forbidding his tech to be viewed here. You can ask him to WhiteList this channel or clear his WhiteList.");
+          return message.reply("This user has privacy settings forbidding their tech to be viewed here. You can ask them to WhiteList this channel or clear their WhiteList.");
       } else if (arg.trim() == 'all') {
         //errors += `Showing all: ${arg}\n`; //Debug
         message.guild.members.forEach(function(targetDB, targetID){
@@ -88,7 +88,7 @@ exports.run = async (client, message, args, level) => {
   });
     
     if (filteredUsers.length > 0)
-    message.channel.send("Some users on your query have privacy seetings forbidding their tech to be viewed here: `"+filteredUsers.toString()+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
+    message.channel.send("Some users in your query have privacy settings forbidding their tech from being viewed here: `"+filteredUsers.toString()+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
     
   if (members.size < 1) {
     errors += `Unable to find any matching users\n`;
