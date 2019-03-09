@@ -42,7 +42,7 @@ exports.run = async (client, message, args, level) => {
     if (offset <= 14 && offset >= -12) {
       targetDB.timeOffset = offset;
       client.userDB.set(targetID, targetDB);
-      return message.reply("your timezone has been set to "+offset);
+      return message.reply("the timezone for "+client.getDisplayName(targetID, message.guild)+" has been set to "+offset);
     } 
     else return message.reply("sorry, that isn't a valid timezone. Please try again.");
   } 
@@ -70,7 +70,7 @@ exports.run = async (client, message, args, level) => {
   else {
     if (targetDB.timeOffset <= 14 && targetDB.timeOffset >= -12) {
       var targetTime = Date.now() + (targetDB.timeOffset * 3600000);
-      return message.reply(`${client.getDisplayName(targetID, message.guild)}'s local time is: `+moment(targetTime).format("MMM-DD, HH:mm"));
+      return message.reply("the local time for "+client.getDisplayName(targetID, message.guild)+" is: "+moment(targetTime).format("MMM-DD, HH:mm"));
     }
     else return message.reply(`${client.getDisplayName(targetID, message.guild)} doesn't have a timezone set.`);
   }

@@ -49,7 +49,7 @@ exports.run = async (client, message, args, level) => {
       singleTarget = false;
       //const roleID = arg.replace("<@&","").replace(">","");
       const roleID = arg.replace(/[^0-9]/g,"");
-      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
+      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe I can't mention it...");
       searchObj = message.guild.roles.get(roleID);
     }
     else if (arg.indexOf("<@") >= 0 ) //target is a USER
