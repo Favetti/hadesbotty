@@ -163,7 +163,7 @@ function action_status(client, userID, rsQueName, message) {
   if (singleMessage) {
     userIDs = new Array(userID);
   }
-  message += `RS${rsQueName} Status: ${userNum}/${MATCH_MAX} in que ${readyNum}/${userNum} are ready`;
+  message += `RS${rsQueName} Status: ${userNum}/${MATCH_MAX} in queue ${readyNum}/${userNum} are ready`;
   var extraKickTime = 0;
   if (quePosition > MATCH_MAX) {
     extraKickTime = MATCH_KICK_EXTRA;
@@ -235,7 +235,7 @@ function action_leave(client, userID, suppressStatus) {
   rsQueInfo.users.splice(rsQueInfo.users.indexOf(userID),1);
   client.redstarQue.set('redstarQue'+rsQueName, rsQueInfo);
   client.redstarQue.delete('userQue'+userID);
-  client.fetchUser(userID).then(user => {user.send("You left the RS"+rsQueName+" queue, Goodbye!")});
+  client.fetchUser(userID).then(user => {user.send("You left the RS"+rsQueName+" queue, goodbye!")});
   if (!suppressStatus) {
     action_status(client, userID, rsQueName, "Someone left the RS"+rsQueName+" queue");
   }
