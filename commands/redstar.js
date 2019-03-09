@@ -23,7 +23,7 @@ exports.run = async (client, message, args, level) => {
       case 'reset':
         if (message.author.permLevel >= 9) {
           client.redstarQue.clear()
-          message.reply("Redstar Ques Cleared!");
+          message.reply("Redstar Queue Cleared!");
         } else {
           message.reply("HAHAHAHAHaaaa... Um... who do you think you are?");
         }
@@ -77,7 +77,7 @@ exports.run = async (client, message, args, level) => {
     }
     //client.logger.error("Action is "+action); // Debug
     if (!userQue && 'join' !== action) {
-      message.author.send(`You are not in a que, so cannot use "${action}"`);
+      message.author.send(`You are not in a queue, so you cannot use "${action}"`);
       return true;
     }
     var newRedstarQue;
@@ -128,14 +128,14 @@ function action_status(client, userID, rsQueName, message) {
   if (userID && !rsQueName) {
     singleMessage = true;
     if (!client.redstarQue.has('userQue'+userID)) {
-      client.fetchUser(userID).then(user => {user.send("You have no que to check the status on!")});
+      client.fetchUser(userID).then(user => {user.send("You have no queue to check the status on!")});
       return true;
     }
     var rsQueName = client.redstarQue.get('userQue'+userID).rsQueName;
   }
   
   if (!client.redstarQue.has('redstarQue'+rsQueName)) {
-    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" que you were in does not exist!")});
+    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" queue you were in does not exist!")});
     //client.logger.error("Cannot find "+'redstarQue'+rsQueName); // Debug
     //client.logger.error(require('util').inspect(client.redstarQue)); // Debug
     client.redstarQue.delete('userQue'+userID);
@@ -167,7 +167,7 @@ function action_status(client, userID, rsQueName, message) {
   var extraKickTime = 0;
   if (quePosition > MATCH_MAX) {
     extraKickTime = MATCH_KICK_EXTRA;
-    message = "You are #**"+quePosition+"** in the que and must wait for this match to start or kick users\n"+message;
+    message = "You are #**"+quePosition+"** in the queue and must wait for this match to start or kick users\n"+message;
   }
   if (false !== rsQueInfo.kickTime) {
     var tillKick = Math.round((extraKickTime + rsQueInfo.kickTime - Date.now()) / 1000);
@@ -217,27 +217,27 @@ function action_start(client, rsQueName, rsQueInfo) {
              
 function action_leave(client, userID, suppressStatus) {
   if (!client.redstarQue.has('userQue'+userID)) {
-    client.fetchUser(userID).then(user => {user.send("You have no que to leave!")});
+    client.fetchUser(userID).then(user => {user.send("You have no queue to leave!")});
     return true;
   }
   var rsQueName = client.redstarQue.get('userQue'+userID).rsQueName;
   if (!client.redstarQue.has('redstarQue'+rsQueName)) {
-    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" que you were in does not exist!")});
+    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" queue you were in does not exist!")});
     client.redstarQue.delete('userQue'+userID);
     return true;
   
   }
   var rsQueInfo = client.redstarQue.get('redstarQue'+rsQueName);
   if (-1 === rsQueInfo.users.indexOf(userID)) {
-    client.fetchUser(userID).then(user => {user.send("You have already left the RS"+rsQueName+" que!")});
+    client.fetchUser(userID).then(user => {user.send("You have already left the RS"+rsQueName+" queue!")});
     return true;
   }
   rsQueInfo.users.splice(rsQueInfo.users.indexOf(userID),1);
   client.redstarQue.set('redstarQue'+rsQueName, rsQueInfo);
   client.redstarQue.delete('userQue'+userID);
-  client.fetchUser(userID).then(user => {user.send("You left the RS"+rsQueName+" que, Goodbye!")});
+  client.fetchUser(userID).then(user => {user.send("You left the RS"+rsQueName+" queue, Goodbye!")});
   if (!suppressStatus) {
-    action_status(client, userID, rsQueName, "Someone left the RS"+rsQueName+" que");
+    action_status(client, userID, rsQueName, "Someone left the RS"+rsQueName+" queue");
   }
 }
 
@@ -252,7 +252,7 @@ function action_join(client, userID, rsQueName) {
     rsQueInfo = client.redstarQue.get('redstarQue'+rsQueName);
   }
   if (-1 !== rsQueInfo.users.indexOf(userID)) {
-    client.fetchUser(userID).then(user => {user.send("You are already in the RS"+rsQueName+" que!")});
+    client.fetchUser(userID).then(user => {user.send("You are already in the RS"+rsQueName+" queue!")});
     //client.logger.error(require('util').inspect(rsQueInfo));
     return true;
   }
@@ -270,60 +270,60 @@ function action_join(client, userID, rsQueName) {
   }
   client.redstarQue.set('redstarQue'+rsQueName, rsQueInfo);
   //client.logger.error(require('util').inspect(client.redstarQue)); // Debug
-  action_status(client, userID, rsQueName, "Someone joined the RS"+rsQueName+" que");
+  action_status(client, userID, rsQueName, "Someone joined the RS"+rsQueName+" queue");
 }
     
 function action_ready(client, userID, ready) {
   if (!client.redstarQue.has('userQue'+userID)) {
-    client.fetchUser(userID).then(user => {user.send("You have no que to become ready in!")});
+    client.fetchUser(userID).then(user => {user.send("You have no queue to become ready in!")});
     return true;
   }
   var rsQueName = client.redstarQue.get('userQue'+userID).rsQueName;
   if (!client.redstarQue.has('redstarQue'+rsQueName)) {
-    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" que you were in does not exist!")});
+    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" queue you were in does not exist!")});
     client.redstarQue.delete('userQue'+userID);
     return true;
   }
   var rsQueInfo = client.redstarQue.get('redstarQue'+rsQueName);
   if (-1 === rsQueInfo.users.indexOf(userID)) {
-    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" que you were supposed to be in doesn't have you, joining now but marking you as unready!")});
+    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" queue you were supposed to be in doesn't have you in it, joining now but marking you as unready!")});
     action_join(client, userID, rsQueName);
     return true;
   }
   var userInfo = client.redstarQue.get('userQue'+userID);
   if (ready === userInfo.ready) {
-    client.fetchUser(userID).then(user => {user.send("You are already"+(ready?"":" not")+" ready in the RS"+rsQueName+" que.")});
+    client.fetchUser(userID).then(user => {user.send("You are already"+(ready?"":" not")+" ready in the RS"+rsQueName+" queue.")});
     return true;
   }
   userInfo.ready = ready;
   client.redstarQue.set('userQue'+userID, userInfo).defer;
-  action_status(client, userID, rsQueName, "Someone changed status to"+(ready?"":" not")+" ready in the RS"+rsQueName+" que.");
+  action_status(client, userID, rsQueName, "Someone changed status to"+(ready?"":" not")+" ready in the RS"+rsQueName+" queue.");
 }
   
 function action_kick(client, userID) {
   if (!client.redstarQue.has('userQue'+userID)) {
-    client.fetchUser(userID).then(user => {user.send("You have no que to kick anyone out of!")});
+    client.fetchUser(userID).then(user => {user.send("You have no queue to kick anyone out of!")});
     return true;
   }
   var rsQueName = client.redstarQue.get('userQue'+userID).rsQueName;
   if (!client.redstarQue.has('redstarQue'+rsQueName)) {
-    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" que you were in does not exist!")});
+    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" queue you were in does not exist!")});
     client.redstarQue.delete('userQue'+userID);
     return true;
   }
   var rsQueInfo = client.redstarQue.get('redstarQue'+rsQueName);
   if (-1 === rsQueInfo.users.indexOf(userID)) {
-    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" que you were supposed to be in doesn't have you, joining now but not kicking anyone!")});
+    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" queue you were supposed to be in doesn't have you in it, joining now but not kicking anyone!")});
     action_join(client, userID, rsQueName);
     return true;
   }
   if (!rsQueInfo.kickTime) {
-    client.fetchUser(userID).then(user => {user.send("You cannot kick people if the RS"+rsQueName+" que is not full.")});
+    client.fetchUser(userID).then(user => {user.send("You cannot kick people if the RS"+rsQueName+" queue is not full.")});
     return true;
   }
   var timeTillKick = rsQueInfo.kickTime - Date.now();
   if (0 < timeTillKick) {
-    client.fetchUser(userID).then(user => {user.send("You cannot kick people for another "+(timeTillKick/1000)+" seconds in the RS"+rsQueName+" que")});
+    client.fetchUser(userID).then(user => {user.send("You cannot kick people for another "+(timeTillKick/1000)+" seconds in the RS"+rsQueName+" queue")});
     return true;
   }
   var userNum = 0;
@@ -348,31 +348,31 @@ function action_kick(client, userID) {
   }
   rsQueInfo.kickTime = false;
   client.redstarQue.set('redstarQue'+rsQueName, rsQueInfo);
-  action_send(client, kickableUsers, "You have been kicked from the RS"+rsQueName+" que because you didn't mark yourself as ready soon enough. You can re-join the que but please pay attention.");
+  action_send(client, kickableUsers, "You have been kicked from the RS"+rsQueName+" queue because you didn't mark yourself as ready soon enough. You can re-join the queue but please pay attention.");
   kickableUsers.forEach( (userID) => {
     action_leave(client, userID, true);
   });
   readyUsers.forEach( (userID) => {
     action_ready(client, userID, false);
   });
-  action_status(client, userID, rsQueName, ""+kickableUsers.length+" AFK players have been kicked from the RS"+rsQueName+" que and everyone has been set to not ready status");
+  action_status(client, userID, rsQueName, ""+kickableUsers.length+" AFK players have been kicked from the RS"+rsQueName+" queue and everyone has been set to not ready status");
 }
 
 function action_talk(client, userID, args) {
   if (!client.redstarQue.has('userQue'+userID)) {
-    client.fetchUser(userID).then(user => {user.send("You have no que to talk to anyone in. Lonely!")});
+    client.fetchUser(userID).then(user => {user.send("You have no queue to talk to anyone in. Lonely!")});
     return true;
   }
   var rsQueName = client.redstarQue.get('userQue'+userID).rsQueName;
   if (!client.redstarQue.has('redstarQue'+rsQueName)) {
-    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" que you were in does not exist!")});
+    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" queue you were in does not exist!")});
     client.redstarQue.delete('userQue'+userID);
     return true;
   }
   var rsQueInfo = client.redstarQue.get('redstarQue'+rsQueName);
   var quePosition = rsQueInfo.users.indexOf(userID);
   if (-1 === quePosition) {
-    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" que you were supposed to be in doesn't have you, joining now but not kicking anyone!")});
+    client.fetchUser(userID).then(user => {user.send("The RS"+rsQueName+" queue you were supposed to be in doesn't have you in it, joining now but not kicking anyone!")});
     action_join(client, userID, rsQueName);
     return true;
   }
@@ -391,15 +391,15 @@ exports.help = {
   category: "Hades Star",
   description: "Joins a cross-server queue for a redstar",
   usage: `redstar [RSnumber, leave, status, ready, unready, or kick]
-The que starts counting down as soon as all users are ready. If there are ${MATCH_MAX} users in the que, the option to kick AFK/unready player becomes available after 2 minutes.
+The queue starts counting down as soon as all users are ready. If there are ${MATCH_MAX} users in the queue, the option to kick AFK/unready player becomes available after 2 minutes.
 Examples:
-  • !redstar 6        (Joins the RS6 que)
-  • !redstar status   (View the current que status)
-  • !redstar leave    (Leave the que)
+  • !redstar 6        (Joins the RS6 queue)
+  • !redstar status   (View the current queue status)
+  • !redstar leave    (Leave the queue)
   • !redstar ready    (sets status to ready)
   • !redstar unready  (sets status to not-ready)
   • !redstar kick     (removes unready players and marks all others as unready)
 Short Versions: 'rs 6', 'rs s', 'rs l', 'rs r', 'rs u', 'rs k'
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-** All communication happens thru Direct Messages **`
+** All communication happens through Direct Messages **`
 };

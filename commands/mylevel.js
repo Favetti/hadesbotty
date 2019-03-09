@@ -14,6 +14,6 @@ exports.conf = {
 exports.help = {
   name: "mylevel",
   category: "Miscelaneous",
-  description: "Tells your current permission level",
+  description: "Tells you your current permission level.",
   usage: "mylevel"
 };

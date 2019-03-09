@@ -34,7 +34,7 @@ exports.run = async (client, message, args, level) => {
         return true; //Skip to next member of args
       }
       if (message.author.id === targetID) {
-        errors += "Do you need a mirror ???\n";
+        errors += "Do you need a mirror???\n";
       } else {
         //errors += `Showing member: ${arg}\n`; //Debug
       }
@@ -93,6 +93,6 @@ exports.conf = {
 exports.help = {
   name: "lastseen",
   category: "Miscelaneous",
-  description: "Last time I saw someone ?",
+  description: "Last time I saw someone?",
   usage: "lastseen [@user|role @role|all]."
 };

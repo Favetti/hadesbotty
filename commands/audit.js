@@ -104,7 +104,7 @@ exports.run = async (client, message, args, level) => {
       fs.writeFile(dir+filename, " "+dataTable.toString().replace(/\r?\n|\r/g, "<BR>").replace().replace(/\s\s+/g, '|'), function(err) {  
         if(err) {
           client.logger.error(err);
-          return message.reply("Erro salvando arquivo..."+dir+filename+"\n"+err);
+          return message.reply("Error saving file..."+dir+filename+"\n"+err);
         }
         client.logger.log("The file was saved: "+dir+filename);
       }); 

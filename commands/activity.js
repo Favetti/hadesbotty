@@ -41,14 +41,14 @@ exports.run = async (client, message, args, level) => {
     else if (args[i].indexOf("<@&") >= 0 ) {
       let roleID = args[i].replace(/[^0-9]/g,"");
       if (!message.guild.roles.has(roleID))
-        return message.reply("Role not found! Maybe i can't mention it...");
+        return message.reply("Role not found! Maybe I can't mention it...");
       searchObj = message.guild.roles.get(roleID);
     }
     else if (args[i].indexOf("<@") >= 0) {
       if (level > 1)
         targetID = args[i].replace(/[^0-9]/g,"");
       else
-        return message.reply("Only a moderator or higer can use !activity on other people.");
+        return message.reply("Only a user with moderator or higher permissions can use !activity on other people.");
     }
     else if (["audit", "history"].includes(args[i]))
         action = args[i];
