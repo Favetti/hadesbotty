@@ -8,7 +8,7 @@ exports.run = async (client, message, args, level) => {
   
   args = args.map(x => x.toLowerCase());  
   if (args.join("").indexOf("gotothebeach") > 0)
-    return message.reply("Yeah.... the beach... i wish...  \nwell, not really... sand and salty water wouldn't go well in my circuits");
+    return message.reply("Yeah.... the beach... I wish...  \nwell, not really... sand and salty water wouldn't go well in my circuits.");
       
   //const moment = require("moment"),
   const table = require('easy-table');
@@ -206,9 +206,23 @@ exports.run = async (client, message, args, level) => {
       }
     });  
     if (!hasData) return message.reply("No data found");
-    else return message.reply(`Score recorded for everyone in ${searchObj.name}:\n` + "```" + dataTable.sort(['Score|des']).toString()+"```"); 
-    
-  }  
+    else {
+      let techList = (`Score recorded for everyone in ${searchObj.name}:\n` + "```" + dataTable.sort(['Score|des']).toString());
+      let messageSize = techList.split("");
+      let interval = 2000;
+      if (messageSize.length > interval) {
+        let groups = techList.split(/[\r\n]+/);
+        let numberGroups = Math.ceil((groups.length - 3) / 65);
+        message.reply(groups.splice(0,1));
+        let header = groups.splice(0,2);
+        for (var i = 0; i < numberGroups; ++i) {
+          message.channel.send(header.join(`\n`) + `\n` + groups.splice(0 , 65).join(`\n`) + "```");
+        }
+        return;
+      }
+      else return message.reply(techList + "```"); 
+    }
+  }
   else if (action === "search"){
     let filteredUsers = new Array();
     searchObj.members.forEach(function (value, index){
