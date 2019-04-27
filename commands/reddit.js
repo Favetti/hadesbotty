@@ -14,7 +14,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   var columns = [],
       dataTable = new easyTable;
 
-  for (let i = 1; i < client.config.hadesTech[techID].levels.length ; i++){
+  for (let i = 1; i <= client.config.hadesTech[techID].levels.length ; i++){
     columns[i] = i;
   }
   

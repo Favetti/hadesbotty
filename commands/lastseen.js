@@ -34,7 +34,7 @@ exports.run = async (client, message, args, level) => {
         return true; //Skip to next member of args
       }
       if (message.author.id === targetID) {
-        errors += "Do you need a mirror ???\n";
+        errors += "Do you need a mirror???\n";
       } else {
         //errors += `Showing member: ${arg}\n`; //Debug
       }
@@ -76,7 +76,7 @@ exports.run = async (client, message, args, level) => {
   });  
   if (!scoreTable.rows.length) return message.reply(errors+"No data found");
   //else return message.reply(`${errors}Last seen time for everyone of ${args.join(', ')}:\n` + "```" + scoreTable.sort('timestamp|asc').toString()+"```"); // Sort not working this way?
-  else return message.reply(`${errors}Last seen time for everyone of ${args.join(', ')}:\n` + "```" + scoreTable.sort(function(a,b){
+  else return message.reply(`${errors}I last saw ${args.join(', ')} this long ago:\n` + "```" + scoreTable.sort(function(a,b){
     //We can sort by our hidded timestamp value
     return a[''] > b[''] ? -1 : 1;
   }).toString()+"```"); 
@@ -93,6 +93,6 @@ exports.conf = {
 exports.help = {
   name: "lastseen",
   category: "Miscelaneous",
-  description: "Last time i saw someone ?",
+  description: "Last time I saw someone?",
   usage: "lastseen [@user|role @role|all]."
 };

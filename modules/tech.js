@@ -36,11 +36,13 @@ module.exports = (client) => {
          return "shields";
 
       // BASE TECH:
+      case "cargocapacity":
+      case "capacity":
+         return "cargocap";
       case "redstarscanner":
       case "scanner":
       case "rss":
          return "rs";
-        
       // INDIVIDUAL TECH - ships:
       case "ts":
       case "trans":
@@ -115,6 +117,10 @@ module.exports = (client) => {
          return "miningunity";
          //return "crunch";
          //return "genesis";
+      case "miningdrone":
+      case "mining_drone":
+      case "mdrone":
+         return "minedrone";
         
       // INDIVIDUAL TECH - weapons:
       case "batt":
@@ -129,7 +135,10 @@ module.exports = (client) => {
       case "dualaser":
          return "dual";
          //return "barrage";
-        
+      case "dart_launcher":
+      case "dartlauncher":
+         return "dart";
+   
       // INDIVIDUAL TECH - shields:
       case "alpha_shield":
       case "alphashield":
@@ -174,6 +183,7 @@ module.exports = (client) => {
       case "redstarextender":
       case "extender":
       case "rse":
+      case "rsle":
          return "rsextender";
       case "remote_repair":
       case "remoterepair":

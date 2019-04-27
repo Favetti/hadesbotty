@@ -29,10 +29,11 @@ const config = {
   },
 
   // Hades Star TechList
-  "hadesTechSize" : {"ships":3,"trade":10,"mining":8,"weapons":5,"shields":7,"support":21},
+  "hadesTechSize" : {"base":2,"ships":3,"trade":11,"mining":9,"weapons":6,"shields":7,"support":21},
 
   "hadesTech" : {
-    "rs": {desc: "Base - RedStar Scanner", group: "base", redditURL: "red_stars", levels: [1,2,20,60,120,250,1000,2000,4000,8000]},
+    "rs": {desc: "Base - Redstar Scanner", group: "base", redditURL: "red_stars", levels: [1,2,20,60,120,250,1000,2000,4000,8000]},
+    "cargocap": {desc: "Base - Cargo Capacity", group: "base", redditURL: "mechanics/shipments", levels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]},
     "transp": {desc: "Ships - Transport", group: "ships", redditURL: "ships/transport", levels: [1,10,60,300,1000]},
     "miner": {desc: "Ships - Miner", group: "ships", redditURL: "ships/miner", levels: [1,5,50,250,800]},
     "bs": {desc: "Ships - Battleship", group: "ships", redditURL: "ships/battleship", levels: [1,10,80,400,1500]},
@@ -46,6 +47,7 @@ const config = {
     "offload": {desc: "Trade - Offload", group: "trade", redditURL: "modules/offload", levels: [100,120,140,160,180,200,250,300,400,500]},
     "beam": {desc: "Trade - Shipment Beam", group: "trade", redditURL: "modules/shipment_beam", levels: [80,100,120,140,160,180,250,300,350,400]},
     "entrust": {desc: "Trade - Entrust", group: "trade", redditURL: "modules/entrust", levels: [100,160,250,400,650,1000,1500,2500,4000,6000]},
+    "dispatch": {desc: "Trade - Dispatch", group: "trade", redditURL: "modules/dispatch", levels: [200,300,400,500,600,800,1000,3500,6000,8000]},
     "recall": {desc: "Trade - Recall", group: "trade", redditURL: "modules/recall", levels: [150]},
     "miningboost": {desc: "Mining - Mining Boost", group: "mining", redditURL: "modules/mining_boost", levels: [8,12,25,50,100,250,500,1000,2000,4000]},
     "hydrobay": {desc: "Mining - Hydrogen Bay Extension", group: "mining", redditURL: "modules/hydrogen_bay_extension", levels: [2,5,20,50,100,200,500,1000,2000,4000]},
@@ -55,11 +57,13 @@ const config = {
     "miningunity": {desc: "Mining - Mining Unity", group: "mining", redditURL: "modules/mining_unity", levels: [30,50,75,100,200,350,700,1000,2500,5000]},
     "crunch": {desc: "Mining - Crunch", group: "mining", redditURL: "modules/crunch", levels: [150,230,360,550,850,1300,2000,3000,5000,8000]},
     "genesis": {desc: "Mining - Genesis", group: "mining", redditURL: "modules/genesis", levels: [200,250,350,500,800,1500,2000,3000,5000,8000]},
+    "minedrone": {desc: "Mining - Mining Drone", group: "mining", redditURL: "modules/mining_drone", levels: [1000,2000,3000,4000,5000,6000,7000,8000,8000,8000]},
     "battery": {desc: "Weapons - Battery", group: "weapons", redditURL: "modules/battery", levels: [2,5,12,25,50,100,250,500,750,1000]},
     "laser": {desc: "Weapons - Laser", group: "weapons", redditURL: "modules/laser", levels: [8,12,25,50,100,250,500,1000,2000,4000]},
     "mass": {desc: "Weapons - Mass Battery", group: "weapons", redditURL: "modules/mass_battery", levels: [15,25,50,100,200,350,550,800,2000,5000]},
     "dual": {desc: "Weapons - Dual Laser", group: "weapons", redditURL: "modules/dual_laser", levels: [25,50,75,100,200,350,700,1000,2500,5000]},
     "barrage": {desc: "Weapons - Barrage", group: "weapons", redditURL: "modules/barrage", levels: [120,300,400,500,600,800,1000,3500,6000,8000]},
+    "dart": {desc: "Weapons - Dart Launcher", group: "weapons", redditURL: "modules/dart_launcher", levels: [4000,4500,5000,5500,6000,6500,7000,7500,8000,8000]},
     "alpha": {desc: "Shields - Alpha Shield", group: "shields", redditURL: "modules/alpha_shield", levels: [2,5,10,20,30]},
     "delta": {desc: "Shields - Delta Shield", group: "shields", redditURL: "modules/delta_shield", levels: [8,12,25,50,100,250,500,1000,2000,4000]},
     "passive": {desc: "Shields - Passive Shield", group: "shields", redditURL: "modules/passive_shield", levels: [15,25,50,100,200,350,550,800,2000,5000]},
@@ -86,8 +90,8 @@ const config = {
     "deltarocket": {desc: "Support - Delta Rocket", group: "support", redditURL: "modules/delta_rocket", levels: [200,350,500,750,1000,2000,3000,4000,6000,8000]},
     "leap": {desc: "Support - Leap" , group: "support", redditURL: "modules/leap", levels: [400,500,600,700,800,1000,2000,4000,6000,8000]},
     "bond": {desc: "Support - Bond" , group: "support", redditURL: "modules/bond", levels: [400,600,1000,1500,2000,3000,4000,5000,6000,8000]},
-    "drone": {desc: "Support - Alpha Drone" , group: "support", redditURL: "modules/alpha_drone", levels: [1000,2000,4000]},
-    "omegarocket": {desc: "Support - Omega Rocket" , group: "support", redditURL: "modules/omega_rocket", levels: [2000,2500,3000,3500,4000,5000,6000,7000,8000]}
+    "drone": {desc: "Support - Alpha Drone" , group: "support", redditURL: "modules/alpha_drone", levels: [1000,2000,3000,4000,5000,6000,7000,8000]},
+    "omegarocket": {desc: "Support - Omega Rocket" , group: "support", redditURL: "modules/omega_rocket", levels: [2000,2500,3000,3500,4000,4500,5000,6000,7000,8000]}
   },
   
   // PERMISSION LEVEL DEFINITIONS.

@@ -8,7 +8,7 @@ exports.run = async (client, message, args, level) => {
   
   args = args.map(x => x.toLowerCase());  
   if (args.join("").indexOf("gotothebeach") > 0)
-    return message.reply("Yeah.... the beach... i wish...  \nwell, not really... sand and salty water wouldn't go well in my circuits");
+    return message.reply("Yeah.... the beach... I wish...  \nwell, not really... sand and salty water wouldn't go well in my circuits.");
       
   //const moment = require("moment"),
   const table = require('easy-table');
@@ -49,7 +49,7 @@ exports.run = async (client, message, args, level) => {
       singleTarget = false;
       //const roleID = arg.replace("<@&","").replace(">","");
       const roleID = arg.replace(/[^0-9]/g,"");
-      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
+      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe I can't mention it...");
       searchObj = message.guild.roles.get(roleID);
     }
     else if (arg.indexOf("<@") >= 0 ) //target is a USER
@@ -61,7 +61,7 @@ exports.run = async (client, message, args, level) => {
     // Other ARGS
     else if (client.config.hadesTech[arg]) // found techID
       techID = arg;
-    else if (arg >= 0 && arg <=10) {
+    else if (arg >= 0 && arg <=30) {
       if (techLevel === false) {
         if (techLevels.length > 0)
           techLevels.push(arg);
@@ -128,7 +128,7 @@ exports.run = async (client, message, args, level) => {
       return message.reply(client.getDisplayName(targetID, message.guild)+" doesn't have any data.");
     
     if (!client.checkPrivacy(targetID, message))
-      return message.reply("This user have privacy seetings forbidding his tech to be viewed here. You can ask him to WhiteList this channel or clear his WhiteList.")
+      return message.reply("This user has privacy settings forbidding his tech to be viewed here. You can ask them to WhiteList this channel or clear their WhiteList.")
       
   }
 
@@ -147,7 +147,7 @@ exports.run = async (client, message, args, level) => {
     var allTech = client.hsTech.get(targetID),
         lineBreaker = "Base";
 
-    msg = (targetID == message.author.id ? client.getDisplayName(targetID, message.guild)+", here are your Tech levels: " : "here are Tech levels for "+client.getDisplayName(targetID, message.guild)+": "),
+    msg = (targetID == message.author.id ? client.getDisplayName(targetID, message.guild)+", here are your tech levels: " : "here are tech levels for "+client.getDisplayName(targetID, message.guild)+": "),
     
     Object.keys(client.config.hadesTech).forEach(techID => {
       let techLevel = allTech[techID];
@@ -206,9 +206,23 @@ exports.run = async (client, message, args, level) => {
       }
     });  
     if (!hasData) return message.reply("No data found");
-    else return message.reply(`Score recorded for everyone of ${args[0] || ""} ${searchObj.name}:\n` + "```" + dataTable.sort(['Score|des']).toString()+"```"); 
-    
-  }  
+    else {
+      let techList = (`Score recorded for everyone in ${searchObj.name}:\n` + "```" + dataTable.sort(['Score|des']).toString());
+      let messageSize = techList.split("");
+      let interval = 2000;
+      if (messageSize.length > interval) {
+        let groups = techList.split(/[\r\n]+/);
+        let numberGroups = Math.ceil((groups.length - 3) / 65);
+        message.reply(groups.splice(0,1));
+        let header = groups.splice(0,2);
+        for (var i = 0; i < numberGroups; ++i) {
+          message.channel.send(header.join(`\n`) + `\n` + groups.splice(0 , 65).join(`\n`) + "```");
+        }
+        return;
+      }
+      else return message.reply(techList + "```"); 
+    }
+  }
   else if (action === "search"){
     let filteredUsers = new Array();
     searchObj.members.forEach(function (value, index){
@@ -232,13 +246,13 @@ exports.run = async (client, message, args, level) => {
     if (!hasData)
       return message.reply("No data found.");
     else
-      return message.reply(`Tech level recorded for everyone of ${args[0]} ${searchObj.name}:\n` + "```" + dataTable.sort(['Level|des']).toString()+"```");
+      return message.reply(`Tech level recorded for requested tech in ${searchObj.name}:\n` + "```" + dataTable.sort(['Level|des']).toString()+"```");
   }  
   else if (action === "set"){
 
     //client.logger.debug(message.author.id+"|SET:"+targetID+"|tGroup:"+techGroup+"|tLvls:"+techLevels+":|tID:"+techID+"|tLvl:"+techLevel);
     
-    let allTech = client.hsTech.get(targetID) || {rs: 0, transp: 0,	miner: 0,	bs: 0,	cargobay: 0,	computer: 0,	tradeboost: 0,	rush: 0,	tradeburst: 0,	autopilot: 0,	offload: 0,	beam: 0,	entrust: 0,	recall: 0,	hydrobay: 0,	miningboost: 0,	enrich: 0,	remote: 0,	hydroupload: 0,	miningunity: 0,	crunch: 0,	genesis: 0,	battery: 0,	laser: 0,	mass: 0,	dual: 0,	barrage: 0,	alpha: 0,	delta: 0,	pas: 0,	omega: 0,	mirror: 0,	area: 0, emp: 0,	teleport: 0,	rsextender: 0,	repair: 0,	warp: 0,	unity: 0,	sanctuary: 0,	stealth: 0,	fortify: 0,	impulse: 0,	rocket: 0,	salvage: 0,	suppress: 0,	destiny: 0,	barrier: 0,	vengeance: 0,	leap: 0 };
+    let allTech = client.hsTech.get(targetID) || {rs: 0,  cargocap: 0,  transp: 0,	miner: 0,  bs: 0,	cargobay: 0,	computer: 0,	tradeboost: 0,	rush: 0,	tradeburst: 0,	shipdrone: 0,	offload: 0,	beam: 0,	entrust: 0,  dispatch: 0,  recall: 0,  miningboost: 0,  hydrobay: 0,  enrich: 0,	remote: 0,	hydroupload: 0,	miningunity: 0,	crunch: 0,	genesis: 0,  minedrone: 0, battery: 0,	laser: 0,	mass: 0,	dual: 0,	barrage: 0,  dart: 0,  alpha: 0,	delta: 0,	passive: 0,	omega: 0,	mirror: 0,	blast: 0,  area: 0,  emp: 0,	teleport: 0,	rsextender: 0,	repair: 0,	warp: 0,	unity: 0,	sanctuary: 0,	stealth: 0,	fortify: 0,	impulse: 0,	rocket: 0,	salvage: 0,	suppress: 0,	destiny: 0,	barrier: 0,	vengeance: 0,  deltarocket: 0, leap: 0,  bond: 0, drone: 0,  omegarocket: 0};
     let msg = "Setting tech for: "+client.getDisplayName(targetID, message.guild);
     let invalid = "Invalid Levels:";
 
@@ -277,6 +291,7 @@ exports.run = async (client, message, args, level) => {
     if (invalid != "Invalid Levels:") msg += invalid;
     return message.channel.send(msg);    
   }
+
 };
 
 exports.conf = {
@@ -303,7 +318,12 @@ Examples::
 • !t score @ws_squad_1
 • !t search destiny
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-TechGroups:: 
- . . . ships   (x3), trade  (x10), mining   (x8), 
- . . . weapons (x5), shields (x6), support (x18)`
+TechGroups::
+ . . . base (x2), ships (x3),
+ . . . trade (x11), mining (x9), 
+ . . . weapons (x6), shields (x7), support (x21)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Techgroup Order::
+ . . . base: redstar, cargocapacity
+ . . . ships: transport, miner, battleship`
 };

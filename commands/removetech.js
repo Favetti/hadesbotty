@@ -32,6 +32,6 @@ exports.conf = {
 exports.help = {
   name: "removetech",
   category: "Hades Star",
-  description: "Remove ALL tech data for tagged user",
+  description: "Remove ALL tech data for tagged user.",
   usage: "removetech {user tag}"
 };

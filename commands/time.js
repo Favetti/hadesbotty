@@ -19,7 +19,7 @@ exports.run = async (client, message, args, level) => {
     if (arg.indexOf("<@&") >= 0) { //target is a ROLE
       //const roleID = arg.replace("<@&","").replace(">","");
       const roleID = arg.replace(/[^0-9]/g,"");
-      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe i can't mention it...");
+      if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe I can't mention it...");
       searchObj = message.guild.roles.get(roleID);
     }
     else if (arg.indexOf("<@") >= 0 ) { //target is a USER
@@ -34,18 +34,17 @@ exports.run = async (client, message, args, level) => {
     }
     else if (arg.indexOf("gmt") >= 0 )
       offset = Number(arg.replace("gmt",""));
-    else if (Number(arg)<= 12 && Number(arg) >= -12)
-      offset = Number(arg);
+    else offset = Number(arg);
   });
 
   // SET
   if (isSet) {
-    if (offset <= 12 && offset >= -12) {
+    if (offset <= 14 && offset >= -12) {
       targetDB.timeOffset = offset;
       client.userDB.set(targetID, targetDB);
-      return message.reply("Timezone set to "+offset);
+      return message.reply("the timezone for "+client.getDisplayName(targetID, message.guild)+" has been set to "+offset);
     } 
-    else return message.reply("Sorry, couldn't understand the timezone");
+    else return message.reply("sorry, that isn't a valid timezone. Please try again.");
   } 
 
   // GET for Guild or Role
@@ -53,7 +52,7 @@ exports.run = async (client, message, args, level) => {
     searchObj.members.forEach(function (target, targetID, mapObj){
       if (client.userDB.has(targetID)) {
         var targetDB = client.userDB.get(targetID);
-        if (targetDB.timeOffset <= 12 && targetDB.timeOffset >= -12) {
+        if (targetDB.timeOffset <= 14 && targetDB.timeOffset >= -12) {
           hasData=true;
           dataTable.cell('Time', moment(Date.now() + (targetDB.timeOffset * 3600000)).format("MMM-DD, HH:mm"));
           dataTable.cell('User', client.getDisplayName(targetID, message.guild));
@@ -63,15 +62,15 @@ exports.run = async (client, message, args, level) => {
       });
     
       if (!hasData) 
-        return message.reply("No data found");
+        return message.reply("no data found.");
       else 
-        return message.reply(`Time recorded for everyone on ${searchObj.name || "guild"}:\n` +"```"+ dataTable.sort(['Time']).toString()+"```"); 
+        return message.reply(`here are the current times for everyone in ${searchObj.name || "guild"}:\n` +"```"+ dataTable.sort(['Time']).toString()+"```"); 
   }
   // GET for single target
   else {
-    if (targetDB.timeOffset <= 12 && targetDB.timeOffset >= -12) {
+    if (targetDB.timeOffset <= 14 && targetDB.timeOffset >= -12) {
       var targetTime = Date.now() + (targetDB.timeOffset * 3600000);
-      return message.reply(`${client.getDisplayName(targetID, message.guild)} local time is: `+moment(targetTime).format("MMM-DD, HH:mm"));
+      return message.reply("the local time for "+client.getDisplayName(targetID, message.guild)+" is: "+moment(targetTime).format("MMM-DD, HH:mm"));
     }
     else return message.reply(`${client.getDisplayName(targetID, message.guild)} doesn't have a timezone set.`);
   }
