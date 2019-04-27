@@ -56,7 +56,7 @@ async function identify(userid) {
     const guilds = Object.keys(user).filter((k) => /^[0-9]+$/.test(k));
     // guilds can be further filter based on whatever custom rules - guild settings, etc
 
-    if (guilds && guilds.length) {
+    if (guilds.length) {
         let guildInfo = guilds.map((g) => {
             let guild = client.guilds.get(g);
             return {
