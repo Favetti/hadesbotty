@@ -28,7 +28,7 @@ client.wikiTech = new Enmap({provider: new EnmapLevel({name: "wikiTech", dataDir
 client.activityDB = new Enmap({provider: new EnmapLevel({name: "activityDB", dataDir: ".data"})});
 
 const init = async () => {
-  
+
   const cmdFiles = await readdir("./commands/");
   client.logger.log(`Loading a total of ${cmdFiles.length} commands.`);
   cmdFiles.forEach(f => {
@@ -51,9 +51,9 @@ const init = async () => {
     const thisLevel = client.config.permLevels[i];
     client.levelCache[thisLevel.name] = thisLevel.level;
   }
-  
+
   client.login(client.config.token);
-  
+
   // *** HTTP SERVER ***
   var http = require('http'),
       path = require('path'),
@@ -61,9 +61,9 @@ const init = async () => {
       //moment = require("moment"),
       app = express(),
       html = '<HTML><BODY><a href="https://discordbots.org/bot/410562547092160522" ><img src="https://discordbots.org/api/widget/410562547092160522.svg" alt="Discord Bot" /></a><br><br><p>More at <a href="https://hadesbotty.weebly.com/">https://hadesbotty.weebly.com/</a></p></BODY></HTML>';
-  
+
   app.use(express.static(path.join(__dirname, 'public')));
-  
+
   app.get("/", (request, response) => {
     //client.logger.log(" HTTPS Ping Received from " + request.headers['x-forwarded-for'].split(",",1));
     //response.sendStatus(200);
@@ -71,16 +71,18 @@ const init = async () => {
     //response.sendFile(path.join(__dirname + '/web/index.html'));
   });
 
+  app.use('/compendium', require('./compendium-app')(client));
+
   app.listen(process.env.PORT);
-  
-  // Express Keepalive for Glitch and post DBL stats  
+
+  // Express Keepalive for Glitch and post DBL stats
   const dbl = new DBL(process.env.DISCORDBOTS_TOKEN);
   setInterval(() => {
     http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-    if(process.env.BOTTY_ENVIRONMENT === "PRD") 
+    if(process.env.BOTTY_ENVIRONMENT === "PRD")
       dbl.postStats(client.guilds.size);
   }, 250000);
-  
+
 };
 
 init();
