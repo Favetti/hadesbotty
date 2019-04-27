@@ -1,3 +1,14 @@
+/*
+    Main module entry point for compendium app integration.
+    Thie defines the callbacks and initializes the compendium endpoints.
+
+    Note that the environment must contain the following:
+
+        COMPENDIUM_APP_SERVER_KEY="<Key Shared with McGoldric>"
+        COMPENDIUM_APP_JWT_SECRET="<A secret key used to prepare tokens>"
+
+ */
+
 const appInit = require('./include/app-init');
 const jwt = require("jsonwebtoken");
 const NodeCache = require('node-cache');

@@ -5,7 +5,9 @@ const moduleTypes = require("../include/module_types");
 
 let compConfig = {};
 
-
+/*
+    Convenience method to send an error response
+ */
 function sendError(res, code, message) {
     res.status(code).send(JSON.stringify({
         code: code,
@@ -15,6 +17,10 @@ function sendError(res, code, message) {
 }
 
 
+/*
+    setTech handler. Maps tech from internal ids to local bot ids and calles the
+    setTech callback
+ */
 async function setTech(req, res) {
     try {
         let token = req.get('Authorization');
