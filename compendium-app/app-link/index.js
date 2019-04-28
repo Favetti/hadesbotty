@@ -19,9 +19,14 @@ async function identify(req, res) {
         let token = req.get('Authorization');
         // Validate the token
         if (!token || token.trim() !== compConfig.server_key) {
-            return sendError(res,401, 'Not Authorized');
+            return sendError(res, 401, 'Not Authorized');
         }
-        const rval = await compConfig.identify(req.params.userid);
+        const userId = req.params.userid;
+        if (!userId) {
+            return sendError(res, 400, 'No UserId');
+        }
+
+        const rval = await compConfig.identify(userId);
         if (!rval) {
             // No users found
             return res.sendStatus(201);
@@ -30,7 +35,7 @@ async function identify(req, res) {
         }
     } catch (e) {
         console.log(e);
-        return sendError(res,500, 'Server Error');
+        return sendError(res, 500, 'Server Error');
     }
 }
 
@@ -40,7 +45,7 @@ async function connect(req, res) {
         let token = req.get('Authorization');
         // Validate the token
         if (!token || token.trim() === '') {
-            return sendError(res,401, 'Not Authorized');
+            return sendError(res, 401, 'Not Authorized');
         }
         let payload = req.body;
         console.log('Payload', payload);
@@ -58,7 +63,7 @@ async function connect(req, res) {
         }
     } catch (e) {
         console.log(e);
-        return sendError(res,500, 'Server Error');
+        return sendError(res, 500, 'Server Error');
     }
 }
 
@@ -84,9 +89,9 @@ async function refresh(req, res) {
 
 }
 
-function  init(config)  {
+function init(config) {
     compConfig = config || {};
-        const router = express.Router();
+    const router = express.Router();
     router.get('/identify/:userid', asyncHandler(identify));
     router.post('/connect', asyncHandler(connect));
     router.get('/refresh', asyncHandler(refresh));
