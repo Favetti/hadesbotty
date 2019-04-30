@@ -33,8 +33,8 @@ const config = {
 
   "hadesTech" : {
     "rs": {desc: "Base - Redstar Scanner", group: "base", redditURL: "red_stars", levels: [1,2,20,60,120,250,1000,2000,4000,8000]},
-    "cargocap": {desc: "Base - Cargo Capacity", group: "base", redditURL: "mechanics/shipments", levels: [1,2,3,4,6,8,10,13,16,19,23,2,3,4,5,7,9,11,14,17,20,24,3,4,5,6,8,10,12,15,18,21,25,4,5,6,7,9,11,13,16,19,22,26,5,6,7,8,10,12,14,17,20,23,27]},
-    "hydrocap": {desc: "Base - Hydrogen Capacity", group: "base", redditURL: "mechanics/asteroids", levels: [50,100,125,160,220,300,420,600,900,1325,2050,250,300,325,360,420,500,620,800,1100,1525,2250,600,650,675,710,770,850,970,1150,1450,1875,2600,1200,1250,1275,1310,1370,1450,1570,1750,2050,2475,3200,2000,2050,2075,2110,2170,2250,2370,2550,2850,3275,4000]},
+    "cargocap": {desc: "Base - Cargo Capacity", group: "base", redditURL: "mechanics/shipments", levels: []},
+    "hydrocap": {desc: "Base - Hydrogen Capacity", group: "base", redditURL: "mechanics/asteroids", levels: []},
     "transp": {desc: "Ships - Transport", group: "ships", redditURL: "ships/transport", levels: [1,10,60,300,1000]},
     "miner": {desc: "Ships - Miner", group: "ships", redditURL: "ships/miner", levels: [1,5,50,250,800]},
     "bs": {desc: "Ships - Battleship", group: "ships", redditURL: "ships/battleship", levels: [1,10,80,400,1500]},

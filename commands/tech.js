@@ -52,16 +52,16 @@ exports.run = async (client, message, args, level) => {
       if (!message.guild.roles.has(roleID)) return message.reply("Role not found! Maybe I can't mention it...");
       searchObj = message.guild.roles.get(roleID);
     }
-    else if (arg.indexOf("<@") >= 0 ) //target is a USER
+    else if (arg.indexOf("<@") >= 0 || arg.indexOf("!") >= 0 ) //target is a USER
       //targetID = arg.replace("<@","").replace(">","");
-      targetID = arg.replace(/[^0-9]/g,"");
+      targetID = arg.replace(/[^0-9]/g,"");  
     else if (client.config.hadesTechSize[arg]) // target is Tech Group
       techGroup = arg;
     
     // Other ARGS
     else if (client.config.hadesTech[arg]) // found techID
       techID = arg;
-    else if (arg >= 0 && arg <=60) {
+    else if (arg >= 0 && arg <=30) {
       if (techLevel === false) {
         if (techLevels.length > 0)
           techLevels.push(arg);
@@ -109,7 +109,7 @@ exports.run = async (client, message, args, level) => {
         return message.reply("I could not understand that TECH name...");
       
       if (!techLevel)
-        return message.reply("I could not understand the TECH LEVEL...");
+        return message.reply("I could not understand that TECH LEVEL...");
     }
     else {
       if (techLevel)
@@ -141,7 +141,7 @@ exports.run = async (client, message, args, level) => {
       return message.reply("SEARCH needs a valid tech.");
   }
 
-  // *** EXECUTE THE COMMAND   
+  // *** EXECUTE THE COMMAND
   if (action === "get"){
 
     var allTech = client.hsTech.get(targetID),
@@ -248,7 +248,7 @@ exports.run = async (client, message, args, level) => {
     else
       return message.reply(`Tech level recorded for requested tech in ${searchObj.name}:\n` + "```" + dataTable.sort(['Level|des']).toString()+"```");
   }  
-  else if (action === "set"){
+  else if (action === "set") {
 
     //client.logger.debug(message.author.id+"|SET:"+targetID+"|tGroup:"+techGroup+"|tLvls:"+techLevels+":|tID:"+techID+"|tLvl:"+techLevel);
     
@@ -257,6 +257,8 @@ exports.run = async (client, message, args, level) => {
     let invalid = "Invalid Levels:";
 
     if (!techGroup) { // single Tech
+      if (techID == "cargocap" || techID == "hydrocap")
+        return message.reply(techID + " cannot be manually set.");
 
       if (!client.config.hadesTech[techID].levels[techLevel-1] && techLevel != 0)
         return message.reply("Invalid Level ("+techLevel+") for "+client.config.hadesTech[techID].desc);
@@ -287,17 +289,22 @@ exports.run = async (client, message, args, level) => {
       msg += "```" + dataTable.toString()+"```";
     }  
     client.hsTech.set(targetID, allTech);
+    //Automatically update the capacity of carogcap and hydrocap. We calculate all the combinatorial possibilities of tranport/miner capacity plus each corrisponding bay size (i.e all combinations with transport 1, then all with tranport 2, etc.).
+    //We then use a formula to calculate the position in that array of values for the users levels and set that as the value in the database.
+    
     allTech = client.hsTech.get(targetID) || {rs: 0,  cargocap: 0,  hydrocap: 0,  transp: 0,	miner: 0,  bs: 0,	cargobay: 0,	computer: 0,	tradeboost: 0,	rush: 0,	tradeburst: 0,	shipdrone: 0,	offload: 0,	beam: 0,	entrust: 0,  dispatch: 0,  recall: 0,  miningboost: 0,  hydrobay: 0,  enrich: 0,	remote: 0,	hydroupload: 0,	miningunity: 0,	crunch: 0,	genesis: 0,  minedrone: 0, battery: 0,	laser: 0,	mass: 0,	dual: 0,	barrage: 0,  dart: 0,  alpha: 0,	delta: 0,	passive: 0,	omega: 0,	mirror: 0,	blast: 0,  area: 0,  emp: 0,	teleport: 0,	rsextender: 0,	repair: 0,	warp: 0,	unity: 0,	sanctuary: 0,	stealth: 0,	fortify: 0,	impulse: 0,	rocket: 0,	salvage: 0,	suppress: 0,	destiny: 0,	barrier: 0,	vengeance: 0,  deltarocket: 0, leap: 0,  bond: 0, drone: 0,  omegarocket: 0};
     let transLevel = parseInt(allTech["transp"], 10);
     let cargobayLevel = parseInt(allTech["cargobay"], 10);
-    let cargoIndex = ((transLevel * 11) - (10 - cargobayLevel));
-    allTech["cargocap"] = cargoIndex.toString();
+    let cargobaySize = [1,2,3,4,6,8,10,13,16,19,23,2,3,4,5,7,9,11,14,17,20,24,3,4,5,6,8,10,12,15,18,21,25,4,5,6,7,9,11,13,16,19,22,26,5,6,7,8,10,12,14,17,20,23,27]; 
+    let cargoIndex = ((transLevel * 11) - (11 - cargobayLevel));
+    allTech["cargocap"] = cargobaySize[cargoIndex].toString();
     let minerLevel = parseInt(allTech["miner"], 10);
     let hydrobayLevel = parseInt(allTech["hydrobay"], 10);
-    let hydroIndex = ((minerLevel * 11) - (10 - hydrobayLevel));    
-    allTech["hydrocap"] = hydroIndex.toString();
+    let hydrobaySize = [50,100,125,160,220,300,420,600,900,1325,2050,250,300,325,360,420,500,620,800,1100,1525,2250,600,650,675,710,770,850,970,1150,1450,1875,2600,1200,1250,1275,1310,1370,1450,1570,1750,2050,2475,3200,2000,2050,2075,2110,2170,2250,2370,2550,2850,3275,4000];
+    let hydroIndex = ((minerLevel * 11) - (11 - hydrobayLevel));    
+    allTech["hydrocap"] = hydrobaySize[hydroIndex].toString();
     client.hsTech.set(targetID, allTech);
-    client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
+    //client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
     if (invalid != "Invalid Levels:") msg += invalid;      
     return message.channel.send(msg);    
   }
