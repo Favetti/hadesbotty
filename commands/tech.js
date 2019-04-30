@@ -298,7 +298,7 @@ exports.run = async (client, message, args, level) => {
     cargobayLevel = parseInt(allTech["cargobay"], 10);
     let cargobaySize = [1,2,3,4,6,8,10,13,16,19,23,2,3,4,5,7,9,11,14,17,20,24,3,4,5,6,8,10,12,15,18,21,25,4,5,6,7,9,11,13,16,19,22,26,5,6,7,8,10,12,14,17,20,23,27]; 
     let cargoIndex = ((transLevel * 11) - (11 - cargobayLevel));
-    if (cargoIndex > 0)
+    if (cargoIndex >= 0)
       allTech["cargocap"] = cargobaySize[cargoIndex].toString();
     else
       allTech["cargocap"] = "0";
@@ -306,7 +306,7 @@ exports.run = async (client, message, args, level) => {
     hydrobayLevel = parseInt(allTech["hydrobay"], 10);
     let hydrobaySize = [50,100,125,160,220,300,420,600,900,1325,2050,250,300,325,360,420,500,620,800,1100,1525,2250,600,650,675,710,770,850,970,1150,1450,1875,2600,1200,1250,1275,1310,1370,1450,1570,1750,2050,2475,3200,2000,2050,2075,2110,2170,2250,2370,2550,2850,3275,4000];
     let hydroIndex = ((minerLevel * 11) - (11 - hydrobayLevel));
-    if (hydroIndex > 0)
+    if (hydroIndex >= 0)
       allTech["hydrocap"] = hydrobaySize[hydroIndex].toString();
     else
       allTech["hydrocap"] = "0";
