@@ -38,7 +38,7 @@ exports.run = async (client, message, args, level) => {
     
     // *** Find ACTION
     if (["set", "get", "score", "search"].includes(arg))
-        action = arg;
+      action = arg;
 
    
     // *** Find TARGET
@@ -61,7 +61,7 @@ exports.run = async (client, message, args, level) => {
     // Other ARGS
     else if (client.config.hadesTech[arg]) // found techID
       techID = arg;
-    else if (arg >= 0 && arg <=30) {
+    else if (arg >= 0 && arg <=60) {
       if (techLevel === false) {
         if (techLevels.length > 0)
           techLevels.push(arg);
@@ -95,7 +95,7 @@ exports.run = async (client, message, args, level) => {
   
   // *** VALIDATE ARGUMENTs COMPOSITION
   if (!action)
-    return message.reply("I could not understand what you want... \n ... GET ? SET ? SCORE ? SEARCH ?\n ... Go to the Beach ?");
+    return message.reply("I could not understand what you want... \n ...GET? SET? SCORE? SEARCH?\n ...Go to the Beach?");
 
   if (action === "set") {
     if (!singleTarget) 
@@ -111,12 +111,12 @@ exports.run = async (client, message, args, level) => {
       if (!techLevel)
         return message.reply("I could not understand the TECH LEVEL...");
     }
-    else{
+    else {
       if (techLevel)
         return message.reply("I believe you wish to set a group of techs("+techGroup+"), but could only understand one level("+techLevel+")");
 
       if (!techLevels) 
-        return message.reply("I believe you wish to set a group of techs("+techGroup+"), but i could not understand the TECH LEVELS...");
+        return message.reply("I believe you wish to set a group of techs("+techGroup+"), but I could not understand the TECH LEVELS...");
     }
   }
     
@@ -141,7 +141,7 @@ exports.run = async (client, message, args, level) => {
       return message.reply("SEARCH needs a valid tech.");
   }
 
-  // *** EXECUTE THE COMMAND
+  // *** EXECUTE THE COMMAND   
   if (action === "get"){
 
     var allTech = client.hsTech.get(targetID),
@@ -252,7 +252,7 @@ exports.run = async (client, message, args, level) => {
 
     //client.logger.debug(message.author.id+"|SET:"+targetID+"|tGroup:"+techGroup+"|tLvls:"+techLevels+":|tID:"+techID+"|tLvl:"+techLevel);
     
-    let allTech = client.hsTech.get(targetID) || {rs: 0,  cargocap: 0,  transp: 0,	miner: 0,  bs: 0,	cargobay: 0,	computer: 0,	tradeboost: 0,	rush: 0,	tradeburst: 0,	shipdrone: 0,	offload: 0,	beam: 0,	entrust: 0,  dispatch: 0,  recall: 0,  miningboost: 0,  hydrobay: 0,  enrich: 0,	remote: 0,	hydroupload: 0,	miningunity: 0,	crunch: 0,	genesis: 0,  minedrone: 0, battery: 0,	laser: 0,	mass: 0,	dual: 0,	barrage: 0,  dart: 0,  alpha: 0,	delta: 0,	passive: 0,	omega: 0,	mirror: 0,	blast: 0,  area: 0,  emp: 0,	teleport: 0,	rsextender: 0,	repair: 0,	warp: 0,	unity: 0,	sanctuary: 0,	stealth: 0,	fortify: 0,	impulse: 0,	rocket: 0,	salvage: 0,	suppress: 0,	destiny: 0,	barrier: 0,	vengeance: 0,  deltarocket: 0, leap: 0,  bond: 0, drone: 0,  omegarocket: 0};
+    let allTech = client.hsTech.get(targetID) || {rs: 0,  cargocap: 0,  hydrocap: 0,  transp: 0,	miner: 0,  bs: 0,	cargobay: 0,	computer: 0,	tradeboost: 0,	rush: 0,	tradeburst: 0,	shipdrone: 0,	offload: 0,	beam: 0,	entrust: 0,  dispatch: 0,  recall: 0,  miningboost: 0,  hydrobay: 0,  enrich: 0,	remote: 0,	hydroupload: 0,	miningunity: 0,	crunch: 0,	genesis: 0,  minedrone: 0, battery: 0,	laser: 0,	mass: 0,	dual: 0,	barrage: 0,  dart: 0,  alpha: 0,	delta: 0,	passive: 0,	omega: 0,	mirror: 0,	blast: 0,  area: 0,  emp: 0,	teleport: 0,	rsextender: 0,	repair: 0,	warp: 0,	unity: 0,	sanctuary: 0,	stealth: 0,	fortify: 0,	impulse: 0,	rocket: 0,	salvage: 0,	suppress: 0,	destiny: 0,	barrier: 0,	vengeance: 0,  deltarocket: 0, leap: 0,  bond: 0, drone: 0,  omegarocket: 0};
     let msg = "Setting tech for: "+client.getDisplayName(targetID, message.guild);
     let invalid = "Invalid Levels:";
 
@@ -260,7 +260,7 @@ exports.run = async (client, message, args, level) => {
 
       if (!client.config.hadesTech[techID].levels[techLevel-1] && techLevel != 0)
         return message.reply("Invalid Level ("+techLevel+") for "+client.config.hadesTech[techID].desc);
-      msg += `\n${client.config.hadesTech[techID].desc} : set to ${techLevel} (was ${allTech[techID]})`
+      msg += `\n${client.config.hadesTech[techID].desc} : set to ${techLevel} (was ${allTech[techID]})`;
       allTech[techID] = techLevel;
     }  
     else { // group
@@ -287,8 +287,18 @@ exports.run = async (client, message, args, level) => {
       msg += "```" + dataTable.toString()+"```";
     }  
     client.hsTech.set(targetID, allTech);
-    //client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
-    if (invalid != "Invalid Levels:") msg += invalid;
+    allTech = client.hsTech.get(targetID) || {rs: 0,  cargocap: 0,  hydrocap: 0,  transp: 0,	miner: 0,  bs: 0,	cargobay: 0,	computer: 0,	tradeboost: 0,	rush: 0,	tradeburst: 0,	shipdrone: 0,	offload: 0,	beam: 0,	entrust: 0,  dispatch: 0,  recall: 0,  miningboost: 0,  hydrobay: 0,  enrich: 0,	remote: 0,	hydroupload: 0,	miningunity: 0,	crunch: 0,	genesis: 0,  minedrone: 0, battery: 0,	laser: 0,	mass: 0,	dual: 0,	barrage: 0,  dart: 0,  alpha: 0,	delta: 0,	passive: 0,	omega: 0,	mirror: 0,	blast: 0,  area: 0,  emp: 0,	teleport: 0,	rsextender: 0,	repair: 0,	warp: 0,	unity: 0,	sanctuary: 0,	stealth: 0,	fortify: 0,	impulse: 0,	rocket: 0,	salvage: 0,	suppress: 0,	destiny: 0,	barrier: 0,	vengeance: 0,  deltarocket: 0, leap: 0,  bond: 0, drone: 0,  omegarocket: 0};
+    let transLevel = parseInt(allTech["transp"], 10);
+    let cargobayLevel = parseInt(allTech["cargobay"], 10);
+    let cargoIndex = ((transLevel * 11) - (10 - cargobayLevel));
+    allTech["cargocap"] = cargoIndex.toString();
+    let minerLevel = parseInt(allTech["miner"], 10);
+    let hydrobayLevel = parseInt(allTech["hydrobay"], 10);
+    let hydroIndex = ((minerLevel * 11) - (10 - hydrobayLevel));    
+    allTech["hydrocap"] = hydroIndex.toString();
+    client.hsTech.set(targetID, allTech);
+    client.logger.debug("setting "+targetID+" to: "+JSON.stringify(allTech));
+    if (invalid != "Invalid Levels:") msg += invalid;      
     return message.channel.send(msg);    
   }
 
@@ -307,7 +317,7 @@ exports.help = {
   description: "Input and retrieve tech info",
   usage: `tech [set|get|score|search] [all|@role|@user] [...args...]
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-GET/SET - only work for @user (or self, if omitted)
+GET/SET - only works for @user (or self, if omitted)
 SCORE   - works with @user, @role or all
 SEARCH  - is for any tech
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -319,11 +329,12 @@ Examples::
 • !t search destiny
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TechGroups::
- . . . base (x2), ships (x3),
+ . . . base (x3), ships (x3),
  . . . trade (x11), mining (x9), 
  . . . weapons (x6), shields (x7), support (x21)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Techgroup Order::
- . . . base: redstar, cargocapacity
+ . . . base: redstar, cargocapacity, hydrocapacity
  . . . ships: transport, miner, battleship`
 };
+
