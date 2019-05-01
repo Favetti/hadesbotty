@@ -38,11 +38,11 @@ exports.run = async (client, message, args, level) => {
       //TODO refactor this to use a common member parsing script
       //errors += client.ParseMembersArg(arg, members, message.guild);//members is passed by refernce-by-value so it can be updated
       //errors += `arg ${argNum}: ${arg}\n`; // Debug
-      if (arg.indexOf("<@&") >= 0) { //target is a ROLE
+      if (arg.indexOf("<@&") >= 0 || arg.indexOf("$") >= 0) { //target is a ROLE
         //const roleID = arg.replace("<@&","").replace(">","");
         const roleID = arg.replace(/[^0-9]/g,"");
         if (!message.guild.roles.has(roleID)) {
-          errors += "Role not found! Maybe i can't mention it...\n";
+          errors += "Role not found! Maybe I can't mention it...\n";
           return true; //Skip to next member of args
         }
         message.guild.roles.get(roleID).members.forEach(function(targetDB, targetID){
@@ -53,7 +53,7 @@ exports.run = async (client, message, args, level) => {
             filteredUsers.push(client.getDisplayName(targetID, message.guild));
         });
       }
-      else if (arg.indexOf("<@") >= 0 ) { //target is a USER
+      else if (arg.indexOf("<@") >= 0 || arg.indexOf("!") >= 0) { //target is a USER
         //var targetID = arg.replace("<@","").replace(">","").replace("!","");
         var targetID = arg.replace(/[^0-9]/g,"");
         var targetDB = client.userDB.get(targetID);// || {username: targetID, lastSeen: false}
@@ -222,8 +222,18 @@ exports.help = {
   category: "Hades Star",
   description: "Shows a report on users/roles and techs",
   usage: `techreport (all or @role or @user)... | (techID or techGroup)... [| (techId or techGroup)...]...
-Run multiple reports on the same users by adding another '|'
-Examples:
-  • !techreport all | ships
-  • !techreport @nickname @roleName | miner genesis crunch | bs batt passive emp salv`
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Run multiple reports on the same users by adding another '/|'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Examples::
+ • !techreport all | ships
+ • !techreport @nickname @roleName | miner genesis crunch | bs batt passive emp salv
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Pingless::
+User:
+ • Use discord userID prepended with a "!"
+ • !tr !310235692133253122 | base
+Role:
+ • Use discord roleID prepended with a "$"
+ • !tr $561193041675681808 | cargocap hydrocap`
 };

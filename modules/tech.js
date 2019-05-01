@@ -36,13 +36,16 @@ module.exports = (client) => {
          return "shields";
 
       // BASE TECH:
-      case "cargocapacity":
-      case "capacity":
-         return "cargocap";
       case "redstarscanner":
       case "scanner":
       case "rss":
          return "rs";
+      case "cargocapacity":
+      case "capacity":
+         return "cargocap";
+      case "hydrogencapacity":
+      case "hydrocapacity":
+          return "hydrocap";
       // INDIVIDUAL TECH - ships:
       case "ts":
       case "trans":
@@ -56,6 +59,8 @@ module.exports = (client) => {
         
       // INDIVIDUAL TECH - trade:
       case "cargo_bay_extension":
+      case "cargobayextension":
+      case "cargoextension":
       case "cargo":
       case "cb":
          return "cargobay";
@@ -95,6 +100,7 @@ module.exports = (client) => {
         
       // INDIVIDUAL TECH - mining:
       case "hydrogen_bay_extension":
+      case "hydroextension":
       case "hydrogenbay":
       case "hb":
          return "hydrobay";
