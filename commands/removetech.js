@@ -7,7 +7,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   if (!args[0])
     return message.reply("Invalid command, missing user tag for target.");
   
-  var targetID = args[0].replace("<@","").replace(">","");
+  var targetID = args[0].replace("<@!","").replace("<@","").replace(">","");
   if (!client.hsTech.has(targetID))
     return message.reply(`<@${targetID}> doesn't have any data.`);
   

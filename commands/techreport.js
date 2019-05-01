@@ -222,8 +222,18 @@ exports.help = {
   category: "Hades Star",
   description: "Shows a report on users/roles and techs",
   usage: `techreport (all or @role or @user)... | (techID or techGroup)... [| (techId or techGroup)...]...
-Run multiple reports on the same users by adding another '|'
-Examples:
-  • !techreport all | ships
-  • !techreport @nickname @roleName | miner genesis crunch | bs batt passive emp salv`
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Run multiple reports on the same users by adding another '/|'
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Examples::
+ • !techreport all | ships
+ • !techreport @nickname @roleName | miner genesis crunch | bs batt passive emp salv
+- - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Pingless::
+User:
+ • Use discord userID prepended with a "!"
+ • !tr !310235692133253122 | base
+Role:
+ • Use discord roleID prepended with a "$"
+ • !tr $561193041675681808 | cargocap hydrocap`
 };
