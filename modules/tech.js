@@ -123,6 +123,9 @@ module.exports = (client) => {
          return "miningunity";
          //return "crunch";
          //return "genesis";
+      case "hrocket":
+      case "hydrorocket":
+         return "hydrogenrocket";
       case "miningdrone":
       case "mining_drone":
       case "mdrone":
