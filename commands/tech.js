@@ -186,7 +186,7 @@ exports.run = async (client, message, args, level) => {
       message.channel.send("```"+msg.slice(0, index)+"```");
       msg = msg.slice(index+1);
     }
-    message.channel.send("```-"+msg+"```");
+    message.channel.send("```"+msg+"```");
 
   }
   else if (action === "score"){
@@ -341,7 +341,7 @@ Pingless set/get::
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 TechGroups::
  . . . base (x3), ships (x3),
- . . . trade (x11), mining (x9), 
+ . . . trade (x11), mining (x10), 
  . . . weapons (x6), shields (x7), support (x21)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Techgroup Order::

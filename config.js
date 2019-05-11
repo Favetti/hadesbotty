@@ -29,7 +29,7 @@ const config = {
   },
 
   // Hades Star TechList
-  "hadesTechSize" : {"base":3,"ships":3,"trade":11,"mining":9,"weapons":6,"shields":7,"support":21},
+  "hadesTechSize" : {"base":3,"ships":3,"trade":11,"mining":10,"weapons":6,"shields":7,"support":21},
 
   "hadesTech" : {
     "rs": {desc: "Base - Redstar Scanner", group: "base", redditURL: "red_stars", levels: [1,2,20,60,120,250,1000,2000,4000,8000]},
