@@ -57,7 +57,6 @@ exports.run = async (client, message, args, level) => {
     targetDB.timeOffset = 20; //set timezone outside of the range to exclude it from lookups.
     client.userDB.set(targetID, targetDB);
     return message.reply("your timezone has been removed.");
-
   }   
   
   // GET for Guild or Role
