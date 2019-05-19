@@ -242,7 +242,7 @@ exports.run = async (client, message, args, level) => {
       }
     });
     if (filteredUsers.length > 0)
-      message.channel.send("Some users on your query have privacy seetings forbidding their tech to be viewed here: `"+filteredUsers.toString()+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
+      message.channel.send("Some users on your query have privacy settings forbidding their tech to be viewed here: `"+filteredUsers.toString()+"`. You can ask them to WhiteList this channel or clear their WhiteList.")
     if (!hasData)
       return message.reply("No data found.");
     else

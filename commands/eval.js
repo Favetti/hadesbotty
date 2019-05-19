@@ -6,7 +6,6 @@
 // However it's, like, super ultra useful for troubleshooting and doing stuff
 // you don't want to put in a command.
 
-
 const { inspect } = require("util");
 const { post } = require("snekfetch");
 
