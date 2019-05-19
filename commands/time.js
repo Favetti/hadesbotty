@@ -13,7 +13,7 @@ exports.run = async (client, message, args, level) => {
       hasData = false,
       isSet = false,
       offset = false,
-      singleTarget = false;
+      singleTarget = false,
       removeData = false;
 
   args.forEach(function(arg) {
