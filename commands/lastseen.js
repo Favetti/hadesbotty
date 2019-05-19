@@ -19,7 +19,7 @@ exports.run = async (client, message, args, level) => {
       //singleTarget = false; // unused?
       const roleID = arg.replace("<@&","").replace(">","");
       if (!message.guild.roles.has(roleID)) {
-        errors += "Role not found! Maybe i can't mention it...\n";
+        errors += "Role not found! Maybe I can't mention it...\n";
         return true; //Skip to next member of args
       }
       message.guild.roles.get(roleID).members.forEach(function(targetDB, targetID){
@@ -85,11 +85,11 @@ exports.run = async (client, message, args, level) => {
       let interval = 2000;
       if (messageSize.length > interval) {
         let groups = seenList.split(/[\r\n]+/);
-        let numberGroups = Math.ceil((groups.length - 2) / 38);
+        let numberGroups = Math.ceil((groups.length - 2) / 33);
         message.reply(groups.splice(0,1));
         let header = groups.splice(0,2);
         for (var i = 0; i < numberGroups; ++i) {
-          message.channel.send(header.join(`\n`) + `\n` + groups.splice(0 , 38).join(`\n`) + "```");
+          message.channel.send(header.join(`\n`) + `\n` + groups.splice(0 , 33).join(`\n`) + "```");
         }
         return;
       }
