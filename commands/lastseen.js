@@ -76,10 +76,25 @@ exports.run = async (client, message, args, level) => {
   });  
   if (!scoreTable.rows.length) return message.reply(errors+"No data found");
   //else return message.reply(`${errors}Last seen time for everyone of ${args.join(', ')}:\n` + "```" + scoreTable.sort('timestamp|asc').toString()+"```"); // Sort not working this way?
-  else return message.reply(`${errors}I last saw ${args.join(', ')} this long ago:\n` + "```" + scoreTable.sort(function(a,b){
-    //We can sort by our hidded timestamp value
-    return a[''] > b[''] ? -1 : 1;
-  }).toString()+"```"); 
+    else {
+      let seenList = (`${errors}I last saw ${args.join(', ')} this long ago:\n` + "```" + scoreTable.sort(function(a,b){
+      //We can sort by our hidden timestamp value
+        return a[''] > b[''] ? -1 : 1;
+      }).toString());
+      let messageSize = seenList.split("");
+      let interval = 2000;
+      if (messageSize.length > interval) {
+        let groups = seenList.split(/[\r\n]+/);
+        let numberGroups = Math.ceil((groups.length - 2) / 38);
+        message.reply(groups.splice(0,1));
+        let header = groups.splice(0,2);
+        for (var i = 1; i < numberGroups; ++i) {
+          message.channel.send(header.join(`\n`) + `\n` + groups.splice(0 , 38).join(`\n`) + "```");
+        }
+        return;
+      }
+      else return message.reply(seenList + "```"); 
+    }
   } catch (error) { return message.reply(`${error}`); }
 };
                
