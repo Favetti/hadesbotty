@@ -19,7 +19,7 @@ exports.run = async (client, message, args, level) => {
       //singleTarget = false; // unused?
       const roleID = arg.replace("<@&","").replace(">","");
       if (!message.guild.roles.has(roleID)) {
-        errors += "Role not found! Maybe i can't mention it...\n";
+        errors += "Role not found! Maybe I can't mention it...\n";
         return true; //Skip to next member of args
       }
       message.guild.roles.get(roleID).members.forEach(function(targetDB, targetID){
