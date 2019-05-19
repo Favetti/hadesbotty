@@ -88,7 +88,7 @@ exports.run = async (client, message, args, level) => {
         let numberGroups = Math.ceil((groups.length - 2) / 38);
         message.reply(groups.splice(0,1));
         let header = groups.splice(0,2);
-        for (var i = 1; i < numberGroups; ++i) {
+        for (var i = 0; i < numberGroups; ++i) {
           message.channel.send(header.join(`\n`) + `\n` + groups.splice(0 , 38).join(`\n`) + "```");
         }
         return;
