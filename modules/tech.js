@@ -238,6 +238,7 @@ module.exports = (client) => {
       case "alphadrone":
       case "drones":
          return "drone";
+         //return "suspend";
       case "omega_rocket":
          return "omegarocket";
       default:
