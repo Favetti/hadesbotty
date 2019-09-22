@@ -252,7 +252,7 @@ exports.run = async (client, message, args, level) => {
 
     //client.logger.debug(message.author.id+"|SET:"+targetID+"|tGroup:"+techGroup+"|tLvls:"+techLevels+":|tID:"+techID+"|tLvl:"+techLevel);
 
-    let allTech = client.hsTech.get(targetID) || {rs: 0,  cargocap: 0,  hydrocap: 0,  transp: 0,	miner: 0,  bs: 0,	cargobay: 0,	computer: 0,	tradeboost: 0,	rush: 0,	tradeburst: 0,	shipdrone: 0,	offload: 0,	beam: 0,	entrust: 0,  dispatch: 0,  recall: 0,  miningboost: 0,  hydrobay: 0,  enrich: 0,	remote: 0,	hydroupload: 0,	miningunity: 0,	crunch: 0,	genesis: 0,  hydrogenrocket: 0, minedrone: 0, battery: 0,	laser: 0,	mass: 0,	dual: 0,	barrage: 0,  dart: 0,  alpha: 0,	delta: 0,	passive: 0,	omega: 0,	mirror: 0,	blast: 0,  area: 0,  emp: 0,	teleport: 0,	rsextender: 0,	repair: 0,	warp: 0,	unity: 0,	sanctuary: 0,	stealth: 0,	fortify: 0,	impulse: 0,	rocket: 0,	salvage: 0,	suppress: 0,	destiny: 0,	barrier: 0,	vengeance: 0,  deltarocket: 0, leap: 0,  bond: 0, drone: 0,  omegarocket: 0};
+    let allTech = client.hsTech.get(targetID) || {rs: 0,  cargocap: 0,  hydrocap: 0,  transp: 0,	miner: 0,  bs: 0,	cargobay: 0,	computer: 0,	tradeboost: 0,	rush: 0,	tradeburst: 0,	shipdrone: 0,	offload: 0,	beam: 0,	entrust: 0,  dispatch: 0,  recall: 0,  miningboost: 0,  hydrobay: 0,  enrich: 0,	remote: 0,	hydroupload: 0,	miningunity: 0,	crunch: 0,	genesis: 0,  hydrogenrocket: 0, minedrone: 0, battery: 0,	laser: 0,	mass: 0,	dual: 0,	barrage: 0,  dart: 0,  alpha: 0,	delta: 0,	passive: 0,	omega: 0,	mirror: 0,	blast: 0,  area: 0,  emp: 0,	teleport: 0,	rsextender: 0,	repair: 0,	warp: 0,	unity: 0,	sanctuary: 0,	stealth: 0,	fortify: 0,	impulse: 0,	rocket: 0,	salvage: 0,	suppress: 0,	destiny: 0,	barrier: 0,	vengeance: 0,  deltarocket: 0, leap: 0,  bond: 0, drone: 0,  suspend: 0,  omegarocket: 0};
     let msg = "Setting tech for: "+client.getDisplayName(targetID, message.guild);
     let invalid = "Invalid Levels:";
 
@@ -294,8 +294,8 @@ exports.run = async (client, message, args, level) => {
     //We then use a formula to calculate the position in that array of values for the users levels and set that as the value in the database.
     transLevel = parseInt(allTech["transp"], 10);
     cargobayLevel = parseInt(allTech["cargobay"], 10);
-    const cargobaySize = [0,1,2,3,5,7,9,12,15,19,25,31,1,2,3,4,6,8,10,13,16,20,26,32,2,3,4,5,7,9,11,14,17,21,27,31,3,4,5,6,8,10,12,15,18,22,28,31,4,5,6,7,9,11,13,16,19,23,29,35,5,6,7,8,10,12,14,17,20,24,30,36]; 
-    const cargoIndex = ((transLevel * 12) + cargobayLevel);
+    const cargobaySize = [0,1,2,3,5,7,9,12,15,19,25,31,46,1,2,3,4,6,8,10,13,16,20,26,32,47,2,3,4,5,7,9,11,14,17,21,27,33,48,3,4,5,6,8,10,12,15,18,22,28,34,49,4,5,6,7,9,11,13,16,19,23,29,35,50,5,6,7,8,10,12,14,17,20,24,30,36,51,8,9,10,11,13,15,17,20,23,27,33,39,54]; 
+    const cargoIndex = ((transLevel * 13) + cargobayLevel);
     allTech["cargocap"] = cargobaySize[cargoIndex].toString();
     minerLevel = parseInt(allTech["miner"], 10);
     hydrobayLevel = parseInt(allTech["hydrobay"], 10);
@@ -342,7 +342,7 @@ Pingless set/get::
 TechGroups::
  . . . base (x3), ships (x3),
  . . . trade (x11), mining (x10), 
- . . . weapons (x6), shields (x7), support (x21)
+ . . . weapons (x6), shields (x7), support (x22)
 - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Techgroup Order::
  . . . base: redstar, cargocapacity, hydrocapacity
